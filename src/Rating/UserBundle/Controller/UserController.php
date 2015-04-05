@@ -4,6 +4,7 @@ namespace Rating\UserBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\VarDumper\VarDumper;
 
 class UserController extends Controller
 {

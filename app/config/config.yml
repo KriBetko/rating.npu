@@ -30,6 +30,10 @@ twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
 
+debug:
+   max_items: 250
+   max_string_length: -1
+
 # Assetic Configuration
 assetic:
     debug:          "%kernel.debug%"
