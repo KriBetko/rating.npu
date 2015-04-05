@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new Rating\MainBundle\RatingMainBundle(),
             new Rating\DashboardBundle\RatingDashboardBundle(),
             new Rating\UserBundle\RatingUserBundle(),
+            new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
