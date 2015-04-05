@@ -1,3 +1,16 @@
-app:
-    resource: "@AppBundle/Controller/"
+rating_user:
+    resource: "@RatingUserBundle/Controller/"
     type:     annotation
+    prefix:   /
+
+rating_dashboard:
+    resource: "@RatingDashboardBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+rating_main:
+    resource: "@RatingMainBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+
