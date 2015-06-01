@@ -1,0 +1,41 @@
+{% extends "::base.html.twig" %}
+{% block body %}
+    <h1 class="center-block">Реєстрація</h1>
+    <form action="{{ path('rating_registration_register') }}" {{ form_enctype(form) }} method="POST" class="login-form container">
+        <div class="form-group form-error-block">
+            {{ form_label(form.email) }}
+            {{ form_errors(form.email) }}
+            {{ form_widget(form.email) }}
+        </div>
+        <div class="form-group form-error-block">
+
+            {{ form_label(form.plainPassword.first) }}
+            {{ form_errors(form.plainPassword.first, { 'attr': {'class': 'form-error-block'} }) }}
+            {{ form_widget(form.plainPassword.first) }}
+        </div>
+        <div class="form-group form-error-block">
+            {{ form_label(form.plainPassword.second) }}
+            {{ form_errors(form.plainPassword.second, { 'attr': {'class': 'form-error-block'} }) }}
+            {{ form_widget(form.plainPassword.second) }}
+        </div>
+        <div class="form-group form-error-block">
+            {{ form_label(form.firstName) }}
+            {{ form_errors(form.firstName, { 'attr': {'class': 'form-error-block'} }) }}
+            {{ form_widget(form.firstName) }}
+        </div>
+        <div class="form-group form-error-block">
+            {{ form_label(form.lastName) }}
+            {{ form_errors(form.lastName, { 'attr': {'class': 'form-error-block'} }) }}
+            {{ form_widget(form.lastName) }}
+        </div>
+        <div class="form-group form-error-block">
+            {{ form_label(form.parentName) }}
+            {{ form_errors(form.parentName, { 'attr': {'class': 'form-error-block'} }) }}
+            {{ form_widget(form.parentName) }}
+        </div>
+        <div class="center-block">
+            <input class="btn btn-success" type="submit" value="{{ 'Зареєструватися'|trans }}" />
+        </div>
+        {{ form_rest(form) }}
+    </form>
+{% endblock body %}

@@ -1,0 +1,7 @@
+{% extends "::profile.html.twig" %}
+{% block body %}
+    <h4>Прізвище: {{ user.firstname }}</h4>
+    <h4>Ім'я: {{ user.lastname }}  </h4>
+    <h4>По-батькові: {{ user.parentname }}</h4>
+    <h4>Email: {{ user.email }}</h4>
+{% endblock %}

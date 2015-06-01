@@ -1,0 +1,12 @@
+fos_user :
+    db_driver : orm
+    firewall_name : main
+    user_class :  Rating\UserBundle\Entity\User
+    registration :
+        form :
+            type : rating_user_registration
+            validation_groups :  [ RatingRegistration ]
+    profile :
+        form :
+            type : rating_user_profile
+            validation_groups :  [ RatingProfile ]

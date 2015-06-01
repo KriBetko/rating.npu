@@ -9,7 +9,7 @@ framework:
 
 web_profiler:
     toolbar: true
-    intercept_redirects: false
+    intercept_redirects: true
 
 monolog:
     handlers:
@@ -42,7 +42,11 @@ monolog:
         #    level:  info
 
 assetic:
-    use_controller: true
+    use_controller:
+
+debug:
+   max_items: 250
+   max_string_length: -1
 
 #swiftmailer:
 #    delivery_address: me@example.com

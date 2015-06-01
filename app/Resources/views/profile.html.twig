@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}
+            {% stylesheets  filter='cssrewrite'
+            '@RatingMainBundle/Resources/public/css/reset.css'
+            '@RatingMainBundle/Resources/public/css/bootstrap.min.css'
+            '@RatingMainBundle/Resources/public/css/bootstrap-theme.min.css'
+            '@RatingMainBundle/Resources/public/less/*'
+            output='css/general.css'
+            %}
+            <link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
+            {% endstylesheets %}
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+        <div>
+            <header style="margin-bottom: 50px" class="wrapper container">
+
+
+                <ul class="nav nav-tabs">
+                    <li role="presentation" class="active"><a href="{{ path('my_profile') }}">Мій Профіль</a></li>
+                    <li role="presentation" class="navbar-right" > <a href="{{ path('fos_user_security_logout') }}">Вийти</a></li>
+                    {% if is_granted('ROLE_ADMIN') %}<li class="navbar-right" role="presentation"><a href="{{ path('fos_user_security_logout') }}">Адміністративна панель</a></li>{% endif  %}
+
+                </ul>
+            </header>
+        </div>
+        <div id="wrapper" class="container">
+            {% block body %}{% endblock %}
+        </div>
+        {% block javascripts %}
+
+            {% javascripts
+            '@RatingMainBundle/Resources/public/scripts/jquery.min.js'
+            '@RatingMainBundle/Resources/public/scripts/bootstrap.min.js'
+            '@RatingMainBundle/Resources/public/scripts/*'
+            %}
+
+            <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+        {% endblock %}
+    </body>
+</html>
