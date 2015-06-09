@@ -128,4 +128,5 @@ class RegistrationController extends Controller
             'user' => $user,
         ));
     }
+
 }

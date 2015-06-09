@@ -67,6 +67,16 @@ class User extends BaseUser
      * )
      */
     protected $parentName;
+    /**
+     * @ORM\ManyToOne(targetEntity="Rating\SubdivisionBundle\Entity\Institute", inversedBy="users")
+     * @ORM\JoinColumn(name="institute_id", referencedColumnName="id")
+     */
+    protected $institute;
+    /**
+     * @ORM\ManyToOne(targetEntity="Rating\SubdivisionBundle\Entity\Cathedra", inversedBy="users")
+     * @ORM\JoinColumn(name="cathedra_id", referencedColumnName="id")
+     */
+    protected $cathedra;
 
     /**
      * Get id
@@ -155,5 +165,51 @@ class User extends BaseUser
     public function setEmailCanonical($emailCanonical){
         $this->emailCanonical = $emailCanonical;
         $this->usernameCanonical = $emailCanonical;
+    }
+
+    /**
+     * Set institute
+     *
+     * @param \Rating\SubdivisionBundle\Entity\Institute $institute
+     * @return User
+     */
+    public function setInstitute(\Rating\SubdivisionBundle\Entity\Institute $institute = null)
+    {
+        $this->institute = $institute;
+
+        return $this;
+    }
+
+    /**
+     * Get institute
+     *
+     * @return \Rating\SubdivisionBundle\Entity\Institute 
+     */
+    public function getInstitute()
+    {
+        return $this->institute;
+    }
+
+    /**
+     * Set cathedra
+     *
+     * @param \Rating\SubdivisionBundle\Entity\Cathedra $cathedra
+     * @return User
+     */
+    public function setCathedra(\Rating\SubdivisionBundle\Entity\Cathedra $cathedra = null)
+    {
+        $this->cathedra = $cathedra;
+
+        return $this;
+    }
+
+    /**
+     * Get cathedra
+     *
+     * @return \Rating\SubdivisionBundle\Entity\Cathedra 
+     */
+    public function getCathedra()
+    {
+        return $this->cathedra;
     }
 }

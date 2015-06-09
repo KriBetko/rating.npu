@@ -1,3 +1,13 @@
+rating_subdivision:
+    resource: "@RatingSubdivisionBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+rating_admin:
+    resource: "@RatingAdminBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 stl_test:
     resource: "@STLTestBundle/Controller/"
     type:     annotation

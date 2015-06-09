@@ -2,6 +2,7 @@
 {% block body %}
     <h1 class="center-block">Реєстрація</h1>
     <form action="{{ path('rating_registration_register') }}" {{ form_enctype(form) }} method="POST" class="login-form container">
+
         <div class="form-group form-error-block">
             {{ form_label(form.email) }}
             {{ form_errors(form.email) }}
@@ -33,6 +34,17 @@
             {{ form_errors(form.parentName, { 'attr': {'class': 'form-error-block'} }) }}
             {{ form_widget(form.parentName) }}
         </div>
+        <div class="form-group form-error-block">
+            {{ form_label(form.institute) }}
+            {{ form_errors(form.institute, { 'attr': {'class': 'form-error-block'} }) }}
+            {{ form_widget(form.institute) }}
+        </div>
+        <div class="form-group form-error-block">
+            {{ form_label(form.cathedra) }}
+            {{ form_errors(form.cathedra, { 'attr': {'class': 'form-error-block'} }) }}
+            {{ form_widget(form.cathedra) }}
+        </div>
+
         <div class="center-block">
             <input class="btn btn-success" type="submit" value="{{ 'Зареєструватися'|trans }}" />
         </div>

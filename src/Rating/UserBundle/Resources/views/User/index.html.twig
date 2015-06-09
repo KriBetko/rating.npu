@@ -1,4 +1,61 @@
-{% extends '::base.html.twig' %}
-{% block body %}
-    User Page
-{% endblock %}
+{% extends '::admin.html.twig' %}
+
+{% block body -%}
+    <h1>Користувачі</h1>
+    <br><br>
+    <a class="btn btn-primary" href="{{ path('admin_index') }}">
+        {{ 'Назад' }}
+    </a>
+    <br><br>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Прізвище</th>
+                <th>Ім'я</th>
+                <th>По-батькові</th>
+                <th>Email</th>
+                <th>Інститут</th>
+                <th>Кафедра</th>
+                <th>Активний</th>
+                <th>Адмін</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>{{ entity.id }}</td>
+                <td>{{ entity.firstName }}</td>
+                <td>{{ entity.lastName }}</td>
+                <td>{{ entity.parentName }}</td>
+                <td>{{ entity.email }}</td>
+                <td>{{ entity.institute.title }}</td>
+                <td>{{ entity.cathedra.title }}</td>
+                <td class="td-center">
+                    {% if entity.enabled == 1 %}
+                    <span class="btn btn-success btn-mini">
+                        <span  class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    </span>
+                    {% else %}
+                        <span class="btn btn-danger btn-mini">
+                        <span  class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+                    </span>
+                    {% endif %}
+                </td>
+                <td class="td-center">
+                    {% if "ROLE_ADMIN" in entity.roles %}
+                        <span class="btn btn-success btn-mini">
+                        <span  class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    </span>
+                    {% else %}
+                        <span class="btn btn-danger btn-mini">
+                            <span  class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+                        </span>
+                    {% endif %}
+                </td>
+
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endblock %}

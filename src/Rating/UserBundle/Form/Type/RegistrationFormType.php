@@ -4,6 +4,7 @@ namespace Rating\UserBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Doctrine\ORM\EntityRepository;
 
 class RegistrationFormType extends AbstractType
 {
@@ -32,6 +33,32 @@ class RegistrationFormType extends AbstractType
                 'class' => 'form-control'
             ),
             'label' => 'По-батькові'
+        ));
+        $builder->add('institute', 'entity', array(
+            'class' => 'RatingSubdivisionBundle:Institute',
+            'property' => 'title',
+            'label' => 'Институт',
+            'attr' => array(
+                'class' => 'form-control'
+            ),
+            'required'    => true,
+            'placeholder' => 'Оберіть інститут',
+            'empty_data'  => null
+        ));
+        $builder->add('cathedra', 'entity', array(
+            'class' => 'RatingSubdivisionBundle:Cathedra',
+            'query_builder' => function (EntityRepository $er) {
+                return $er->createQueryBuilder('c')
+                    ->orderBy('c.title', 'ASC');
+            },
+            'property' => 'title',
+            'label' => 'Кафедра',
+            'attr' => array(
+                'class' => 'form-control'
+            ),
+            'required'    => true,
+            'placeholder' => 'Оберіть кафедру',
+            'empty_data'  => null
         ));
         $builder->add('plainPassword', 'repeated', array(
             'type' => 'password',
