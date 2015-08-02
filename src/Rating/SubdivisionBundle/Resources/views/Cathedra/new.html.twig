@@ -1,0 +1,15 @@
+{% extends '::admin.html.twig' %}
+{% block title %}Створити Кафедру{% endblock %}
+{% block body -%}
+    <h1>Створити Кафедру</h1>
+    <br>
+    <a class="btn btn-primary back-btn" href="{{ path('cathedras') }}">
+        {{ 'Назад' }}
+    </a>
+    <br><br>
+    {% form_theme form 'bootstrap_3_layout.html.twig' %}
+    <div class="admin-form">
+        {{ form(form) }}
+    </div>
+
+{% endblock %}

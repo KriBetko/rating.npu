@@ -1,0 +1,14 @@
+{% extends '::admin.html.twig' %}
+{% block title %}Редагування Інституту{% endblock %}
+{% block body -%}
+    <h1>Редагування Інтистуту</h1>
+    <br>
+    <a class="btn btn-primary back-btn" href="{{ path('institutes') }}">
+        {{ 'Назад' }}
+    </a>
+    <br><br>
+    {% form_theme edit_form 'bootstrap_3_layout.html.twig' %}
+    <div class="admin-form">
+    {{ form(edit_form) }}
+    </div>
+{% endblock %}

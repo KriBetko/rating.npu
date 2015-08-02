@@ -1,0 +1,15 @@
+{% extends '::admin.html.twig' %}
+
+{% block body -%}
+<ul>
+    <li><a href="{{ path('user') }}">Користувачі</a></li>
+    <br>
+    <li>Підрозділи
+        <ul style="margin-left: 15px;">
+            <li><a href="{{ path('institutes') }}">Інститути</a></li>
+            <li><a href="{{ path('cathedras') }}">Кафедри</a></li>
+        </ul>
+    </li>
+
+</ul>
+{% endblock %}
