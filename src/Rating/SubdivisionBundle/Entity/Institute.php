@@ -41,6 +41,7 @@ class Institute
     public function __construct()
     {
         $this->cathedras = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -56,7 +57,7 @@ class Institute
     /**
      * Set title
      *
-     * @param string $title
+     * @param string $titl
      * @return Institute
      */
     public function setTitle($title)
