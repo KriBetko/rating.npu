@@ -2,6 +2,7 @@
 
 namespace Rating\UserBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -27,6 +28,7 @@ class User extends BaseUser
     public function __construct()
     {
         parent::__construct();
+        $this->jobs = new ArrayCollection();
     }
     /**
      * @ORM\Column(type="string", length=255)
@@ -67,16 +69,11 @@ class User extends BaseUser
      * )
      */
     protected $parentName;
+
     /**
-     * @ORM\ManyToOne(targetEntity="Rating\SubdivisionBundle\Entity\Institute", inversedBy="users")
-     * @ORM\JoinColumn(name="institute_id", referencedColumnName="id")
+     * @ORM\OneToMany(targetEntity="Rating\SubdivisionBundle\Entity\Job", mappedBy="user")
      */
-    protected $institute;
-    /**
-     * @ORM\ManyToOne(targetEntity="Rating\SubdivisionBundle\Entity\Cathedra", inversedBy="users")
-     * @ORM\JoinColumn(name="cathedra_id", referencedColumnName="id")
-     */
-    protected $cathedra;
+    protected $jobs;
 
     /**
      * Get id
@@ -167,49 +164,37 @@ class User extends BaseUser
         $this->usernameCanonical = $emailCanonical;
     }
 
+
     /**
-     * Set institute
+     * Add jobs
      *
-     * @param \Rating\SubdivisionBundle\Entity\Institute $institute
+     * @param \Rating\SubdivisionBundle\Entity\Job $jobs
      * @return User
      */
-    public function setInstitute(\Rating\SubdivisionBundle\Entity\Institute $institute = null)
+    public function addJob(\Rating\SubdivisionBundle\Entity\Job $jobs)
     {
-        $this->institute = $institute;
+        $this->jobs[] = $jobs;
 
         return $this;
     }
 
     /**
-     * Get institute
+     * Remove jobs
      *
-     * @return \Rating\SubdivisionBundle\Entity\Institute 
+     * @param \Rating\SubdivisionBundle\Entity\Job $jobs
      */
-    public function getInstitute()
+    public function removeJob(\Rating\SubdivisionBundle\Entity\Job $jobs)
     {
-        return $this->institute;
+        $this->jobs->removeElement($jobs);
     }
 
     /**
-     * Set cathedra
+     * Get jobs
      *
-     * @param \Rating\SubdivisionBundle\Entity\Cathedra $cathedra
-     * @return User
+     * @return \Doctrine\Common\Collections\Collection 
      */
-    public function setCathedra(\Rating\SubdivisionBundle\Entity\Cathedra $cathedra = null)
+    public function getJobs()
     {
-        $this->cathedra = $cathedra;
-
-        return $this;
-    }
-
-    /**
-     * Get cathedra
-     *
-     * @return \Rating\SubdivisionBundle\Entity\Cathedra 
-     */
-    public function getCathedra()
-    {
-        return $this->cathedra;
+        return $this->jobs;
     }
 }

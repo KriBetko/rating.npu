@@ -1,0 +1,11 @@
+{% extends '::admin.html.twig' %}
+
+{% block body -%}
+    <a class="btn btn-primary" href="{{ path('position') }}">Назад</a>
+    <br>
+    <h3>Нова Посада</h3>
+    {% form_theme form 'bootstrap_3_layout.html.twig' %}
+    <div class="admin-form">
+        {{ form(form) }}
+    </div>
+{% endblock %}

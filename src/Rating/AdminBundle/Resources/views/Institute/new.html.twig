@@ -1,13 +1,10 @@
 {% extends '::admin.html.twig' %}
 {% block title %}Створити Інститут{% endblock %}
 {% block body -%}
-    <h1>Створити Інститут</h1>
+    <a class="btn btn-primary back-btn" href="{{ path('institutes') }}"> {{ 'Назад' }}</a>
     <br>
-    <a class="btn btn-primary back-btn" href="{{ path('institutes') }}">
-        {{ 'Назад' }}
-    </a>
-    <br><br>
-    {% form_theme form 'bootstrap_3_layout.html.twig' %}
+    <h3>Створити Інститут</h3>
+       {% form_theme form 'bootstrap_3_layout.html.twig' %}
     <div class="admin-form">
         {{ form(form) }}
     </div>
