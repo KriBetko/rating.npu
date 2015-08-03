@@ -1,3 +1,8 @@
+system_app:
+    resource: "@SystemAppBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 rating_subdivision:
     resource: "@RatingSubdivisionBundle/Controller/"
     type:     annotation
@@ -6,12 +11,7 @@ rating_subdivision:
 rating_admin:
     resource: "@RatingAdminBundle/Controller/"
     type:     annotation
-    prefix:   /
-
-stl_test:
-    resource: "@STLTestBundle/Controller/"
-    type:     annotation
-    prefix:   /
+    prefix:   /admin
 
 rating_user:
     resource: "@RatingUserBundle/Controller/"

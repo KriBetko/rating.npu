@@ -6,9 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-/**
- * @Route("/admin")
- */
 class DefaultController extends Controller
 {
     /**
@@ -17,6 +14,6 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return array('name' => 'sdfsf');
+        return $this->render('RatingAdminBundle::index.html.twig');
     }
 }

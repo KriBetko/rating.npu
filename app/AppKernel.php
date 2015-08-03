@@ -21,9 +21,9 @@ class AppKernel extends Kernel
             new Rating\UserBundle\RatingUserBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new FOS\UserBundle\FOSUserBundle(),
-            new STL\TestBundle\STLTestBundle(),
             new Rating\AdminBundle\RatingAdminBundle(),
             new Rating\SubdivisionBundle\RatingSubdivisionBundle(),
+            new System\AppBundle\SystemAppBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

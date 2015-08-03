@@ -1,6 +1,6 @@
 <?php
 
-namespace Rating\SubdivisionBundle\Controller;
+namespace Rating\AdminBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -39,7 +39,7 @@ class CathedraController extends Controller
 
      * @Route("/", name="cathedra_create")
      * @Method("POST")
-     * @Template("RatingSubdivisionBundle:Cathedra:new.html.twig")
+     * @Template("RatingAdminBundle:Cathedra:new.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -175,7 +175,7 @@ class CathedraController extends Controller
      *
      * @Route("/{id}", name="cathedra_update")
      * @Method("PUT")
-     * @Template("RatingSubdivisionBundle:Cathedra:edit.html.twig")
+     * @Template("RatingAdminBundle:Cathedra:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {

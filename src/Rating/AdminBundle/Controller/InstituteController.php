@@ -1,27 +1,28 @@
 <?php
 
-namespace Rating\UserBundle\Controller;
+namespace Rating\AdminBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Rating\UserBundle\Entity\User;
-use Rating\UserBundle\Form\UserType;
+use Rating\SubdivisionBundle\Entity\Institute;
+use Rating\SubdivisionBundle\Form\InstituteType;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
- * User controller.
+ * Institute controller.
  *
- * @Route("/admin/users")
+ * @Route("/admin/institute")
  */
-class UserController extends Controller
+class InstituteController extends Controller
 {
 
     /**
-     * Lists all User entities.
+     * Lists all Institute entities.
      *
-     * @Route("/", name="user")
+     * @Route("/", name="institutes")
      * @Method("GET")
      * @Template()
      */
@@ -29,22 +30,23 @@ class UserController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('RatingUserBundle:User')->findAll();
+        $entities = $em->getRepository('RatingSubdivisionBundle:Institute')->findAll();
 
-        return array(
-            'entities' => $entities,
-        );
+
+        return $this->render('RatingAdminBundle:Institute:index.html.twig', array(
+            'entities' => $entities
+        ));
     }
     /**
-     * Creates a new User entity.
+     * Creates a new Institute entity.
      *
-     * @Route("/", name="user_create")
+     * @Route("/", name="institute_create")
      * @Method("POST")
-     * @Template("RatingUserBundle:User:new.html.twig")
+     * @Template("RatingAdminBundle:Institute:new.html.twig")
      */
     public function createAction(Request $request)
     {
-        $entity = new User();
+        $entity = new Institute();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -53,7 +55,7 @@ class UserController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('user_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('institute_edit', array('id' => $entity->getId())));
         }
 
         return array(
@@ -63,34 +65,35 @@ class UserController extends Controller
     }
 
     /**
-     * Creates a form to create a User entity.
+     * Creates a form to create a Institute entity.
      *
-     * @param User $entity The entity
+     * @param Institute $entity The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(User $entity)
+    private function createCreateForm(Institute $entity)
     {
-        $form = $this->createForm(new UserType(), $entity, array(
-            'action' => $this->generateUrl('user_create'),
+        $form = $this->createForm(new InstituteType(), $entity, array(
+            'action' => $this->generateUrl('institute_create'),
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', 'submit', array('label' => 'Зберегти',  'attr' => array(
+            'class' => 'btn btn-success')));
 
         return $form;
     }
 
     /**
-     * Displays a form to create a new User entity.
+     * Displays a form to create a new Institute entity.
      *
-     * @Route("/new", name="user_new")
+     * @Route("/new", name="institute_new")
      * @Method("GET")
      * @Template()
      */
     public function newAction()
     {
-        $entity = new User();
+        $entity = new Institute();
         $form   = $this->createCreateForm($entity);
 
         return array(
@@ -100,9 +103,9 @@ class UserController extends Controller
     }
 
     /**
-     * Finds and displays a User entity.
+     * Finds and displays a Institute entity.
      *
-     * @Route("/{id}", name="user_show")
+     * @Route("/{id}", name="institute_show")
      * @Method("GET")
      * @Template()
      */
@@ -110,10 +113,10 @@ class UserController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('RatingUserBundle:User')->find($id);
+        $entity = $em->getRepository('RatingSubdivisionBundle:Institute')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find User entity.');
+            throw $this->createNotFoundException('Unable to find Institute entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -125,9 +128,9 @@ class UserController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing User entity.
+     * Displays a form to edit an existing Institute entity.
      *
-     * @Route("/{id}/edit", name="user_edit")
+     * @Route("/{id}/edit", name="institute_edit")
      * @Method("GET")
      * @Template()
      */
@@ -135,10 +138,10 @@ class UserController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('RatingUserBundle:User')->find($id);
+        $entity = $em->getRepository('RatingSubdivisionBundle:Institute')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find User entity.');
+            throw $this->createNotFoundException('Unable to find Institute entity.');
         }
 
         $editForm = $this->createEditForm($entity);
@@ -152,38 +155,39 @@ class UserController extends Controller
     }
 
     /**
-    * Creates a form to edit a User entity.
+    * Creates a form to edit a Institute entity.
     *
-    * @param User $entity The entity
+    * @param Institute $entity The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(User $entity)
+    private function createEditForm(Institute $entity)
     {
-        $form = $this->createForm(new UserType(), $entity, array(
-            'action' => $this->generateUrl('user_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new InstituteType(), $entity, array(
+            'action' => $this->generateUrl('institute_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', 'submit', array('label' => 'Оновити',  'attr' => array(
+            'class' => 'btn btn-success')));
 
         return $form;
     }
     /**
-     * Edits an existing User entity.
+     * Edits an existing Institute entity.
      *
-     * @Route("/{id}", name="user_update")
+     * @Route("/{id}", name="institute_update")
      * @Method("PUT")
-     * @Template("RatingUserBundle:User:edit.html.twig")
+     * @Template("RatingAdminBundle:Institute:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('RatingUserBundle:User')->find($id);
+        $entity = $em->getRepository('RatingSubdivisionBundle:Institute')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find User entity.');
+            throw $this->createNotFoundException('Unable to find Institute entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -193,7 +197,7 @@ class UserController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('user_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('institute_edit', array('id' => $id)));
         }
 
         return array(
@@ -203,9 +207,9 @@ class UserController extends Controller
         );
     }
     /**
-     * Deletes a User entity.
+     * Deletes a Institute entity.
      *
-     * @Route("/{id}", name="user_delete")
+     * @Route("/{id}", name="institute_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -215,21 +219,21 @@ class UserController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('RatingUserBundle:User')->find($id);
+            $entity = $em->getRepository('RatingSubdivisionBundle:Institute')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find User entity.');
+                throw $this->createNotFoundException('Unable to find Institute entity.');
             }
 
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('user'));
+        return $this->redirect($this->generateUrl('institute'));
     }
 
     /**
-     * Creates a form to delete a User entity by id.
+     * Creates a form to delete a Institute entity by id.
      *
      * @param mixed $id The entity id
      *
@@ -238,7 +242,7 @@ class UserController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('user_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('institute_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
