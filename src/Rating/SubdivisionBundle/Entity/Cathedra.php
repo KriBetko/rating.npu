@@ -33,10 +33,6 @@ class Cathedra
      */
     protected $institute;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Rating\UserBundle\Entity\User", mappedBy="cathedra")
-     */
-    protected $users;
 
     /**
      * Get id

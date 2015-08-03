@@ -13,12 +13,14 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use FOS\UserBundle\Model\UserInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Rating\SubdivisionBundle\Entity\Job;
 
 
 class RegistrationController extends Controller
 {
     public function registerAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
         /** @var $formFactory \FOS\UserBundle\Form\Factory\FactoryInterface */
         $formFactory = $this->get('fos_user.registration.form.factory');
         /** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
@@ -35,13 +37,19 @@ class RegistrationController extends Controller
         if (null !== $event->getResponse()) {
             return $event->getResponse();
         }
-
+        $job = new Job();
+        $job->setAdditional(false);
+        $job->setBet(1);
+        $job->setUser($user);
+        $user->addJob($job);
         $form = $formFactory->createForm();
         $form->setData($user);
+
 
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            $em->persist($job);
             $event = new FormEvent($form, $request);
             $dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
 

@@ -34,16 +34,26 @@
             {{ form_errors(form.parentName, { 'attr': {'class': 'form-error-block'} }) }}
             {{ form_widget(form.parentName) }}
         </div>
+
+        {% for job in form.jobs %}
         <div class="form-group form-error-block">
-            {{ form_label(form.institute) }}
-            {{ form_errors(form.institute, { 'attr': {'class': 'form-error-block'} }) }}
-            {{ form_widget(form.institute) }}
+            {{ form_label(job.institute) }}
+            {{ form_errors(job.institute, { 'attr': {'class': 'form-error-block'} }) }}
+            {{ form_widget(job.institute) }}
         </div>
-        <div class="form-group form-error-block">
-            {{ form_label(form.cathedra) }}
-            {{ form_errors(form.cathedra, { 'attr': {'class': 'form-error-block'} }) }}
-            {{ form_widget(form.cathedra) }}
-        </div>
+            <div class="form-group form-error-block">
+                {{ form_label(job.cathedra) }}
+                {{ form_errors(job.cathedra, { 'attr': {'class': 'form-error-block'} }) }}
+                {{ form_widget(job.cathedra) }}
+            </div>
+            <div class="form-group form-error-block">
+                {{ form_label(job.position) }}
+                {{ form_errors(job.position, { 'attr': {'class': 'form-error-block'} }) }}
+                {{ form_widget(job.position) }}
+            </div>
+        {% endfor %}
+
+
 
         <div class="center-block">
             <input class="btn btn-success" type="submit" value="{{ 'Зареєструватися'|trans }}" />
@@ -55,7 +65,7 @@
     {{ parent() }}
     <script>
         $(document).ready(function(){
-            $('#fos_user_registration_form_institute').change(function() {
+            $('#fos_user_registration_form_jobs_0_institute').change(function() {
 
                 if ($(this).val()){
                     $.ajax({
@@ -64,14 +74,14 @@
                     })
                             .done(function( msg ) {
                                 if (msg.status == 1){
-                                    $('#fos_user_registration_form_cathedra').empty().append(msg.output).prop('disabled', false);
+                                    $('#fos_user_registration_form_jobs_0_cathedra').empty().append(msg.output).prop('disabled', false);
                                 } else  {
-                                    $('#fos_user_registration_form_cathedra').empty().append('<option value="">-</option>').prop('disabled', 'disabled');
+                                    $('#fos_user_registration_form_jobs_0_cathedra').empty().append('<option value="">-</option>').prop('disabled', 'disabled');
                                 }
 
                             });
                 } else {
-                    $('#fos_user_registration_form_cathedra').empty().append('<option value="">-</option>').prop('disabled', 'disabled');
+                    $('#fos_user_registration_form_jobs_0_cathedra').empty().append('<option value="">-</option>').prop('disabled', 'disabled');
                 }
             });
         });

@@ -1,7 +1,65 @@
 {% extends "::profile.html.twig" %}
+{% block title%}Мій профіль{% endblock %}
 {% block body %}
-    <h4>Прізвище: {{ user.firstname }}</h4>
-    <h4>Ім'я: {{ user.lastname }}  </h4>
-    <h4>По-батькові: {{ user.parentname }}</h4>
-    <h4>Email: {{ user.email }}</h4>
+    <div class="row">
+        <div class="col-md-8">
+            <h3 class="center-block">Персональна інформація</h3>
+            <hr>
+            <div class="row">
+                <div class="col-md-8"><b>Прізвище:</b></div>
+                <div class="col-md-16"><p>{{ user.firstName }}</p></div>
+            </div>
+            <div class="row">
+                <div class="col-md-8"><b>Ім'я:</b></div>
+                <div class="col-md-16"><p>{{ user.lastName }}</p></div>
+            </div>
+            <div class="row">
+                <div class="col-md-8"><b>По-батькові:</b></div>
+                <div class="col-md-16"><p>{{ user.parentName }}</p></div>
+            </div> <div class="row">
+                <div class="col-md-8"><b>Email:</b></div>
+                <div class="col-md-16"><p>{{ user.email }}</p></div>
+            </div>
+            <div class="text-right">
+                <a href="" class="btn btn-success">Редагувати</a>
+            </div>
+        </div>
+        <div class="col-md-16">
+            <h3 class="center-block">Місце роботи</h3>
+            <hr>
+
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Кафедра</th>
+                            <th>Посада</th>
+                            <th>Ставка</th>
+                            <th>Тип</th>
+                            <th>Дії</th>
+                        </tr>
+                    </thead>
+
+            {% for job in jobs %}
+                <tr>
+                    <td class="text-center">{{ job.cathedra.title }}</td>
+                    <td class="text-center">{{ job.position.title }}</td>
+                    <td class="text-center">{{ job.bet }}</td>
+                    <td class="text-center">{% if job.additional == 1 %}Сумісництво{% else %}Основне місце роботи{% endif %}</td>
+                    <td class="text-center">
+                        <a class="btn btn-info btn-xs" href="" title="Редагувати">
+                            <span  class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                        </a>
+                        <a class="btn btn-danger btn-xs" href="" title="Видалити">
+                            <span  class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        </a>
+                    </td >
+                </tr>
+
+            {% endfor %}
+                </table>
+            <div class="text-right">
+            <a href="" class="btn btn-success">Додати</a>
+            </div>
+        </div>
+    </div>
 {% endblock %}

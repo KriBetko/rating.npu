@@ -31,10 +31,7 @@ class Institute
      * @ORM\OneToMany(targetEntity="Cathedra", mappedBy="institute")
      */
     protected $cathedras;
-    /**
-     * @ORM\OneToMany(targetEntity="Rating\UserBundle\Entity\User", mappedBy="institute")
-     */
-    protected $users;
+
     /**
      * Constructor
      */

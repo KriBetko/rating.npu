@@ -15,7 +15,9 @@ class ProfileController extends Controller
      */
     public function indexAction()
     {
+        $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        return $this->render("RatingProfileBundle:Profile:index.html.twig", array('user' => $user));
+        $jobs = $em->getRepository('RatingSubdivisionBundle:Job')->findUserJobs($user);
+        return $this->render("RatingProfileBundle:Profile:index.html.twig", array('user' => $user, 'jobs' => $jobs));
     }
 }

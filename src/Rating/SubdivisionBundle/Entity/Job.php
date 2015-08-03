@@ -42,7 +42,7 @@ class Job
     protected $institute;
 
     /**
-     * @ORM\Column(type="decimal", nullable=true)
+     * @ORM\Column(type="decimal", scale=2, nullable=true)
      */
     protected $bet;
 
