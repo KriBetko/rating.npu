@@ -15,8 +15,6 @@
                 <th>Ім'я</th>
                 <th>По-батькові</th>
                 <th>Email</th>
-                <th>Інститут</th>
-                <th>Кафедра</th>
                 <th>Активний</th>
                 <th>Адмін</th>
             </tr>
@@ -29,8 +27,6 @@
                 <td>{{ entity.lastName }}</td>
                 <td>{{ entity.parentName }}</td>
                 <td>{{ entity.email }}</td>
-                <td>{{ entity.institute.title }}</td>
-                <td>{{ entity.cathedra.title }}</td>
                 <td class="td-center">
                     {% if entity.enabled == 1 %}
                     <span class="btn btn-success btn-mini">
@@ -44,13 +40,13 @@
                 </td>
                 <td class="td-center">
                     {% if "ROLE_ADMIN" in entity.roles %}
-                        <span class="btn btn-success btn-mini">
+                        <a href="{{ path('change_role', {'id': entity.id}) }}" class="btn btn-success btn-mini">
                         <span  class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                    </span>
+                    </a>
                     {% else %}
-                        <span class="btn btn-danger btn-mini">
+                        <a  href="{{ path('change_role', {'id': entity.id}) }}"  class="btn btn-danger btn-mini">
                             <span  class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-                        </span>
+                        </a>
                     {% endif %}
                 </td>
 

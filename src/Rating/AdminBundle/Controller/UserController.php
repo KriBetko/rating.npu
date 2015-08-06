@@ -244,4 +244,19 @@ class UserController extends Controller
             ->getForm()
         ;
     }
+    /**
+     * @Route("/change/role/{id}", name="change_role")
+     */
+    public function changeRoleAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('RatingUserBundle:User')->findOneById($id);
+        if ($user->hasRole('ROLE_ADMIN') ){
+            $user->removeRole('ROLE_ADMIN');
+        } else {
+            $user->addRole('ROLE_ADMIN');
+        }
+        $em->flush();
+        return $this->redirect($this->generateUrl('user'));
+    }
 }
