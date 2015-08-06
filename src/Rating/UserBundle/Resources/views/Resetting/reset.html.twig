@@ -1,0 +1,17 @@
+{% extends '::base.html.twig' %}
+{% block body %}
+<form action="{{ path('fos_user_resetting_reset', {'token': token}) }}" {{ form_enctype(form) }} method="POST" class="fos_user_resetting_reset">
+    <span class="register_errors password_error"></span>
+    <div class="" style="width: 400px; margin: auto">
+        <h2 class="form-title center-block">{{ 'Відновлення пароля' | trans }}</h2>
+        {{ form_row(form.plainPassword.first, {'attr': {'placeholder': 'Новий пароль'}, 'label':false }) }}
+        {{ form_row(form.plainPassword.second, {'attr': {'placeholder': 'Підтвердіть пароль'}, 'label':false }) }}
+        {{ form_rest(form) }}
+        <div style="text-align: center; display: none" class="loader reset_loader"><img style=" width: 70px" src="/bundles/omnivalormain/images/loader.gif"></div>
+    </div>
+
+    <div class="sign-in-wrapper resetting_replace buttons_block">
+        <button class="btn btn-success center-block"  type="submit"><span>{{ 'Відновити' | trans }}</span></button>
+    </div>
+</form>
+{% endblock %}

@@ -3,63 +3,192 @@
 {% block body %}
     <div class="row">
         <div class="col-md-8">
+            {% for flashMessage in app.session.flashbag.get('success_update') %}
+                <div class="alert alert-success">
+                    Дані успішно збережені!
+                </div>
+            {% endfor %}
             <h3 class="center-block">Персональна інформація</h3>
             <hr>
             <div class="row">
-                <div class="col-md-8"><b>Прізвище:</b></div>
-                <div class="col-md-16"><p>{{ user.firstName }}</p></div>
+                <div class="col-md-9"><b>Прізвище:</b></div>
+                <div class="col-md-15"><p>{{ user.firstName }}</p></div>
             </div>
             <div class="row">
-                <div class="col-md-8"><b>Ім'я:</b></div>
-                <div class="col-md-16"><p>{{ user.lastName }}</p></div>
+                <div class="col-md-9"><b>Ім'я:</b></div>
+                <div class="col-md-15"><p>{{ user.lastName }}</p></div>
             </div>
             <div class="row">
-                <div class="col-md-8"><b>По-батькові:</b></div>
-                <div class="col-md-16"><p>{{ user.parentName }}</p></div>
+                <div class="col-md-9"><b>По-батькові:</b></div>
+                <div class="col-md-15"><p>{{ user.parentName }}</p></div>
             </div> <div class="row">
-                <div class="col-md-8"><b>Email:</b></div>
-                <div class="col-md-16"><p>{{ user.email }}</p></div>
+                <div class="col-md-9"><b>Email:</b></div>
+                <div class="col-md-15"><p>{{ user.email }}</p></div>
+            </div>
+            <div class="row">
+                <div class="col-md-9"><b>Дата народження:</b></div>
+                <div class="col-md-15"><p>
+                        {% if user.birthday is not null %}
+                        {{ user.birthday|date('d.m.Y') }}
+                        {% else %}
+                            Не вказана
+                        {% endif %}
+                    </p></div>
             </div>
             <div class="text-right">
-                <a href="" class="btn btn-success">Редагувати</a>
+                <a href="{{ path('my_profile_edit') }}" class="btn btn-success">Редагувати</a>
             </div>
         </div>
         <div class="col-md-16">
             <h3 class="center-block">Місце роботи</h3>
             <hr>
-
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Кафедра</th>
-                            <th>Посада</th>
-                            <th>Ставка</th>
-                            <th>Тип</th>
-                            <th>Дії</th>
-                        </tr>
-                    </thead>
-
-            {% for job in jobs %}
-                <tr>
-                    <td class="text-center">{{ job.cathedra.title }}</td>
-                    <td class="text-center">{{ job.position.title }}</td>
-                    <td class="text-center">{{ job.bet }}</td>
-                    <td class="text-center">{% if job.additional == 1 %}Сумісництво{% else %}Основне місце роботи{% endif %}</td>
-                    <td class="text-center">
-                        <a class="btn btn-info btn-xs" href="" title="Редагувати">
-                            <span  class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                        </a>
-                        <a class="btn btn-danger btn-xs" href="" title="Видалити">
-                            <span  class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                        </a>
-                    </td >
-                </tr>
-
-            {% endfor %}
-                </table>
+            <div id="table-jobs-block">
+                {{ include('RatingProfileBundle:Profile:table_jobs.html.twig') }}
+            </div>
             <div class="text-right">
-            <a href="" class="btn btn-success">Додати</a>
+            <a href="" class="btn btn-success" data-toggle="modal" data-target="#modalJob">Додати</a>
             </div>
         </div>
     </div>
+    {# START MODAL add Job #}
+    <div class="modal fade" id="modalJob" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Додати нове місце рботи</h4>
+                </div>
+                <div class="modal-body" id="form-block">
+                    {{ include('RatingProfileBundle:Profile:form_job.html.twig') }}
+                </div>
+                <div class="modal-footer">
+                    {#<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>#}
+                    <button id="form-job-sender" type="button" class="btn btn-primary">Зберегти</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {# END MODAL add Job #}
+
+    {# START MODAL remove Job #}
+    <div class="modal fade" id="modalRemoveJob" tabindex="-2" role="dialog" aria-labelledby="myModalLabel" data-id="">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Видалення місця роботи</h4>
+                </div>
+                <div class="modal-body" id="form-block">
+                    Ви дійсно бажаєте видалити дане місце роботи?
+                </div>
+                <div class="modal-footer center-block">
+                    <a data-href="{{ path('profile_remove_job') }}" id="removeJob" type="button" class="btn btn-danger">ТАК</a>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">НІ</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {# END MODAL remove Job #}
+
+    {# START MODAL edit Job #}
+    <div class="modal fade" id="modalEditJob" tabindex="-3" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Редагування місця роботи</h4>
+                </div>
+                <div class="modal-body" id="form-edit-block">
+
+                </div>
+                <div class="modal-footer center-block">
+                    <button data-dismiss="modal"  id="sender-edit-form" type="button" class="btn btn-primary">Оновити</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {# END MODAL edit Job #}
 {% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function(){
+            function initAddJobForm (){
+                getCathedrasList('#job_institute', '#job_cathedra');
+                $('#form-job-sender').click(function(){
+                   $('#form-job').ajaxSubmit({
+                               'success': function(e){
+                                   if (e.status == 0) {
+                                       $('#form-block').html(e.view);
+                                       initAddJobForm();
+                                   } else if(status = 1) {
+                                       $('#modalJob').modal('hide');
+                                       $('#form-job').clearForm();
+                                       $('#table-jobs-block').html(e.view);
+                                   }
+                                   return false;
+                               }
+                           });
+                });
+
+            }
+
+            initAddJobForm();
+
+            $(document.body).on('click', '.remove-job-link', function(){
+               $('#removeJob').attr('data-id', $(this).attr('data-id'));
+            });
+
+            $(document.body).on('submit', '#form-job, #form-edit-job', function(e){
+                e.preventDefault();
+            });
+
+            $('#removeJob').click(function(){
+                $.ajax({
+                    method: "post",
+                    url:  $(this).attr('data-href')+'/'+$(this).attr('data-id')
+                })
+                .done(function(e) {
+                    if (e.status == 1){
+                        $('#modalRemoveJob').modal('hide');
+                        $('#table-jobs-block').html(e.view);
+                    }
+
+                });
+            });
+
+            $('#sender-edit-form').click(function(e){
+                e.preventDefault();
+                e.stopPropagation();
+                $('#form-edit-job').ajaxSubmit({
+                    'success': function(e){
+                        if (e.status == 0) {
+                            $('#form-edit-block').html(e.view);
+                        } else if(status = 1) {
+                            $('#modalEditJob').modal('hide');
+                            $('#form-edit-job').clearForm();
+                            $('#table-jobs-block').html(e.view);
+                        }
+                        return false;
+                    }
+                });
+            });
+
+            $(document.body).on('click', '.edit-job-link', function(){
+                $.ajax({
+                    method: "get",
+                    url:  $(this).attr('data-href')+'/'+$(this).attr('data-id')
+                })
+                .done(function(e) {
+                    $('#form-edit-block').html(e.view);
+
+                });
+            });
+
+        });
+    </script>
+{% endblock javascripts%}
+

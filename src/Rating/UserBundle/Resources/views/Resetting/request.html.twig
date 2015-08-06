@@ -1,0 +1,23 @@
+<form action="{{ path('fos_user_resetting_send_email') }}" method="POST" id="resetForm" role="form" class="login-form container">
+    <div class="" style="width: 400px; margin: auto">
+
+        <div style="text-align: center; display: none" class="loader"><img style=" width: 70px" src="/bundles/omnivalormain/images/loader.gif"></div>
+        <div style="display: none" id="recovery_success" class="alert alert-success center-block" role="alert"><b> {{ 'Будь ласка, перевірте Ваш email. Вам вислані подальші інструкції для відновлення пароля' | trans }}</b></div>
+    </div>
+    <div class="replace-reset">
+    <div class="form-group">
+        <div class="form-error-block">
+        <span class="help-block">
+            <ul class="list-unstyled">
+                <li><span class="glyphicon glyphicon-exclamation-sign recovery_error" style="display: none"></span></li>
+            </ul>
+        </span>
+        </div>
+        <input type="text" id="username" name="username" required="required" placeholder="{{ 'Email' | trans }}" class="form-control" />
+    </div>
+
+    <div class="sign-in-wrapper recovery_replace buttons_block center-block">
+        <button class="btn btn-primary" type="submit"><span>{{ 'Відновити' | trans }}</span></button>
+    </div>
+    </div>
+</form>

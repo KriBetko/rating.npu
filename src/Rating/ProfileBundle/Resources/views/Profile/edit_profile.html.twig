@@ -1,0 +1,72 @@
+{% extends "::profile.html.twig" %}
+{% block title%}Мій профіль{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-10">
+            <form novalidate action="{{ path('my_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="login-form">
+                <h3 class="center-block">Редагування профіля</h3>
+                <div class="form-group form-error-block">
+                    {{ form_label(form.email) }}
+                    {{ form_errors(form.email) }}
+                    {{ form_widget(form.email) }}
+                </div>
+                <div class="form-group form-error-block">
+                    {{ form_label(form.firstName) }}
+                    {{ form_errors(form.firstName, { 'attr': {'class': 'form-error-block'} }) }}
+                    {{ form_widget(form.firstName) }}
+                </div>
+                <div class="form-group form-error-block">
+                    {{ form_label(form.lastName) }}
+                    {{ form_errors(form.lastName, { 'attr': {'class': 'form-error-block'} }) }}
+                    {{ form_widget(form.lastName) }}
+                </div>
+                <div class="form-group form-error-block">
+                    {{ form_label(form.parentName) }}
+                    {{ form_errors(form.parentName, { 'attr': {'class': 'form-error-block'} }) }}
+                    {{ form_widget(form.parentName) }}
+                </div>
+                <div class="form-group form-error-block">
+                    {{ form_label(form.birthday) }}
+                    {{ form_errors(form.birthday, { 'attr': {'class': 'form-error-block'} }) }}
+                    {{ form_widget(form.birthday) }}
+                </div>
+
+                <div class="center-block">
+                    <input class="btn btn-success" type="submit" value="{{ 'Оновити'|trans }}" />
+                </div>
+                {{ form_rest(form) }}
+            </form>
+        </div>
+        <div class="col-md-4"></div>
+        <div class="col-md-10">
+            <form novalidate action="{{ path('my_profile_edit') }}"  {{ form_enctype(formPass) }} method="POST" class="login-form">
+                <h3 class="center-block">Зміна пароля</h3>
+                <div class="form-group form-error-block">
+                    {{ form_label(formPass.current_password) }}
+                    {{ form_errors(formPass.current_password, { 'attr': {'class': 'form-error-block'} }) }}
+                    {{ form_widget(formPass.current_password) }}
+                </div>
+                <div class="form-group form-error-block">
+                    {{ form_label(formPass.plainPassword.first) }}
+                    {{ form_errors(formPass.plainPassword.first, { 'attr': {'class': 'form-error-block'} }) }}
+                    {{ form_widget(formPass.plainPassword.first) }}
+                </div>
+                <div class="form-group form-error-block">
+                    {{ form_label(formPass.plainPassword.second) }}
+                    {{ form_errors(formPass.plainPassword.second, { 'attr': {'class': 'form-error-block'} }) }}
+                    {{ form_widget(formPass.plainPassword.second) }}
+                </div>
+                <div class="center-block">
+                    <input class="btn btn-success" type="submit" value="{{ 'Змінити пароль'|trans }}" />
+                </div>
+                {{ form_rest(formPass) }}
+            </form>
+        </div>
+
+
+    </div>
+
+
+
+
+{% endblock %}

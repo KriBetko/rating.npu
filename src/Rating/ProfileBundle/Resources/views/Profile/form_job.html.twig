@@ -1,0 +1,29 @@
+<form  novalidate id="{% if update is defined %}form-edit-job{% else %}form-job{% endif %}"
+      action="{% if update is defined %}{{ path('profile_edit_job', {'id': job.id}) }}{% else %}{{ path('profile_save_job') }}{% endif %}" {{ form_enctype(formJob) }} method="POST" class="login-form container">
+    <div class="form-group form-error-block">
+        {{ form_label(formJob.institute) }}
+        {{ form_errors(formJob.institute, { 'attr': {'class': 'form-error-block'} }) }}
+        {{ form_widget(formJob.institute) }}
+    </div>
+    <div class="form-group form-error-block">
+        {{ form_label(formJob.cathedra) }}
+        {{ form_errors(formJob.cathedra, { 'attr': {'class': 'form-error-block'} }) }}
+        {{ form_widget(formJob.cathedra) }}
+    </div>
+    <div class="form-group form-error-block">
+        {{ form_label(formJob.position) }}
+        {{ form_errors(formJob.position, { 'attr': {'class': 'form-error-block'} }) }}
+        {{ form_widget(formJob.position) }}
+    </div>
+    <div class="form-group form-error-block">
+        {{ form_label(formJob.bet) }}
+        {{ form_errors(formJob.bet, { 'attr': {'class': 'form-error-block'} }) }}
+        {{ form_widget(formJob.bet) }}
+    </div>
+    <div class="form-group form-error-block">
+        {{ form_label(formJob.additional) }}
+        {{ form_errors(formJob.additional, { 'attr': {'class': 'form-error-block'} }) }}
+        {{ form_widget(formJob.additional) }}
+    </div>
+    {{ form_rest(formJob) }}
+</form>

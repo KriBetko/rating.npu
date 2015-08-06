@@ -80,6 +80,13 @@ fos_user:
                 sender_name:    Admin
             enabled: true
             template:   RatingUserBundle:User:confirm.email.html.twig
+    resetting:
+          email:
+            template: RatingUserBundle:Resetting:resetting.email.twig
+            from_email:
+              address:        admin@npu.edu.ua
+              sender_name:    Admin
+
     profile:
         form:
             type: rating_user_profile

@@ -34,7 +34,7 @@ FOS\UserBundle\Model\User:
                 message: fos_user.password.blank1
                 groups: [ "RatingRegistration", "ResetPassword", "ChangePassword" ]
             - Length:
-                min: 2
+                min: 6
                 minMessage: Пароль занадто короткий
                 groups: [ "RatingRegistration", "RatingProfile", "ResetPassword", "ChangePassword"]
 

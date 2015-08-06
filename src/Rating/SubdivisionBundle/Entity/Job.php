@@ -2,7 +2,7 @@
 namespace Rating\SubdivisionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="Rating\SubdivisionBundle\Repository\JobRepository")
@@ -26,23 +26,33 @@ class Job
     /**
      * @ORM\ManyToOne(targetEntity="Position")
      * @ORM\JoinColumn(name="position_id", referencedColumnName="id")
+     * @Assert\NotBlank(message="Будь ласка, оберіть Вашу посаду.", groups={"addJob"})
      */
     protected $position;
 
     /**
      * @ORM\ManyToOne(targetEntity="Cathedra")
      * @ORM\JoinColumn(name="cathedra_id", referencedColumnName="id")
+     * @Assert\NotBlank(message="Будь ласка, оберіть кафедру.", groups={"addJob"})
      */
     protected $cathedra;
 
     /**
      * @ORM\ManyToOne(targetEntity="Institute")
      * @ORM\JoinColumn(name="institute_id", referencedColumnName="id")
+     * @Assert\NotBlank(message="Будь ласка, оберіть інститут.", groups={"addJob"})
      */
     protected $institute;
 
     /**
      * @ORM\Column(type="decimal", scale=2, nullable=true)
+     * @Assert\Range(
+     *      min = 0.00,
+     *      max = 1.00,
+     *      minMessage = "Значення має бути від 0 до 1",
+     *      maxMessage = "Значення має бути від 0 до 1", groups={"addJob"}
+     * )
+     * @Assert\NotBlank(message="Будь ласка, вкажіть ставку (від 0.00 до 1.00).", groups={"addJob"})
      */
     protected $bet;
 

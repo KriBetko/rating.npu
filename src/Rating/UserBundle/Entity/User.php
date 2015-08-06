@@ -39,7 +39,7 @@ class User extends BaseUser
      *     max="255",
      *     minMessage="Ім'я занадто коротке.",
      *     maxMessage="Ім'я занадто довге.",
-     *     groups={"Registration", "Profile"}
+     *     groups={"Registration", "Profile", "RatingRegistration", "RatingProfile"}
      * )
      */
     protected $firstName;
@@ -52,7 +52,7 @@ class User extends BaseUser
      *     max="255",
      *     minMessage="Прізвище занадто коротке.",
      *     maxMessage="Прізвище занадто довге.",
-     *     groups={"Registration", "Profile"}
+     *     groups={"Registration", "Profile", "RatingRegistration", "RatingProfile"}
      * )
      */
     protected $lastName;
@@ -65,10 +65,15 @@ class User extends BaseUser
      *     max="255",
      *     minMessage="Мінімальна кількість символів - 3",
      *     maxMessage="Максимальна кількість символів - 255.",
-     *     groups={"Registration", "Profile"}
+     *     groups={"Registration", "Profile", "RatingRegistration", "RatingProfile"}
      * )
      */
     protected $parentName;
+
+    /**
+     * @ORM\Column(type="datetime", length=255, nullable=true)
+    */
+    protected $birthday;
 
     /**
      * @ORM\OneToMany(targetEntity="Rating\SubdivisionBundle\Entity\Job", mappedBy="user")
@@ -196,5 +201,28 @@ class User extends BaseUser
     public function getJobs()
     {
         return $this->jobs;
+    }
+
+    /**
+     * Set birthday
+     *
+     * @param \DateTime $birthday
+     * @return User
+     */
+    public function setBirthday($birthday)
+    {
+        $this->birthday = $birthday;
+
+        return $this;
+    }
+
+    /**
+     * Get birthday
+     *
+     * @return \DateTime 
+     */
+    public function getBirthday()
+    {
+        return $this->birthday;
     }
 }
