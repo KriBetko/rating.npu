@@ -11,7 +11,6 @@
                     <h4 class="form-title">{{ 'Відновлення пароля' | trans }}</h4>
                 </div>
                 <div class="modal-body" id="">
-
                     {{ render(controller('RatingUserBundle:Resetting:request')) }}
                 </div>
 
@@ -24,19 +23,24 @@
     {{ parent() }}
     <script>
         $('#resetForm').submit(function(e){
+            $('.replace-reset').hide();
+            $('.loader').show();
             e.preventDefault();
             $('.recovery_error').hide();
             $('.recovery_replace').hide();
             $.post($(this).attr('action'), $('#resetForm').serializeArray(), function(response){
+
             })
 
                     .done(function(r){
                         if (r.status) {
+                            $('.loader').hide();
                             $('.replace-reset').hide();
                             $('#recovery_success').show();
                         }else{
                             $('.recovery_error').text(r.error).show();
                             $('.recovery_replace').show();
+                            $('.replace-reset').show();
 
                         }
                     })

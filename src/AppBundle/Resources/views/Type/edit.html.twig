@@ -1,0 +1,13 @@
+{% extends '::admin.html.twig' %}
+{% block title %}Редагування Типу Категорій{% endblock %}
+{% block body -%}
+
+    <a class="btn btn-primary back-btn" href="{{ path('type') }}">{{ 'Назад' }}</a>
+    <br>
+    <h3>Редагування Типу Категорій</h3>
+
+    {% form_theme edit_form 'bootstrap_3_layout.html.twig' %}
+    <div class="admin-form">
+        {{ form(edit_form) }}
+    </div>
+{% endblock %}

@@ -2,14 +2,18 @@
 {% block body %}
 <ul>
     <li><a href="{{ path('user') }}">Користувачі</a></li>
+    <br>
     <li><a href="{{ path('institutes') }}">Інститути</a></li>
     <li><a href="{{ path('cathedras') }}">Кафедри</a></li>
     <li><a href="{{ path('position') }}">Посади</a></li>
-   {# <li><a href="{{ path() }}">Критерії</a></li>
-    <li><a href="{{ path() }}">Навчальні роки</a></li>
-    <li><a href="{{ path() }}">Категорії</a></li>
-    <li><a href="{{ path() }}"></a></li>
-    <li><a href="{{ path() }}"></a></li>
-    <li><a href="{{ path() }}"></a></li>#}
+    <br>
+    <li><a href="{{ path('year') }}">Навчальні роки</a></li>
+    <br>
+    <li><a href="{{ path('criterion') }}">Критерії</a></li>
+    <li><a href="{{ path('group') }}">Групи критерїів</a></li>
+    <br>
+    <li><a href="{{ path('category') }}">Категорії критеріїв</a></li>
+    <li><a href="{{ path('type') }}">Типи категорій</a></li>
+
 </ul>
 {% endblock %}

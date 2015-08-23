@@ -24,6 +24,7 @@ class AppKernel extends Kernel
             new Rating\AdminBundle\RatingAdminBundle(),
             new Rating\SubdivisionBundle\RatingSubdivisionBundle(),
             new System\AppBundle\SystemAppBundle(),
+            new AppBundle\AppBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

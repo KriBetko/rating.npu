@@ -28,6 +28,11 @@ rating_main:
     type:     annotation
     prefix:   /
 
+rating_app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 fos_user:
     resource: "@RatingUserBundle/Resources/config/routing/all.xml"
 
