@@ -175,4 +175,12 @@ class YearController extends Controller
             'edit_form'   => $editForm->createView(),
         );
     }
-}
+    /**
+     * @Route("/generate/measures/{year}", name="generate_measures")
+     */
+    public function generateMeasureAction($year)
+    {
+        $year = $this->getDoctrine()->getManager()->getRepository('AppBundle:Year')->findOneById($year);
+        $manager = $this->get('year.manager')->generateMeasureForAllUser($year);
+        return $this->redirect($this->generateUrl('year'));
+    }}

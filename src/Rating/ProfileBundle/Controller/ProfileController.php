@@ -79,6 +79,7 @@ class ProfileController extends Controller
         $status = 0;
         $job = $em->getRepository('RatingSubdivisionBundle:Job')->findOneBy(array('id' => $id, 'user' => $user));
         $form = $this->createForm(new JobType(), $job);
+
         if ($request->getMethod() == 'POST'){
             $form->handleRequest($request);
             if ($form->isValid()){

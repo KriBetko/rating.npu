@@ -1,0 +1,201 @@
+{% extends '::profile.html.twig' %}
+{% block title %} Особова картка {% endblock %}
+{% block body -%}
+    <div id="category-accordion">
+        {% for category in measures %}
+            <h3>{{ category.title }}</h3>
+            <div class="category-block">
+                {% if category.singles is defined %}
+                    {% for single in category.singles %}
+                        <div style="width: 600px; display: inline-block">{{ single.criteria_title }}</div>
+                        <div style="width: 200px; display: inline-block">{{ single.criteria_coefficient }}</div>
+                        <div style="width: 200px; display: inline-block">{{ single.measure.value }}</div>
+                        <div style="width: 50px; display: inline-block">
+                            <a data-target="#modalMeasure" data-toggle="modal"  class="btn btn-info btn-xs edit-measure-link" data-id="{{ single.measure.id }}" data-href="{{ path('edit_measure', {'id': single.measure.id}) }}" title="Редагувати">
+                                <span  class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            </a>
+                        </div>
+                        <br>
+                    {% endfor %}
+                {% endif %}
+
+                {% if category.grouped is defined %}
+                        {% for group in category.grouped %}
+                                <div>{{ group.title }}</div>
+                                {% for single in group.singles %}
+                                <div style="margin-left: 100px; width:500px; display: inline-block">{{ single.criteria_title }}</div>
+                                <div style="width: 200px; display: inline-block">{{ single.criteria_coefficient }}</div>
+                                <div style="width: 200px; display: inline-block">{{ single.measure.value }}</div>
+                                <div style="width: 50px; display: inline-block">
+                                    <a data-target="#modalMeasure" data-toggle="modal"  class="btn btn-info btn-xs edit-measure-link" data-id="{{ single.measure.id }}" data-href="{{ path('edit_measure', {'id': single.measure.id}) }}" title="Редагувати">
+                                        <span  class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                    </a>
+                                </div>
+                                <br>
+                        {% endfor %}
+                    {% endfor %}
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+
+
+
+    {# START MODAL Measure #}
+    <div class="modal fade" id="modalMeasure" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Редагування критерія</h4>
+                </div>
+                <div class="modal-body" id="form-measure-block">
+
+                </div>
+                <div class="modal-footer">
+                    <button id="form-measure-sender" type="button" class="btn btn-primary">Зберегти</button>
+                    <button type="button" class="btn" data-dismiss="modal">Відмінити</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {# END MODAL Measure #}
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        var $addTagLink = $('<a class=" btn btn-success btn-xs add-field-link" href="#">  <span  class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>');
+        var $newLinkLi = $('<li class="new-link-field"></li>').append($addTagLink);
+
+        $(document).ready(function(){
+            // setup an "add a tag" link
+
+            // init category accordion
+            $('#category-accordion').accordion();
+
+
+            // open measure edit popup
+            $(document.body).on('click', '.edit-measure-link', function(){
+                $.ajax({
+                    method: "get",
+                    url:  $(this).attr('data-href')
+                })
+                        .done(function(e) {
+                            $('#form-measure-block').html(e.view);
+                            setTimeout( function (){
+                                initFieldCollection();
+                            }, 50);
+                        });
+            });
+
+            // submit measure form
+            $('#form-measure-sender').click(function(){
+                $('#form-edit-measure').ajaxSubmit({
+                    'success': function(e){
+                        if (e.status == 0) {
+                            $('#form-block').html(e.view);
+                        } else if(status = 1) {
+                            $('#modalMeasure').modal('hide');
+                            $('#form-edit-measure').clearForm();
+                        }
+                        return false;
+                    }
+                });
+            });
+            $(document.body).on('input', '#measure_value', function(){
+                var count = $(this).val();
+                var fields = $('.input-field').get().reverse();
+                var countInput = fields.length;
+
+                if (count > countInput){
+                    for(i = 0; count - countInput  > i; i++){
+                        addTagForm( $('ol.fields'), $newLinkLi);
+                    }
+                }
+                if (count < countInput){
+                    for(i = 0; countInput - count > i; i++){
+                        fields[i].remove();
+                    }
+                }
+            });
+        });
+
+        $(document.body).on('click', '.add-field-link', function(){
+            var fields = $('.input-field').length;
+            $('#measure_value').val(fields);
+        });
+
+        $(document.body).on('submit', '#form-edit-measure', function(e){
+            e.preventDefault();
+            alert('no!');
+        });
+
+
+
+        // begin field collection block
+        function initFieldCollection() {
+            var $collectionHolder;
+
+
+
+            // Get the ul that holds the collection of tags
+            $collectionHolder = $('ol.fields');
+
+            // add a delete link to all of the existing tag form li elements
+            $collectionHolder.find('li').each(function() {
+                addTagFormDeleteLink($(this));
+            });
+
+
+
+            // add the "add a tag" anchor and li to the tags ul
+            $collectionHolder.append($newLinkLi);
+
+            // count the current form inputs we have (e.g. 2), use that as the new
+            // index when inserting a new item (e.g. 2)
+            $collectionHolder.data('index', $collectionHolder.find(':input').length);
+
+            $addTagLink.on('click', function(e) {
+                // prevent the link from creating a "#" on the URL
+                e.preventDefault();
+
+                // add a new tag form (see next code block)
+                addTagForm($collectionHolder, $newLinkLi);
+            });
+        }
+
+        function addTagForm($collectionHolder, $newLinkLi) {
+            // Get the data-prototype explained earlier
+            var prototype = $collectionHolder.data('prototype');
+
+            // get the new index
+            var index = $collectionHolder.data('index');
+
+            // Replace '__name__' in the prototype's HTML to
+            // instead be a number based on how many items we have
+            var newForm = prototype.replace(/__name__/g, index);
+
+            // increase the index with one for the next item
+            $collectionHolder.data('index', index + 1);
+
+            // Display the form in the page in an li, before the "Add a tag" link li
+            var $newFormLi = $('<li class="input-field"></li>').append(newForm);
+            $newLinkLi.before($newFormLi);
+            // add a delete link to the new form
+            addTagFormDeleteLink($newFormLi);
+        }
+
+        function addTagFormDeleteLink($tagFormLi) {
+            var $removeFormA = $('<a class=" btn btn-danger btn-xs remove-field-link" href="#">  <span  class="glyphicon glyphicon-remove  " aria-hidden="true"></span></a>');
+            $tagFormLi.append($removeFormA);
+            $removeFormA.on('click', function(e) {
+                e.preventDefault();
+                $('#measure_value').val($('#measure_value').val()-1);
+                $tagFormLi.remove();
+            });
+        }
+
+    </script>
+{% endblock javascripts%}

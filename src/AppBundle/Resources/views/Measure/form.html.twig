@@ -1,0 +1,27 @@
+
+<form  novalidate id="form-edit-measure"
+       action="{{ path('edit_measure', {'id': measure.id}) }}" {{ form_enctype(form) }} method="POST" class="">
+    <div class="form-group form-error-block">
+
+
+
+        {% if measure.criterion.group is not null %}
+            <div>{{ measure.criterion.group.title }}:<div>
+            <br>
+        {% endif %}
+
+        <div class="row">
+            <div class="col-md-18" style=" text-align: center;">{{ measure.criterion.title }}</div>
+
+            <div class="col-md-4">{{ form_widget(form.value) }}</div>
+        </div>
+
+                    <br><hr><br>
+                    <ol  class="fields" id="field-ol" data-prototype="{{ form_widget(form.fields.vars.prototype)|e }}">
+                        {% for field in form.fields %}
+                            <li class="input-field">{{ form_row(field.title) }}</li>
+                        {% endfor %}
+                    </ol>
+    </div>
+    {{ form_rest(form) }}
+</form>

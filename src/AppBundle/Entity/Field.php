@@ -23,7 +23,7 @@ class Field
     protected $title;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Measure", inversedBy="fields")
+     * @ORM\ManyToOne(targetEntity="Measure", inversedBy="fields", cascade={"persist"})
      * @ORM\JoinColumn(name="measure_id", referencedColumnName="id")
      */
     protected $measure;

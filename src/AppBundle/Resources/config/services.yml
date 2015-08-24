@@ -1,0 +1,13 @@
+services:
+    measure:
+        class: AppBundle\Manager\MeasureManager
+        public: true
+        arguments:
+            - @doctrine.orm.default_entity_manager
+            - @service_container
+    year.manager:
+        class: AppBundle\Manager\YearManager
+        public: true
+        arguments:
+            - @doctrine.orm.default_entity_manager
+            - @service_container

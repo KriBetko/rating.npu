@@ -41,7 +41,7 @@ class Measure
     protected $year;
 
     /**
-     * @ORM\OneToMany(targetEntity="Field", mappedBy="measure")
+     * @ORM\OneToMany(targetEntity="Field", mappedBy="measure", cascade={"persist"})
      */
     protected $fields;
 
@@ -163,7 +163,8 @@ class Measure
      */
     public function addField(\AppBundle\Entity\Field $fields)
     {
-        $this->fields[] = $fields;
+        $fields->setMeasure($this);
+        $this->fields->add($fields);
 
         return $this;
     }
