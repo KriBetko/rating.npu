@@ -24,7 +24,7 @@ class Field
 
     /**
      * @ORM\ManyToOne(targetEntity="Measure", inversedBy="fields", cascade={"persist"})
-     * @ORM\JoinColumn(name="measure_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="measure_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $measure;
 
