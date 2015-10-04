@@ -18,14 +18,17 @@ class CategoryType extends AbstractType
             ->add('title', 'text', array(
                 'label' => 'Назва'
             ))
-            ->add('type', 'entity', array(
-                'class' => 'AppBundle:Type',
-                'property' => 'title',
-                'label' => 'Тип',
+            ->add('type', 'choice', array(
+                'choices'  => array(
+                    1 => 'Для користувачів',
+                    2 => 'Для кафедри',
+                    3 => 'Для інститута'
+                ),
+                'required' => false,
+
                 'attr' => array(
                     'class' => 'form-control'
                 ),
-                'required'    => true,
                 'placeholder' => 'Тип',
                 'empty_data'  => null
             ))

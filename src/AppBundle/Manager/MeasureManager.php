@@ -5,6 +5,7 @@ use AppBundle\Entity\Criterion;
 use AppBundle\Entity\Measure;
 use AppBundle\Entity\Year;
 use Doctrine\ORM\EntityManager;
+use Rating\SubdivisionBundle\Entity\Job;
 use Rating\UserBundle\Entity\User;
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 
@@ -19,10 +20,10 @@ class MeasureManager
         $this->container = $container;
     }
 
-    public function create(Year $year,User $user, Criterion $criterion)
+    public function create(Year $year,Job $job, Criterion $criterion)
     {
         $measure = $this->em->getRepository('AppBundle:Measure')->findOneBy(array(
-            'user'      => $user,
+            'job'      => $job,
             'criterion' => $criterion,
             'year'      => $year)
         );
@@ -30,7 +31,7 @@ class MeasureManager
         if ($measure) return $measure;
 
         $measure = new Measure();
-        $measure->setUser($user);
+        $measure->setJob($job);
         $measure->setCriterion($criterion);
         $measure->setYear($year);
         $measure->setValue(0);

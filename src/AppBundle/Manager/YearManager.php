@@ -19,12 +19,12 @@ class YearManager
     public function generateMeasureForAllUser(Year $year)
     {
         $measureManager = $this->container->get('measure');
-        $users = $this->em->getRepository('RatingUserBundle:User')->findAll();
+        $jobs = $this->em->getRepository('RatingSubdivisionBundle:Job')->findAll();
         $criteria = $year->getCriteria()->toArray();
         $this->clearDeletedMeasureForAllUser($year, $criteria);
         foreach ($criteria as $criterion) {
-            foreach ($users as $user) {
-                $measureManager->create($year, $user, $criterion);
+            foreach ($jobs as $job) {
+                $measureManager->create($year, $job, $criterion);
             }
             $this->em->flush();
         }

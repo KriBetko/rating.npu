@@ -1,44 +1,52 @@
 {% extends '::profile.html.twig' %}
 {% block title %} Особова картка {% endblock %}
 {% block body -%}
-    <div id="category-accordion">
-        {% for category in measures %}
-            <h3>{{ category.title }}</h3>
-            <div class="category-block">
-                {% if category.singles is defined %}
-                    {% for single in category.singles %}
-                        <div style="width: 600px; display: inline-block">{{ single.criteria_title }}</div>
-                        <div style="width: 200px; display: inline-block">{{ single.criteria_coefficient }}</div>
-                        <div style="width: 200px; display: inline-block">{{ single.measure.value }}</div>
-                        <div style="width: 50px; display: inline-block">
-                            <a data-target="#modalMeasure" data-toggle="modal"  class="btn btn-info btn-xs edit-measure-link" data-id="{{ single.measure.id }}" data-href="{{ path('edit_measure', {'id': single.measure.id}) }}" title="Редагувати">
-                                <span  class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                            </a>
-                        </div>
-                        <br>
-                    {% endfor %}
-                {% endif %}
-
-                {% if category.grouped is defined %}
-                        {% for group in category.grouped %}
-                                <div>{{ group.title }}</div>
-                                {% for single in group.singles %}
-                                <div style="margin-left: 100px; width:500px; display: inline-block">{{ single.criteria_title }}</div>
-                                <div style="width: 200px; display: inline-block">{{ single.criteria_coefficient }}</div>
-                                <div style="width: 200px; display: inline-block">{{ single.measure.value }}</div>
-                                <div style="width: 50px; display: inline-block">
-                                    <a data-target="#modalMeasure" data-toggle="modal"  class="btn btn-info btn-xs edit-measure-link" data-id="{{ single.measure.id }}" data-href="{{ path('edit_measure', {'id': single.measure.id}) }}" title="Редагувати">
-                                        <span  class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                    </a>
-                                </div>
-                                <br>
+    {% for job in measures %}
+        <div class="jobs_container">
+        <h4 style="position: relative">{{ job.job.cathedra.institute.title }} - {{ job.job.cathedra.title }} <b></b></h4>
+        <div class="category-accordion">
+            {% for category in job.categories %}
+                <h3>{{ category.title }}<b style="text-align: right"></b></h3>
+                <div class="category-block category_{{ category.category_id }}_{{ job.job.id }}" >
+                    {% if category.singles is defined %}
+                        {% for single in category.singles %}
+                            <div style="width: 600px; display: inline-block">{{ single.criteria_title }}</div>
+                            <div style="width: 200px; display: inline-block">{{ single.criteria_coefficient }}</div>
+                            <div class="value_{{ single.measure.id }}" style="width: 200px; display: inline-block">{{ single.measure.value }}</div>
+                            <div style="width: 50px; display: inline-block">
+                                <a data-target="#modalMeasure" data-toggle="modal"  class="btn btn-info btn-xs edit-measure-link" data-id="{{ single.measure.id }}" data-href="{{ path('edit_measure', {'id': single.measure.id}) }}" title="Редагувати">
+                                    <span  class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                </a>
+                            </div>
+                            <div class="measure_total measure_{{ single.measure.id }}" style="display: inline-block; width:  70px">{{ single.criteria_coefficient * single.measure.value }}</div>
+                            <br><br>
                         {% endfor %}
-                    {% endfor %}
-                {% endif %}
-            </div>
-        {% endfor %}
-    </div>
+                    {% endif %}
+                    {% if category.grouped is defined %}
+                            {% for group in category.grouped %}
+                                    <div>{{ group.title }}</div>
+                                    {% for single in group.singles %}
+                                    <div style="margin-left: 100px; width:500px; display: inline-block">{{ single.criteria_title }}</div>
+                                    <div style="width: 200px; display: inline-block">{{ single.criteria_coefficient }}</div>
+                                    <div style="width: 200px; display: inline-block">{{ single.measure.value }}</div>
+                                    <div style="width: 50px; display: inline-block">
+                                        <a data-target="#modalMeasure" data-toggle="modal"  class="btn btn-info btn-xs edit-measure-link" data-id="{{ single.measure.id }}" data-href="{{ path('edit_measure', {'id': single.measure.id}) }}" title="Редагувати">
+                                            <span  class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                        </a>
+                                    </div>
+                                    <div class="measure_total measure_{{ single.measure.id }}" style="display: inline-block; width:  70px">{{ single.criteria_coefficient * single.measure.value }}</div>
 
+                                    {% endfor %}
+                                <br><br>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+            {% endfor %}
+        </div>
+        </div>
+        <br>
+    {% endfor %}
 
 
     {# START MODAL Measure #}
@@ -70,10 +78,12 @@
         var $newLinkLi = $('<li class="new-link-field"></li>').append($addTagLink);
 
         $(document).ready(function(){
+            calculateJobsBlock();
+            calculateCategoryBlock();
             // setup an "add a tag" link
 
             // init category accordion
-            $('#category-accordion').accordion();
+            $('.category-accordion').accordion({ collapsible: true, active: false});
 
 
             // open measure edit popup
@@ -92,11 +102,19 @@
 
             // submit measure form
             $('#form-measure-sender').click(function(){
+                var total = 0;
                 $('#form-edit-measure').ajaxSubmit({
                     'success': function(e){
                         if (e.status == 0) {
                             $('#form-block').html(e.view);
-                        } else if(status = 1) {
+                        } else if(e.status = 1) {
+                            var blockCategory = $('.category_'+e.category+'_'+ e.job);
+                            var currentMeasure = $('.measure_'+ e.measure);
+                            var valueDiv = $('.value_'+e.measure);
+                            $(currentMeasure).text(e.total);
+                            valueDiv.text(e.value);
+                            calculateJobsBlock();
+                            calculateCategoryBlock();
                             $('#modalMeasure').modal('hide');
                             $('#form-edit-measure').clearForm();
                         }
@@ -132,7 +150,29 @@
             alert('no!');
         });
 
+        var calculateJobsBlock = function(){
+          var containers = $('.jobs_container');
+            containers.each(function(k, container){
+                var total = 0;
+                $('.measure_total', container).each(function(key ,field){
 
+                    total += parseFloat($(field).text());
+                });
+                $('h4 b', container).text(total);
+            });
+        };
+
+        var calculateCategoryBlock = function(){
+            var containers = $('.category-block');
+            containers.each(function(k, container){
+                var totalLabel = $(container).prev();
+                var total = 0;
+                $('.measure_total', container).each(function(key ,field){
+                    total += parseFloat($(field).text());
+                });
+                $('b', totalLabel, container).text(total);
+            });
+        };
 
         // begin field collection block
         function initFieldCollection() {

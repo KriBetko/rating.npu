@@ -10,6 +10,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Category
 {
+    const TYPE_USER         = 1;
+    const TYPE_CATHEDRA     = 2;
+    const TYPE_INSTITUTE    = 3;
+
+
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -23,8 +28,7 @@ class Category
     protected $title;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Type")
-     * @ORM\JoinColumn(name="type_id", referencedColumnName="id")
+     * @ORM\Column(name="criterion_type", type="integer")
      */
     protected $type;
 
@@ -75,13 +79,14 @@ class Category
         return $this->title;
     }
 
+
     /**
      * Set type
      *
-     * @param \AppBundle\Entity\Type $type
+     * @param integer $type
      * @return Category
      */
-    public function setType(\AppBundle\Entity\Type $type = null)
+    public function setType($type)
     {
         $this->type = $type;
 
@@ -91,11 +96,57 @@ class Category
     /**
      * Get type
      *
-     * @return \AppBundle\Entity\Type
+     * @return integer 
      */
     public function getType()
     {
         return $this->type;
     }
 
+    /**
+     * Add criteria
+     *
+     * @param \AppBundle\Entity\Criterion $criteria
+     * @return Category
+     */
+    public function addCriterium(\AppBundle\Entity\Criterion $criteria)
+    {
+        $this->criteria[] = $criteria;
+
+        return $this;
+    }
+
+    /**
+     * Remove criteria
+     *
+     * @param \AppBundle\Entity\Criterion $criteria
+     */
+    public function removeCriterium(\AppBundle\Entity\Criterion $criteria)
+    {
+        $this->criteria->removeElement($criteria);
+    }
+
+    /**
+     * Get criteria
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCriteria()
+    {
+        return $this->criteria;
+    }
+    public function getTextType()
+    {
+        switch($this->type)
+        {
+            case self::TYPE_USER:
+                return "Для користувачів";
+            case self::TYPE_CATHEDRA:
+                return "Для кафедри";
+            case self::TYPE_INSTITUTE:
+                return "Для інституту";
+            default:
+                return "Не обрано";
+        }
+    }
 }

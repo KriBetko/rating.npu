@@ -41,7 +41,7 @@ class MeasureController extends Controller
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
 
-        $measure = $em->getRepository('AppBundle:Measure')->findOneBy(array('id' => $id, 'user' => $user));
+        $measure = $em->getRepository('AppBundle:Measure')->findOneBy(array('id' => $id));
 
         $form = $this->createForm(new MeasureType(), $measure);
 
@@ -71,7 +71,16 @@ class MeasureController extends Controller
                 }
                 $measure->setValue(count($measure->getFields()));
                 $em->flush();
-                return $this->get('app.sender')->sendJson(array('status' => 1));
+                return $this->get('app.sender')->sendJson(
+                    array(
+                        'status' => 1,
+                        'measure' => $measure->getId(),
+                        'total'     => $measure->getValue() * $measure->getCriterion()->getCoefficient(),
+                        'category'  => $measure->getCriterion()->getCategory()->getId(),
+                        'value'     => $measure->getValue(),
+                        'job'       => $measure->getJob()->getId()
+                    )
+                );
             }
 
         }

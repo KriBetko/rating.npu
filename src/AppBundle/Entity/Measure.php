@@ -18,10 +18,10 @@ class Measure
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Rating\UserBundle\Entity\User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Rating\SubdivisionBundle\Entity\Job")
+     * @ORM\JoinColumn(name="job_id", referencedColumnName="id", onDelete="CASCADE")
      */
-    protected $user;
+    protected $job;
 
     /**
      * @ORM\Column(type="integer")
@@ -86,28 +86,6 @@ class Measure
         return $this->value;
     }
 
-    /**
-     * Set user
-     *
-     * @param \Rating\UserBundle\Entity\User $user
-     * @return Measure
-     */
-    public function setUser(\Rating\UserBundle\Entity\User $user = null)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * Get user
-     *
-     * @return \Rating\UserBundle\Entity\User 
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
 
     /**
      * Set criterion
@@ -187,5 +165,28 @@ class Measure
     public function getFields()
     {
         return $this->fields;
+    }
+
+    /**
+     * Set job
+     *
+     * @param \Rating\SubdivisionBundle\Entity\Job $job
+     * @return Measure
+     */
+    public function setJob(\Rating\SubdivisionBundle\Entity\Job $job = null)
+    {
+        $this->job = $job;
+
+        return $this;
+    }
+
+    /**
+     * Get job
+     *
+     * @return \Rating\SubdivisionBundle\Entity\Job 
+     */
+    public function getJob()
+    {
+        return $this->job;
     }
 }
