@@ -19,7 +19,24 @@ class InstituteType extends AbstractType
                 'label' => 'Назва'
             ))
             ->add('description', 'textarea', array(
-                'label' => 'Короткий опис'
+                'label' => 'Короткий опис',
+                'required' => false
+            ))
+            ->add('director', 'entity', array(
+                'class' => 'RatingUserBundle:User',
+                'label' => 'Директор',
+                'required'    => false,
+                'placeholder' => 'Директор',
+                'empty_data'  => null
+            ))
+
+            ->add('managers', 'entity', array(
+                'class' => 'RatingUserBundle:User',
+                'label' => 'Керівники',
+                'empty_value' => null,
+                'empty_data' => null,
+                'multiple' =>true,
+                'required'    => false,
             ))
         ;
     }

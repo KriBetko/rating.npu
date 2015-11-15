@@ -18,7 +18,7 @@
         <tbody>
         {% for entity in entities %}
             <tr  {% if entity.active == true %}style="background-color: lavender"{% endif %}>
-                <td><a href="{{ path('year_edit', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td><a href="{{ path('year_edit', { 'id': entity.id }) }}">{{ loop.index }}</a></td>
                 <td>{{ entity.title }}</td>
                 <td>
                     <a class="btn btn-info btn-mini" href="{{ path('year_edit', { 'id': entity.id }) }}" title="Редагувати">

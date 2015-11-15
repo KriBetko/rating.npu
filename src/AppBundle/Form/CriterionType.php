@@ -25,7 +25,7 @@ class CriterionType extends AbstractType
                 'required' => false,
                 'label' => 'Опис'
             ))
-            //->add('type')
+
 
 
             ->add('group', 'entity', array(

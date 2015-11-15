@@ -23,7 +23,7 @@ class Cathedra
     protected $title;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $description;
 
@@ -33,6 +33,23 @@ class Cathedra
      */
     protected $institute;
 
+    /**
+     * @ORM\OneToOne(targetEntity="Rating\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="director", referencedColumnName="id")
+     */
+    protected $director;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Rating\UserBundle\Entity\User", inversedBy="cathedras")
+     * @ORM\JoinTable(name="cathedras_users")
+     */
+    protected $managers;
+
+    public function __construct()
+    {
+        $this->managers = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -112,13 +129,7 @@ class Cathedra
     {
         return $this->institute;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+
 
     /**
      * Add users
@@ -151,5 +162,61 @@ class Cathedra
     public function getUsers()
     {
         return $this->users;
+    }
+
+    /**
+     * Set director
+     *
+     * @param \Rating\UserBundle\Entity\User $director
+     * @return Cathedra
+     */
+    public function setDirector(\Rating\UserBundle\Entity\User $director = null)
+    {
+        $this->director = $director;
+
+        return $this;
+    }
+
+    /**
+     * Get director
+     *
+     * @return \Rating\UserBundle\Entity\User 
+     */
+    public function getDirector()
+    {
+        return $this->director;
+    }
+
+    /**
+     * Add managers
+     *
+     * @param \Rating\UserBundle\Entity\User $managers
+     * @return Cathedra
+     */
+    public function addManager(\Rating\UserBundle\Entity\User $managers)
+    {
+        $this->managers[] = $managers;
+
+        return $this;
+    }
+
+    /**
+     * Remove managers
+     *
+     * @param \Rating\UserBundle\Entity\User $managers
+     */
+    public function removeManager(\Rating\UserBundle\Entity\User $managers)
+    {
+        $this->managers->removeElement($managers);
+    }
+
+    /**
+     * Get managers
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getManagers()
+    {
+        return $this->managers;
     }
 }

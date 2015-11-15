@@ -29,7 +29,7 @@ class Criterion
     protected $coefficient;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", nullable=true, length=100)
      */
     protected $reference;
 

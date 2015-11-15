@@ -20,8 +20,6 @@ class User extends BaseUser
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
-     *
-     *
      */
     protected $id;
 
@@ -79,6 +77,16 @@ class User extends BaseUser
      * @ORM\OneToMany(targetEntity="Rating\SubdivisionBundle\Entity\Job", mappedBy="user")
      */
     protected $jobs;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Rating\SubdivisionBundle\Entity\Institute", mappedBy="managers")
+     */
+    private $institutes;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Rating\SubdivisionBundle\Entity\Cathedra", mappedBy="managers")
+     */
+    private $cathedras;
 
     /**
      * Get id
@@ -224,5 +232,75 @@ class User extends BaseUser
     public function getBirthday()
     {
         return $this->birthday;
+    }
+
+    /**
+     * Add institutes
+     *
+     * @param \Rating\SubdivisionBundle\Entity\Institute $institutes
+     * @return User
+     */
+    public function addInstitute(\Rating\SubdivisionBundle\Entity\Institute $institutes)
+    {
+        $this->institutes[] = $institutes;
+
+        return $this;
+    }
+
+    /**
+     * Remove institutes
+     *
+     * @param \Rating\SubdivisionBundle\Entity\Institute $institutes
+     */
+    public function removeInstitute(\Rating\SubdivisionBundle\Entity\Institute $institutes)
+    {
+        $this->institutes->removeElement($institutes);
+    }
+
+    /**
+     * Get institutes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getInstitutes()
+    {
+        return $this->institutes;
+    }
+
+    /**
+     * Add cathedras
+     *
+     * @param \Rating\SubdivisionBundle\Entity\Cathedra $cathedras
+     * @return User
+     */
+    public function addCathedra(\Rating\SubdivisionBundle\Entity\Cathedra $cathedras)
+    {
+        $this->cathedras[] = $cathedras;
+
+        return $this;
+    }
+
+    /**
+     * Remove cathedras
+     *
+     * @param \Rating\SubdivisionBundle\Entity\Cathedra $cathedras
+     */
+    public function removeCathedra(\Rating\SubdivisionBundle\Entity\Cathedra $cathedras)
+    {
+        $this->cathedras->removeElement($cathedras);
+    }
+
+    /**
+     * Get cathedras
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCathedras()
+    {
+        return $this->cathedras;
+    }
+    public function __toString()
+    {
+        return $this->getLastName().' '.$this->getFirstName().' '.$this->getParentName();
     }
 }

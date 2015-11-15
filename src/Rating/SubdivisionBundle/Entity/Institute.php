@@ -21,9 +21,19 @@ class Institute
      * @ORM\Column(type="string", length=100)
      */
     protected $title;
+    /**
+     * @ORM\OneToOne(targetEntity="Rating\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="director", referencedColumnName="id")
+     */
+    protected $director;
+    /**
+     * @ORM\ManyToMany(targetEntity="Rating\UserBundle\Entity\User", inversedBy="institutes")
+     * @ORM\JoinTable(name="institutes_users")
+     */
+    protected $managers;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $description;
 
@@ -38,7 +48,7 @@ class Institute
     public function __construct()
     {
         $this->cathedras = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->managers = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -130,36 +140,61 @@ class Institute
         return $this->cathedras;
     }
 
+
+
     /**
-     * Add users
+     * Set director
      *
-     * @param \Rating\UserBundle\Entity\User $users
+     * @param \Rating\UserBundle\Entity\User $director
      * @return Institute
      */
-    public function addUser(\Rating\UserBundle\Entity\User $users)
+    public function setDirector(\Rating\UserBundle\Entity\User $director = null)
     {
-        $this->users[] = $users;
+        $this->director = $director;
 
         return $this;
     }
 
     /**
-     * Remove users
+     * Get director
      *
-     * @param \Rating\UserBundle\Entity\User $users
+     * @return \Rating\UserBundle\Entity\User 
      */
-    public function removeUser(\Rating\UserBundle\Entity\User $users)
+    public function getDirector()
     {
-        $this->users->removeElement($users);
+        return $this->director;
     }
 
     /**
-     * Get users
+     * Add managers
+     *
+     * @param \Rating\UserBundle\Entity\User $managers
+     * @return Institute
+     */
+    public function addManager(\Rating\UserBundle\Entity\User $managers)
+    {
+        $this->managers[] = $managers;
+
+        return $this;
+    }
+
+    /**
+     * Remove managers
+     *
+     * @param \Rating\UserBundle\Entity\User $managers
+     */
+    public function removeManager(\Rating\UserBundle\Entity\User $managers)
+    {
+        $this->managers->removeElement($managers);
+    }
+
+    /**
+     * Get managers
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getUsers()
+    public function getManagers()
     {
-        return $this->users;
+        return $this->managers;
     }
 }
