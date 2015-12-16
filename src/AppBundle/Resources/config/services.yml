@@ -11,3 +11,7 @@ services:
         arguments:
             - @doctrine.orm.default_entity_manager
             - @service_container
+
+    security_handler:
+        class: Rating\UserBundle\Auth\SecurityHandler
+        arguments:  [@router]

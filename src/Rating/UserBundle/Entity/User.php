@@ -3,18 +3,16 @@
 namespace Rating\UserBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Doctrine\ORM\Mapping\AttributeOverrides;
-use Doctrine\ORM\Mapping\AttributeOverride;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Rating\UserBundle\Repository\UserRepository")
  * @ORM\Table(name="user")
  *
  */
-class User extends BaseUser
+class User implements UserInterface, \Serializable
 {
     /**
      * @ORM\Id
@@ -23,50 +21,55 @@ class User extends BaseUser
      */
     protected $id;
 
-    public function __construct()
-    {
-        parent::__construct();
-        $this->jobs = new ArrayCollection();
-    }
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Email()
+     */
+    private $email;
+
+    /**
+     * @ORM\Column(name="roles", type="array")
+     */
+    private $roles;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
      *
-     * @Assert\NotBlank(message="Будь ласка, введіть Ваше ім'я.", groups={"RatingRegistration", "RatingProfile"})
-     * @Assert\Length(
-     *     min=3,
-     *     max="255",
-     *     minMessage="Ім'я занадто коротке.",
-     *     maxMessage="Ім'я занадто довге.",
-     *     groups={"Registration", "Profile", "RatingRegistration", "RatingProfile"}
-     * )
      */
     protected $firstName;
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      *
-     * @Assert\NotBlank(message="Будь ласка, введіть Ваше прізвище.", groups={"RatingRegistration", "RatingProfile"})
-     * @Assert\Length(
-     *     min=3,
-     *     max="255",
-     *     minMessage="Прізвище занадто коротке.",
-     *     maxMessage="Прізвище занадто довге.",
-     *     groups={"Registration", "Profile", "RatingRegistration", "RatingProfile"}
-     * )
      */
     protected $lastName;
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      *
-     * @Assert\NotBlank(message="Будь ласка, введіть Ваше по-батькові.", groups={"RatingRegistration", "RatingProfile"})
-     * @Assert\Length(
-     *     min=3,
-     *     max="255",
-     *     minMessage="Мінімальна кількість символів - 3",
-     *     maxMessage="Максимальна кількість символів - 255.",
-     *     groups={"Registration", "Profile", "RatingRegistration", "RatingProfile"}
-     * )
      */
     protected $parentName;
+
+    /**
+     * @return mixed
+     */
+    public function getPicture()
+    {
+        return $this->picture;
+    }
+
+    /**
+     * @param mixed $picture
+     */
+    public function setPicture($picture)
+    {
+        $this->picture = $picture;
+    }
+
+    /**
+     * @ORM\Column(type="string", length=512, nullable=true)
+     *
+     */
+    protected $picture;
 
     /**
      * @ORM\Column(type="datetime", length=255, nullable=true)
@@ -77,6 +80,31 @@ class User extends BaseUser
      * @ORM\OneToMany(targetEntity="Rating\SubdivisionBundle\Entity\Job", mappedBy="user")
      */
     protected $jobs;
+
+    /**
+     * @ORM\Column(type="string", nullable=true, length=256)
+     */
+    protected $googleId;
+
+    /**
+     * @return mixed
+     */
+    public function getGoogleId()
+    {
+        return $this->googleId;
+    }
+
+    public function __construct()
+    {
+        $this->jobs = new ArrayCollection();
+    }
+    /**
+     * @param mixed $googleId
+     */
+    public function setGoogleId($googleId)
+    {
+        $this->googleId = $googleId;
+    }
 
     /**
      * @ORM\ManyToMany(targetEntity="Rating\SubdivisionBundle\Entity\Institute", mappedBy="managers")
@@ -166,17 +194,6 @@ class User extends BaseUser
     {
         return $this->parentName;
     }
-    public function setEmail($email){
-        $email = is_null($email) ? '' : $email;
-        parent::setEmail($email);
-        $this->setUsername($email);
-    }
-
-    public function setEmailCanonical($emailCanonical){
-        $this->emailCanonical = $emailCanonical;
-        $this->usernameCanonical = $emailCanonical;
-    }
-
 
     /**
      * Add jobs
@@ -281,6 +298,22 @@ class User extends BaseUser
     }
 
     /**
+     * @return mixed
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param mixed $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    /**
      * Remove cathedras
      *
      * @param \Rating\SubdivisionBundle\Entity\Cathedra $cathedras
@@ -299,8 +332,62 @@ class User extends BaseUser
     {
         return $this->cathedras;
     }
+
     public function __toString()
     {
         return $this->getLastName().' '.$this->getFirstName().' '.$this->getParentName();
     }
+
+    public function getSalt()
+    {
+        return null;
+    }
+
+    public function getUsername()
+    {
+        return $this->getEmail();
+    }
+
+    public function getPassword()
+    {
+        return null;
+    }
+    public function eraseCredentials()
+    {
+        return null;
+    }
+    public function getRoles()
+    {
+        return $this->roles;
+    }
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->email,
+            $this->googleId,
+            // see section on salt below
+            // $this->salt,
+        ));
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->email,
+            $this->googleId,
+            // see section on salt below
+            // $this->salt
+            ) = unserialize($serialized);
+    }
+    public function addRole($role)
+    {
+        $this->roles[] = $role;
+        return $this;
+    }
+
+
 }

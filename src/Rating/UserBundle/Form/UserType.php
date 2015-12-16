@@ -15,9 +15,13 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
-         $builder->add('email', null, array(
+         $builder->add('email', 'text', array(
+             'disabled' => true,
              'attr' => array(
-                 'class' => 'form-control'
+                 'class' => 'form-control',
+                 'disabled' => true,
+
+
              )
          ));
         $builder->add('firstName', null, array(
@@ -38,7 +42,7 @@ class UserType extends AbstractType
             ),
             'label' => 'По-батькові'
         ))
-            ->add('email')
+
             ->add('birthday', 'date', array(
                 'widget' => 'single_text',
                 'label'  => 'Дата народження'

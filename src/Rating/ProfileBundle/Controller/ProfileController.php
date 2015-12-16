@@ -127,46 +127,20 @@ class ProfileController extends Controller
         $user = $this->getUser();
         $form = $this->createForm(new UserType(), $user);
 
-        /** @var $dispatcher \Symfony\Component\EventDispatcher\EventDispatcherInterface */
-        $dispatcher = $this->get('event_dispatcher');
-
-        $event = new GetResponseUserEvent($user, $request);
-        $dispatcher->dispatch(FOSUserEvents::CHANGE_PASSWORD_INITIALIZE, $event);
-
-        if (null !== $event->getResponse()) {
-            return $event->getResponse();
-        }
-        $formPass = $this->createForm(new ChangePasswordFormType(), $user);
-        $formPass->setData($user);
 
         if ($request->getMethod() == 'POST'){
             $form->handleRequest($request);
             if ($form->isValid()){
-                $userManager = $this->get('fos_user.user_manager');
-                $userManager->updateUser($user, true);
+                $em->flush();
                 $this->addFlash('success_update', '1');
                 return $this->redirect($this->generateUrl('my_profile'));
 
-            }
-            $formPass->handleRequest($request);
-            if ($formPass->isValid()) {
-                /** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
-                $userManager = $this->get('fos_user.user_manager');
-                $event = new FormEvent($formPass, $request);
-                $dispatcher->dispatch(FOSUserEvents::CHANGE_PASSWORD_SUCCESS, $event);
-                $userManager->updateUser($user);
-                $url = $this->generateUrl('my_profile');
-                $response = new RedirectResponse($url);
-                $dispatcher->dispatch(FOSUserEvents::CHANGE_PASSWORD_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
-                $this->addFlash('success_update', '1');
-                return $response;
             }
         }
 
         return $this->render('RatingProfileBundle:Profile:edit_profile.html.twig',
             array(
-                'form' => $form->createView(),
-                'formPass' => $formPass->createView()
+                'form' => $form->createView()
             ));
     }
 
