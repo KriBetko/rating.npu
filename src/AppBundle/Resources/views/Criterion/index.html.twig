@@ -13,6 +13,8 @@
                 <th>Назва</th>
                 <th>Коефіцієнт</th>
                 <th>Опис</th>
+                <th>Категорія</th>
+                <th>Група</th>
                 {#<th>Тип</th>#}
                 <th>Дії</th>
             </tr>
@@ -25,6 +27,9 @@
                 <td>{{ entity.coefficient }}</td>
                 <td>{{ entity.reference }}</td>
                 {#<td>{{ entity.type }}</td>#}
+                <td>{% if entity.category is not null %}{{ entity.category.title }}{% endif %}</td>
+                <td>{% if entity.group is not null %}{{ entity.group.title }}{% endif %}</td>
+
                 <td>
                     <a class="btn btn-info btn-mini" href="{{ path('criterion_edit', { 'id': entity.id }) }}">
                         <span  class="glyphicon glyphicon-edit" aria-hidden="true"></span>

@@ -10,9 +10,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Category
 {
-    const TYPE_USER         = 1;
-    const TYPE_CATHEDRA     = 2;
-    const TYPE_INSTITUTE    = 3;
+    const TYPE_TEACHER      = 1;
+    const TYPE_STUDENT      = 2;
+    const TYPE_CATHEDRA     = 3;
+    const TYPE_INSTITUTE    = 4;
 
 
     /**
@@ -139,8 +140,10 @@ class Category
     {
         switch($this->type)
         {
-            case self::TYPE_USER:
-                return "Для користувачів";
+            case self::TYPE_TEACHER:
+                return "Для викладачів";
+            case self::TYPE_STUDENT:
+                return "Для студнетів";
             case self::TYPE_CATHEDRA:
                 return "Для кафедри";
             case self::TYPE_INSTITUTE:

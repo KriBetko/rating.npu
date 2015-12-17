@@ -9,6 +9,13 @@ use Doctrine\ORM\EntityRepository;
 
 class JobType extends AbstractType
 {
+    public $instituteId;
+
+    public function __construct($job)
+    {
+        $this->instituteId = ($job->getInstitute()) ? $job->getInstitute()->getId() : null;
+    }
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options

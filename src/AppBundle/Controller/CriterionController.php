@@ -29,7 +29,7 @@ class CriterionController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('AppBundle:Criterion')->findAll();
+        $entities = $em->getRepository('AppBundle:Criterion')->findGrouped();
 
         return array(
             'entities' => $entities,
@@ -52,8 +52,8 @@ class CriterionController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-
-            return $this->redirect($this->generateUrl('criterion_edit', array('id' => $entity->getId())));
+            $this->addFlash('success_create', 'success');
+            return $this->redirect($this->generateUrl('criterion'));
         }
 
         return array(
@@ -167,8 +167,8 @@ class CriterionController extends Controller
 
         if ($editForm->isValid()) {
             $em->flush();
-
-            return $this->redirect($this->generateUrl('criterion_edit', array('id' => $id)));
+            $this->addFlash('success_edit', 'success');
+            return $this->redirect($this->generateUrl('criterion'));
         }
 
         return array(

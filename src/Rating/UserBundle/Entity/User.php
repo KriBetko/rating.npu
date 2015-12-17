@@ -34,18 +34,42 @@ class User implements UserInterface, \Serializable
     private $roles;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255)
      *
+     * @Assert\NotBlank(message="Будь ласка, введіть Ваше ім'я.", groups={"RatingRegistration", "RatingProfile"})
+     * @Assert\Length(
+     *     min=3,
+     *     max="255",
+     *     minMessage="Ім'я занадто коротке.",
+     *     maxMessage="Ім'я занадто довге.",
+     *     groups={"Registration", "Profile", "RatingRegistration", "RatingProfile"}
+     * )
      */
     protected $firstName;
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255)
      *
+     * @Assert\NotBlank(message="Будь ласка, введіть Ваше прізвище.", groups={"RatingRegistration", "RatingProfile"})
+     * @Assert\Length(
+     *     min=3,
+     *     max="255",
+     *     minMessage="Прізвище занадто коротке.",
+     *     maxMessage="Прізвище занадто довге.",
+     *     groups={"Registration", "Profile", "RatingRegistration", "RatingProfile"}
+     * )
      */
     protected $lastName;
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255)
      *
+     * @Assert\NotBlank(message="Будь ласка, введіть Ваше по-батькові.", groups={"RatingRegistration", "RatingProfile"})
+     * @Assert\Length(
+     *     min=3,
+     *     max="255",
+     *     minMessage="Мінімальна кількість символів - 3",
+     *     maxMessage="Максимальна кількість символів - 255.",
+     *     groups={"Registration", "Profile", "RatingRegistration", "RatingProfile"}
+     * )
      */
     protected $parentName;
 
@@ -367,6 +391,9 @@ class User implements UserInterface, \Serializable
             $this->id,
             $this->email,
             $this->googleId,
+            $this->parentName,
+            $this->lastName,
+            $this->firstName
             // see section on salt below
             // $this->salt,
         ));
@@ -379,6 +406,9 @@ class User implements UserInterface, \Serializable
             $this->id,
             $this->email,
             $this->googleId,
+            $this->parentName,
+            $this->lastName,
+            $this->firstName
             // see section on salt below
             // $this->salt
             ) = unserialize($serialized);
@@ -387,6 +417,20 @@ class User implements UserInterface, \Serializable
     {
         $this->roles[] = $role;
         return $this;
+    }
+    public function isStudent()
+    {
+        if (in_array("ROLE_STUDENT", $this->getRoles())) {
+            return true;
+        }
+        return false;
+    }
+    public function isTeacher()
+    {
+        if (in_array("ROLE_TEACHER", $this->getRoles())) {
+            return true;
+        }
+        return false;
     }
 
 

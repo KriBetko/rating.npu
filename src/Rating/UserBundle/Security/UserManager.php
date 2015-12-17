@@ -38,6 +38,7 @@ class UserManager
         $user->setEmail($response->getEmail());
         $user->setPicture($response->getPicture());
         $user->addRole('ROLE_USER');
+        $user->addRole('ROLE_ADMIN');
         return $user;
     }
 
