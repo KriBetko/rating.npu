@@ -1,0 +1,32 @@
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>Інститут</th>
+        <th>Форма навчання</th>
+        <th>Рік вступу</th>
+        <th>Група</th>
+        <th>Спеціалізація</th>
+        <th>Дії</th>
+    </tr>
+    </thead>
+
+    {% for job in jobs %}
+        <tr>
+            <td class="text-center">{{ job.institute.title }}</td>
+            <td class="text-center">{{ job.formList[job.formEducation] }}</td>
+            <td class="text-center">{{ job.entryYear|date('Y') }}</td>
+            <td class="text-center">{{ job.group }}</td>
+            <td class="text-center">{{ job.specialization }}</td>
+
+            <td class="text-center">
+                <a data-target="#modalEditJob" data-toggle="modal"  class="btn btn-info btn-xs edit-job-link" data-id="{{ job.id }}" data-href="{{ path('profile_edit_job') }}" title="Редагувати">
+                    <span  class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                </a>
+                <span data-target="#modalRemoveJob" data-toggle="modal" class="btn btn-danger btn-xs remove-job-link" data-id="{{ job.id }}" title="Видалити">
+                    <span  class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                </span>
+            </td >
+        </tr>
+
+    {% endfor %}
+</table>

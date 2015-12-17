@@ -2,11 +2,11 @@
 namespace Rating\SubdivisionBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use FOS\UserBundle\Model\User;
+
 
 class JobRepository extends EntityRepository
 {
-    public function findUserJobs(User $user)
+    public function findUserJobs($user)
     {
         $em = $this->getEntityManager();
         $qb = $em->createQueryBuilder();

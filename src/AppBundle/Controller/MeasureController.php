@@ -24,6 +24,7 @@ class MeasureController extends Controller
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         $year = $this->get('year.manager')->getCurrentYear();
+        $this->get('year.manager')->generateMeasureForAllUser($year, $user);
 
         $measures = $em->getRepository('AppBundle:Measure')->getUserMeasures($year, $user);
 

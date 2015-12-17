@@ -52,8 +52,8 @@ class CategoryController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-
-            return $this->redirect($this->generateUrl('category_edit', array('id' => $entity->getId())));
+            $this->addFlash('success_create', 'success');
+            return $this->redirect($this->generateUrl('category'));
         }
 
         return array(
@@ -170,8 +170,8 @@ class CategoryController extends Controller
 
         if ($editForm->isValid()) {
             $em->flush();
-
-            return $this->redirect($this->generateUrl('category_edit', array('id' => $id)));
+            $this->addFlash('success_edit', 'success');
+            return $this->redirect($this->generateUrl('category'));
         }
 
         return array(

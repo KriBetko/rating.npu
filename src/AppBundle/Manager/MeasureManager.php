@@ -52,4 +52,8 @@ class MeasureManager
         $this->em->getRepository('AppBundle:Measure')->removeMeasures($ids, $year);
         return true;
     }
+    protected function role()
+    {
+
+    }
 }

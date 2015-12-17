@@ -20,7 +20,6 @@ class AppKernel extends Kernel
             new Rating\ProfileBundle\RatingProfileBundle(),
             new Rating\UserBundle\RatingUserBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
-            new FOS\UserBundle\FOSUserBundle(),
             new Rating\AdminBundle\RatingAdminBundle(),
             new Rating\SubdivisionBundle\RatingSubdivisionBundle(),
             new System\AppBundle\SystemAppBundle(),

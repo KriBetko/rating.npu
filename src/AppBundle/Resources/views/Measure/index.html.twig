@@ -3,7 +3,7 @@
 {% block body -%}
     {% for job in measures %}
         <div class="jobs_container">
-        <h4 style="position: relative">{{ job.job.cathedra.institute.title }} - {{ job.job.cathedra.title }} <b></b></h4>
+        <h4 style="position: relative">{% if app.user.isStudent %} {{ job.job.institute.title }} - {{ job.job.group }} {% else %} {{ job.job.cathedra.institute.title }} - {{ job.job.cathedra.title }}{% endif %} <b></b></h4>
         <div class="category-accordion">
             {% for category in job.categories %}
                 <h3>{{ category.title }}<b style="text-align: right"></b></h3>

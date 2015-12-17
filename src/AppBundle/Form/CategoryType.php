@@ -20,9 +20,10 @@ class CategoryType extends AbstractType
             ))
             ->add('type', 'choice', array(
                 'choices'  => array(
-                    1 => 'Для користувачів',
-                    2 => 'Для кафедри',
-                    3 => 'Для інститута'
+                    1 => 'Для викладачів',
+                    2 => 'Для студентів',
+                    3 => 'Для кафедри',
+                    4 => 'Для інститута'
                 ),
                 'required' => false,
 

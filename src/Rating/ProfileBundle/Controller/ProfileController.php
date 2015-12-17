@@ -4,6 +4,7 @@ namespace Rating\ProfileBundle\Controller;
 
 use FOS\UserBundle\Event\FilterUserResponseEvent;
 use FOS\UserBundle\Event\GetResponseUserEvent;
+use Rating\SubdivisionBundle\Form\EducationType;
 use Rating\UserBundle\Form\Type\ChangePasswordFormType;
 use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Model\UserInterface;
@@ -32,13 +33,15 @@ class ProfileController extends Controller
 
         $job = new Job();
         $job->setUser($user);
-        $form = $this->createForm(new JobType(), $job);
+        $form = $this->getFormForUser($job);
         $jobs = $em->getRepository('RatingSubdivisionBundle:Job')->findUserJobs($user);
 
         return $this->render("RatingProfileBundle:Profile:index.html.twig", array(
             'user'      => $user,
             'jobs'      => $jobs,
-            'formJob'   => $form->createView()
+            'formJob'   => $form->createView(),
+            'tableView' => $this->getTableView(),
+            'formView'  => $this->getFormView()
         ));
     }
 
@@ -51,7 +54,7 @@ class ProfileController extends Controller
         $user = $this->getUser();
         $status = 0;
         $job = new Job();
-        $form = $this->createForm(new JobType(), $job);
+        $form = $this->getFormForUser($job);
         $form->handleRequest($request);
         if ($form->isValid()){
             $job->setUser($user);
@@ -59,9 +62,9 @@ class ProfileController extends Controller
             $em->flush();
             $jobs = $em->getRepository('RatingSubdivisionBundle:Job')->findUserJobs($user);
             $status = 1;
-            $view =  $this->render("RatingProfileBundle:Profile:table_jobs.html.twig", array('jobs' => $jobs,))->getContent();
+            $view =  $this->render($this->getTableView(), array('jobs' => $jobs,))->getContent();
         } else {
-            $view = $this->render("RatingProfileBundle:Profile:form_job.html.twig", array(
+            $view = $this->render($this->getFormView(), array(
                 'user'      => $user,
                 'formJob'   => $form->createView()
             ))->getContent();
@@ -78,7 +81,7 @@ class ProfileController extends Controller
         $user = $this->getUser();
         $status = 0;
         $job = $em->getRepository('RatingSubdivisionBundle:Job')->findOneBy(array('id' => $id, 'user' => $user));
-        $form = $this->createForm(new JobType(), $job);
+        $form = $this->getFormForUser($job);
 
         if ($request->getMethod() == 'POST'){
             $form->handleRequest($request);
@@ -86,12 +89,12 @@ class ProfileController extends Controller
                 $em->flush();
                 $jobs = $em->getRepository('RatingSubdivisionBundle:Job')->findUserJobs($user);
                 $status = 1;
-                $view =  $this->render("RatingProfileBundle:Profile:table_jobs.html.twig", array('jobs' => $jobs,))->getContent();
+                $view =  $this->render($this->getTableView(), array('jobs' => $jobs,))->getContent();
                 return $this->get('app.sender')->sendJson(array('status' => $status, 'view' => $view));
             }
 
         }
-        $view = $this->render("RatingProfileBundle:Profile:form_job.html.twig", array(
+        $view = $this->render($this->getFormView(), array(
             'user'      => $user,
             'formJob'   => $form->createView(),
             'job'       => $job,
@@ -112,7 +115,7 @@ class ProfileController extends Controller
         $em->remove($job);
         $em->flush();
         $jobs = $em->getRepository('RatingSubdivisionBundle:Job')->findUserJobs($user);
-        $view =  $this->render("RatingProfileBundle:Profile:table_jobs.html.twig", array('jobs' => $jobs,))->getContent();
+        $view =  $this->render($this->getTableView(), array('jobs' => $jobs,))->getContent();
 
         return $this->get('app.sender')->sendJson(array('status' => 1, 'view' => $view));
     }
@@ -127,47 +130,40 @@ class ProfileController extends Controller
         $user = $this->getUser();
         $form = $this->createForm(new UserType(), $user);
 
-        /** @var $dispatcher \Symfony\Component\EventDispatcher\EventDispatcherInterface */
-        $dispatcher = $this->get('event_dispatcher');
-
-        $event = new GetResponseUserEvent($user, $request);
-        $dispatcher->dispatch(FOSUserEvents::CHANGE_PASSWORD_INITIALIZE, $event);
-
-        if (null !== $event->getResponse()) {
-            return $event->getResponse();
-        }
-        $formPass = $this->createForm(new ChangePasswordFormType(), $user);
-        $formPass->setData($user);
 
         if ($request->getMethod() == 'POST'){
             $form->handleRequest($request);
             if ($form->isValid()){
-                $userManager = $this->get('fos_user.user_manager');
-                $userManager->updateUser($user, true);
+                $em->flush();
                 $this->addFlash('success_update', '1');
                 return $this->redirect($this->generateUrl('my_profile'));
 
-            }
-            $formPass->handleRequest($request);
-            if ($formPass->isValid()) {
-                /** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
-                $userManager = $this->get('fos_user.user_manager');
-                $event = new FormEvent($formPass, $request);
-                $dispatcher->dispatch(FOSUserEvents::CHANGE_PASSWORD_SUCCESS, $event);
-                $userManager->updateUser($user);
-                $url = $this->generateUrl('my_profile');
-                $response = new RedirectResponse($url);
-                $dispatcher->dispatch(FOSUserEvents::CHANGE_PASSWORD_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
-                $this->addFlash('success_update', '1');
-                return $response;
             }
         }
 
         return $this->render('RatingProfileBundle:Profile:edit_profile.html.twig',
             array(
-                'form' => $form->createView(),
-                'formPass' => $formPass->createView()
+                'form' => $form->createView()
             ));
     }
+
+    protected function getFormForUser($job)
+    {
+        $user = $this->getUser();
+        $form = ($user->isStudent()) ? $this->createForm(new EducationType($job), $job) :  $this->createForm(new JobType($job), $job);
+        return $form;
+    }
+    protected function getTableView()
+    {
+        $user = $this->getUser();
+        return  ($user->isStudent()) ?  "RatingProfileBundle:Profile:table_jobs_student.html.twig" :  "RatingProfileBundle:Profile:table_jobs.html.twig";
+
+    }
+    protected function getFormView()
+    {
+        $user = $this->getUser();
+        return  ($user->isStudent()) ?  "RatingProfileBundle:Profile:form_job_student.html.twig" :  "RatingProfileBundle:Profile:form_job.html.twig";
+    }
+
 
 }

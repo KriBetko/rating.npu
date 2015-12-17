@@ -12,6 +12,11 @@ class MainController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('RatingMainBundle:Main:index.html.twig');
+        return $this->render(
+            'RatingMainBundle:Main:index.html.twig',
+            [
+                'authUrl'   =>  $this->get('google.oauth')->getAuthUrl()
+            ]
+        );
     }
 }

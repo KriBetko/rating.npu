@@ -10,6 +10,16 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Job
 {
+    const FORM_DAILY        = 1;
+    const FORM_EXTRAMURAL   = 2;
+
+     protected $formList =
+        [
+            self::FORM_DAILY        => 'Денна',
+            self::FORM_EXTRAMURAL   => 'Заочна'
+
+        ];
+
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -57,9 +67,110 @@ class Job
     protected $bet;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     protected $additional;
+
+    /**
+     * @ORM\Column(name="group_name", type="string", length=64, nullable=true)
+     * @Assert\NotBlank(message="Будь ласка, вкажіть навчальну группу", groups={"education"})
+     */
+    protected $group;
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     * @Assert\NotBlank(message="Будь ласка, вкажіть форму навчання", groups={"education"})
+     */
+    protected $formEducation;
+    /**
+     * @ORM\Column(type="date", length=64, nullable=true)
+     * @Assert\NotBlank(message="Будь ласка, оберіть рік вступу", groups={"education"})
+     */
+    protected $entryYear;
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank(message="Будь ласка, вкажіть спеціальність", groups={"education"})
+     */
+    protected $specialization;
+
+    /**
+     * @return mixed
+     */
+    public function getEntryYear()
+    {
+        return $this->entryYear;
+    }
+
+    /**
+     * @param mixed $entryYear
+     */
+    public function setEntryYear($entryYear)
+    {
+        $this->entryYear = $entryYear;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFormEducation()
+    {
+        return $this->formEducation;
+    }
+
+    /**
+     * @param mixed $formEducation
+     */
+    public function setFormEducation($formEducation)
+    {
+        $this->formEducation = $formEducation;
+    }
+
+    /**
+     * @return array
+     */
+    public function getFormList()
+    {
+        return $this->formList;
+    }
+
+    /**
+     * @param array $formList
+     */
+    public function setFormList($formList)
+    {
+        $this->formList = $formList;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGroup()
+    {
+        return $this->group;
+    }
+
+    /**
+     * @param mixed $group
+     */
+    public function setGroup($group)
+    {
+        $this->group = $group;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSpecialization()
+    {
+        return $this->specialization;
+    }
+
+    /**
+     * @param mixed $specialization
+     */
+    public function setSpecialization($specialization)
+    {
+        $this->specialization = $specialization;
+    }
 
 
 

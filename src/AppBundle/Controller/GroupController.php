@@ -52,8 +52,8 @@ class GroupController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-
-            return $this->redirect($this->generateUrl('group_edit', array('id' => $entity->getId())));
+            $this->addFlash('success_create', 'success');
+            return $this->redirect($this->generateUrl('group'));
         }
 
         return array(
@@ -191,8 +191,8 @@ class GroupController extends Controller
 
         if ($editForm->isValid()) {
             $em->flush();
-
-            return $this->redirect($this->generateUrl('group_edit', array('id' => $id)));
+            $this->addFlash('success_edit', 'success');
+            return $this->redirect($this->generateUrl('group'));
         }
 
         return array(

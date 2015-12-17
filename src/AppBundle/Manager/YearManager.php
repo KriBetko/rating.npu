@@ -1,6 +1,7 @@
 <?php
 namespace AppBundle\Manager;
 
+use AppBundle\Entity\Category;
 use AppBundle\Entity\Year;
 use Doctrine\ORM\EntityManager;
 use Rating\UserBundle\Entity\User;
@@ -16,14 +17,17 @@ class YearManager
         $this->em = $entityManager;
         $this->container = $container;
     }
-    public function generateMeasureForAllUser(Year $year)
+    public function generateMeasureForAllUser(Year $year, $user = false)
     {
         $measureManager = $this->container->get('measure');
-        $jobs = $this->em->getRepository('RatingSubdivisionBundle:Job')->findAll();
+        $repository = $this->em->getRepository('RatingSubdivisionBundle:Job');
+        $jobs = ($user) ? $repository->findBy(['user' => $user]) : $repository->findAll();
         $criteria = $year->getCriteria()->toArray();
         $this->clearDeletedMeasureForAllUser($year, $criteria);
         foreach ($criteria as $criterion) {
             foreach ($jobs as $job) {
+                if (($job->getGroup() !== null && $criterion->getCategory()->getType() == Category::TYPE_STUDENT) ||
+                    ($job->getGroup() == null && $criterion->getCategory()->getType() == Category::TYPE_TEACHER))
                 $measureManager->create($year, $job, $criterion);
             }
             $this->em->flush();
