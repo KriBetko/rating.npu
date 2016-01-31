@@ -16,6 +16,22 @@ class MeasureRepository extends EntityRepository
         $q->execute();
     }
 
+    public function getValue($cathedra)
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery('SELECT  u.firstName AS fname, u.lastName AS lname, u.parentName AS pname, SUM (m.result) AS summa, u.id AS id
+                                   FROM \AppBundle\Entity\Measure m
+                                        LEFT JOIN \Rating\SubdivisionBundle\Entity\Job j WITH (j.id = m.job)
+                                        JOIN \Rating\UserBundle\Entity\User u WITH (j.user = u.id)
+                                        JOIN \Rating\SubdivisionBundle\Entity\Cathedra c WITH (j.cathedra = c.id)
+                                        WHERE c.id= :cathedra
+                                        GROUP BY u.id
+                                    ');
+        $query->setParameters(array('cathedra' => $cathedra->getId()));
+        $result =  $query->getResult();
+        return $result;
+    }
+
     public function getUserMeasures($year, $user)
     {
         $em = $this->getEntityManager();

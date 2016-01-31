@@ -46,6 +46,26 @@ class Measure
     protected $fields;
 
     /**
+     * @return mixed
+     */
+    public function getResult()
+    {
+        return $this->result;
+    }
+
+    /**
+     * @param mixed $result
+     */
+    public function setResult($result)
+    {
+        $this->result = $result;
+    }
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    protected $result = 0;
+    /**
      * Constructor
      */
     public function __construct()

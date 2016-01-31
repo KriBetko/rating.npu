@@ -71,6 +71,7 @@ class MeasureController extends Controller
                     }
                 }
                 $measure->setValue(count($measure->getFields()));
+                $measure->setResult($measure->getCriterion()->getCoefficient() * $measure->getValue());
                 $em->flush();
                 return $this->get('app.sender')->sendJson(
                     array(

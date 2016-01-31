@@ -1,0 +1,17 @@
+{% extends  "::profile.html.twig"%}
+
+{% block body %}
+    <ul>
+    {% for i in institutes %}
+        <li><a href="{{ path("inst") }}">{{ i.title }}</a></li>
+        {% set cath = i.cathedras  %}
+        <li>
+            <ul>
+                {% for c in cath %}
+                    <li><a href="">{{ c.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}

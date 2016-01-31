@@ -1,0 +1,21 @@
+{% extends  "::profile.html.twig"%}
+
+{% block body %}
+    <h2>{{ cathedra.title }}</h2>
+
+   <table class="table table-bordered">
+       <thead>
+        <tr>
+            <th>ПІБ</th>
+            <th>Рейтинг</th>
+        </tr>
+           {% for u in users %}
+               <tr>
+                   <td><a href="{{ path('profile_user_show', {'id': u.id}) }}">{{ u.fname }} {{ u.lname }} {{ u.pname }}</a></td>
+                   <td>{{ u.summa }}</td>
+               </tr>
+           {% endfor %}
+       </thead>
+   </table>
+    <h3>Рейтинг - {{ total }}</h3>
+{% endblock %}
