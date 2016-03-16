@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Field;
+use AppBundle\Entity\Year;
 use AppBundle\Form\MeasureType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,20 +17,23 @@ class MeasureController extends Controller
 {
 
     /**
-     * @Route("/profile/measure", name="my_measure")
+     * @Route("/profile/measure/{yearId}", name="my_measure")
      * @Method("GET")
      */
-    public function myAction()
+    public function myAction(Request $request, $yearId = null)
     {
         $em = $this->getDoctrine()->getManager();
+        $yearEntity = $em->getRepository('AppBundle:Year')->findOneBy(['id' => $yearId]);
         $user = $this->getUser();
-        $year = $this->get('year.manager')->getCurrentYear();
+        $year = $yearEntity instanceof Year ? $yearEntity : $this->get('year.manager')->getCurrentYear();
         $this->get('year.manager')->generateMeasureForAllUser($year, $user);
 
         $measures = $em->getRepository('AppBundle:Measure')->getUserMeasures($year, $user);
 
         return $this->render('AppBundle:Measure:index.html.twig', array(
-            'measures' => $measures,
+            'measures'  =>  $measures,
+            'years'     =>  $this->get('year.manager')->getYears(),
+            'year'      => $year
         ));
 
     }

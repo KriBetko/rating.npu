@@ -19,7 +19,10 @@ class YearType extends AbstractType
                 'label' => 'Активний?',
                 'required' => false
             ))
-
+            ->add('editable', null, array(
+                'label' => 'Дозволити редагування?',
+                'required' => false
+            ))
             ->add('title', 'text', array(
                 'label' => 'Назва'
             ))

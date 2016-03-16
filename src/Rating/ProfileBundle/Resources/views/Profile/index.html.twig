@@ -8,7 +8,7 @@
                     Дані успішно збережені!
                 </div>
             {% endfor %}
-            <h3 class="center-block">Персональна інформація</h3>
+            <h3 class="center-block">Персональні відомості</h3>
             <hr>
             <div class="row">
                 <div class="col-md-9"><b>Прізвище:</b></div>
@@ -39,7 +39,7 @@
                 <a href="{{ path('my_profile_edit') }}" class="btn btn-success">Редагувати</a>
             </div>
         </div>
-        <div class="col-md-16">
+        <div class="col-md-24">
 
             <h3 class="center-block">{% if is_granted('ROLE_TEACHER') %}Місце роботи {% else %}Місце навчання{% endif %}</h3>
             <hr>
@@ -119,26 +119,25 @@
 {% block javascripts %}
     {{ parent() }}
     <script>
-        $(document).ready(function(){
-            function initAddJobForm (){
-                getCathedrasList('#job_institute', '#job_cathedra');
-                $('#form-job-sender').click(function(){
-                   $('#form-job').ajaxSubmit({
-                               'success': function(e){
-                                   if (e.status == 0) {
-                                       $('#form-block').html(e.view);
-                                       initAddJobForm();
-                                   } else if(status = 1) {
-                                       $('#modalJob').modal('hide');
-                                       $('#form-job').clearForm();
-                                       $('#table-jobs-block').html(e.view);
-                                   }
-                                   return false;
-                               }
-                           });
+        function initAddJobForm (){
+            getCathedrasList('#job_institute', '#job_cathedra');
+            $('#form-job-sender').click(function(){
+                $('#form-job').ajaxSubmit({
+                    'success': function(e){
+                        if (e.status == 0) {
+                            $('#form-block').html(e.view);
+                        } else if(status = 1) {
+                            $('#modalJob').modal('hide');
+                            $('#form-job').clearForm();
+                            $('#table-jobs-block').html(e.view);
+                        }
+                        return false;
+                    }
                 });
+            });
 
-            }
+        }
+        $(document).ready(function(){
 
             initAddJobForm();
 
@@ -171,6 +170,7 @@
                     'success': function(e){
                         if (e.status == 0) {
                             $('#form-edit-block').html(e.view);
+                            getCathedrasList('#job_institute', '#job_cathedra');
                         } else if(status = 1) {
                             $('#modalEditJob').modal('hide');
                             $('#form-edit-job').clearForm();

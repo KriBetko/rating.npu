@@ -1,7 +1,14 @@
 {% extends '::profile.html.twig' %}
 {% block title %} Особова картка {% endblock %}
 {% block body -%}
+    <select id="year-select" class="form-control" style="width: 190px; margin-bottom: 40px">
+        {% for y in years  %}
+            <option value="{{ y.id }}" {% if y.id == year.id %}selected="selected"{% endif %}>{{ y.title }}</option>
+        {% endfor %}
+    </select>
+    {% set editable = year.editable %}
     {% for job in measures %}
+
         <div class="jobs_container">
         <h4 style="position: relative">{% if app.user.isStudent %} {{ job.job.institute.title }} - {{ job.job.group }} {% else %} {{ job.job.cathedra.institute.title }} - {{ job.job.cathedra.title }}{% endif %} <b></b></h4>
         <div class="category-accordion">
@@ -15,7 +22,7 @@
                             <div class="value_{{ single.measure.id }}" style="width: 200px; display: inline-block">{{ single.measure.value }}</div>
                             <div style="width: 50px; display: inline-block">
                                 <a data-target="#modalMeasure" data-toggle="modal"  class="btn btn-info btn-xs edit-measure-link" data-id="{{ single.measure.id }}" data-href="{{ path('edit_measure', {'id': single.measure.id}) }}" title="Редагувати">
-                                    <span  class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                    <span  class="glyphicon {% if editable %}glyphicon-pencil{% else %}glyphicon-edit{% endif %}" aria-hidden="true"></span>
                                 </a>
                             </div>
                             <div class="measure_total measure_{{ single.measure.id }}" style="display: inline-block; width:  70px">{{ single.criteria_coefficient * single.measure.value }}</div>
@@ -31,7 +38,7 @@
                                     <div style="width: 200px; display: inline-block">{{ single.measure.value }}</div>
                                     <div style="width: 50px; display: inline-block">
                                         <a data-target="#modalMeasure" data-toggle="modal"  class="btn btn-info btn-xs edit-measure-link" data-id="{{ single.measure.id }}" data-href="{{ path('edit_measure', {'id': single.measure.id}) }}" title="Редагувати">
-                                            <span  class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                            <span  class="glyphicon {% if editable %}glyphicon-pencil{% else %}glyphicon-edit{% endif %}" aria-hidden="true"></span>
                                         </a>
                                     </div>
                                     <div class="measure_total measure_{{ single.measure.id }}" style="display: inline-block; width:  70px">{{ single.criteria_coefficient * single.measure.value }}</div>
@@ -61,7 +68,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button id="form-measure-sender" type="button" class="btn btn-primary">Зберегти</button>
+                    {% if editable %}<button id="form-measure-sender" type="button" class="btn btn-primary">Зберегти</button>{% endif %}
                     <button type="button" class="btn" data-dismiss="modal">Відмінити</button>
                 </div>
 
@@ -78,12 +85,21 @@
         var $newLinkLi = $('<li class="new-link-field"></li>').append($addTagLink);
 
         $(document).ready(function(){
+            $('#year-select').change(function(){
+                var optionSelected = $("option:selected", this);
+                var valueSelected = this.value;
+                window.location.href = "/app_dev.php/profile/measure/"+valueSelected;
+            });
             calculateJobsBlock();
             calculateCategoryBlock();
             // setup an "add a tag" link
 
             // init category accordion
-            $('.category-accordion').accordion({ collapsible: true, active: false});
+            $('.category-accordion').accordion(
+                    {
+                        autoHeight: false, collapsible: true, active: false, heightStyle: "content"
+                    }
+            );
 
 
             // open measure edit popup

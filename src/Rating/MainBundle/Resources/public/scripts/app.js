@@ -1,7 +1,6 @@
 
 function getCathedrasList(instituteSelect, cathedraSelect){
-    $(instituteSelect).change(function() {
-
+    $('body').on('change', instituteSelect, function() {
         if ($(this).val()){
             $.ajax({
                 method: "get",

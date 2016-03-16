@@ -28,6 +28,11 @@ class Year
     protected $active;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $editable;
+
+    /**
      * @ORM\ManyToMany(targetEntity="Criterion")
      * @ORM\JoinTable(name="criterion_years",
      *      joinColumns={@ORM\JoinColumn(name="year_id", referencedColumnName="id")},
@@ -43,6 +48,23 @@ class Year
     {
         $this->criteria = new \Doctrine\Common\Collections\ArrayCollection();
         $this->active = false;
+        $this->editable = false;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEditable()
+    {
+        return $this->editable;
+    }
+
+    /**
+     * @param mixed $editable
+     */
+    public function setEditable($editable)
+    {
+        $this->editable = $editable;
     }
 
     /**

@@ -1,6 +1,7 @@
 <table class="table table-bordered">
     <thead>
     <tr>
+        <th>Інститут</th>
         <th>Кафедра</th>
         <th>Посада</th>
         <th>Ставка</th>
@@ -11,6 +12,7 @@
 
     {% for job in jobs %}
         <tr>
+            <td class="text-center">{{ job.cathedra.institute.title }}</td>
             <td class="text-center">{{ job.cathedra.title }}</td>
             <td class="text-center">{{ job.position.title }}</td>
             <td class="text-center">{{ job.bet }}</td>

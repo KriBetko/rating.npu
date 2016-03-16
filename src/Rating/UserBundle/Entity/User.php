@@ -418,6 +418,16 @@ class User implements UserInterface, \Serializable
         $this->roles[] = $role;
         return $this;
     }
+    public function removeRole($role)
+    {
+        $this->roles[] = $role;
+        foreach ($this->roles as $k => $v) {
+            if ($role == $v ) {
+                unset($this->roles[$k]);
+            }
+        }
+        return $this;
+    }
     public function isStudent()
     {
         if (in_array("ROLE_STUDENT", $this->getRoles())) {
@@ -428,6 +438,13 @@ class User implements UserInterface, \Serializable
     public function isTeacher()
     {
         if (in_array("ROLE_TEACHER", $this->getRoles())) {
+            return true;
+        }
+        return false;
+    }
+    public function isAdmin()
+    {
+        if (in_array("ROLE_ADMIN", $this->getRoles())) {
             return true;
         }
         return false;

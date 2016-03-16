@@ -1,5 +1,5 @@
 {% extends '::profile.html.twig' %}
-{% block title %} Особова картка {% endblock %}
+{% block title %} Особ1ова картка {% endblock %}
 {% block body -%}
     {% for job in measures %}
         <div class="jobs_container">
@@ -82,7 +82,10 @@
             // setup an "add a tag" link
 
             // init category accordion
-            $('.category-accordion').accordion({ collapsible: true, active: false});
+            $('.category-accordion').accordion({
+                heightStyle: "content",
+                collapsible: true,
+                active: false});
 
 
             // open measure edit popup

@@ -251,7 +251,7 @@ class UserController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('RatingUserBundle:User')->findOneById($id);
-        if ($user->hasRole('ROLE_ADMIN') ){
+        if ($user->isAdmin() ){
             $user->removeRole('ROLE_ADMIN');
         } else {
             $user->addRole('ROLE_ADMIN');

@@ -50,4 +50,8 @@ class YearManager
     {
         return $this->em->getRepository('AppBundle:Year')->findOneByActive(true);
     }
+    public function getYears()
+    {
+        return $this->em->getRepository('AppBundle:Year')->findBy([], ['title' => 'DESC']);
+    }
 }
