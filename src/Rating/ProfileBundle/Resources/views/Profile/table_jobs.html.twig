@@ -1,12 +1,12 @@
 <table class="table table-bordered">
     <thead>
     <tr>
-        <th>Інститут</th>
+        <th>Факультет (інститут)</th>
         <th>Кафедра</th>
         <th>Посада</th>
         <th>Ставка</th>
-        <th>Тип</th>
-        <th>Дії</th>
+        <th>Форма працевлаштування</th>
+        <th>Редагувати</th>
     </tr>
     </thead>
 
@@ -16,7 +16,7 @@
             <td class="text-center">{{ job.cathedra.title }}</td>
             <td class="text-center">{{ job.position.title }}</td>
             <td class="text-center">{{ job.bet }}</td>
-            <td class="text-center">{% if job.additional == 1 %}Сумісництво{% else %}Основне місце роботи{% endif %}</td>
+            <td class="text-center">{% if job.additional == 1 %}За сумісництвом{% else %}Основне{% endif %}</td>
             <td class="text-center">
                 <a data-target="#modalEditJob" data-toggle="modal"  class="btn btn-info btn-xs edit-job-link" data-id="{{ job.id }}" data-href="{{ path('profile_edit_job') }}" title="Редагувати">
                     <span  class="glyphicon glyphicon-edit" aria-hidden="true"></span>

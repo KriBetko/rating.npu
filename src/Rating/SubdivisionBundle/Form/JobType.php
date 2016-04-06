@@ -27,12 +27,12 @@ class JobType extends AbstractType
             ->add('institute', 'entity', array(
                 'class' => 'RatingSubdivisionBundle:Institute',
                 'property' => 'title',
-                'label' => 'Інститут',
+                'label' => 'Факультет',
                 'attr' => array(
                     'class' => 'form-control'
                 ),
                 'required'    => true,
-                'placeholder' => 'Оберіть інститут',
+                'placeholder' => 'Оберіть факультет(інститут)',
                 'empty_data'  => null
             ))
 
