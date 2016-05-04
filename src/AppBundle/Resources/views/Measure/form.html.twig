@@ -2,45 +2,57 @@
 <form  novalidate id="form-edit-measure"
        action="{{ path('edit_measure', {'id': measure.id}) }}" {{ form_enctype(form) }} method="POST" class="">
     <div class="form-group form-error-block">
-
         {% set editable = measure.year.editable %}
 
-
         {% if measure.criterion.group is not null %}
-            <div>{{ measure.criterion.group.title }}:<div>
+            <div>{{ measure.criterion.group.title }}:</div>
             <br>
         {% endif %}
 
         <div class="row">
-            <div class="col-md-18" style=" text-align: center;">{{ measure.criterion.title }}</div>
-
-            <div class="col-md-4">
-                {% if editable %}
+            {% if singleGroup %}
+                <div class="col-md-24" style=" text-align: center;">Ви не можете редагувати цей критерій, оскільки вже обрали критерій в цій групі</div>
+                <div style="display: none">
                     {{ form_widget(form.value) }}
+                </div>
+            {% else %}
+                {% if measure.criterion.isPlural() %}
+                    <div class="col-md-18" style=" text-align: center;">{{ measure.criterion.title }}</div>
                 {% else %}
-                    <div style="display: none">
-                        {{ form_widget(form.value) }}
-                        </div>
-                        {{ form.vars.value.value }}
+                    <div class="col-md-10" style=" text-align: center;">Данний критерій одиничний. Відмітьте значення та натисніть на кнопку "Зберегти"</div>
                 {% endif %}
 
-            </div>
+                <div class="  {% if measure.criterion.isPlural() %}col-md-4{% else %}col-md-14{% endif %}" >
+                    {% if editable %}
+                        {{ form_widget(form.value) }}
+                    {% else %}
+                        <div style="display: none">
+                            {{ form_widget(form.value) }}
+                        </div>
+                        {{ form.vars.value.value }}
+                    {% endif %}
+
+                </div>
+            {% endif %}
+
         </div>
 
+        {% if not singleGroup %}
                     <br><hr><br>
-                    {% if editable %}
+                    {% if editable and measure.criterion.isPlural() %}
                     <ol  class="fields" id="field-ol" data-prototype="{{ form_widget(form.fields.vars.prototype)|e }}">
                         {% for field in form.fields %}
                             <li class="input-field">{{ form_row(field.title) }}</li>
                         {% endfor %}
                     </ol>
                     {% else %}
-                        <ol>
+                        <ol {% if not measure.criterion.isPlural() %}style="display: none" {% endif %}>
                             {% for field in form.fields %}
                                 <li>{{ form_row(field.title, { 'attr':{'disabled':'disabled'} }) }}</li>
                             {% endfor %}
                         </ol>
                     {% endif %}
+        {% endif %}
     </div>
-    {{ form_rest(form) }}
+   {{ form_rest(form) }}
 </form>

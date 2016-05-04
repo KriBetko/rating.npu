@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Entity\Group;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -17,6 +18,13 @@ class GroupType extends AbstractType
         $builder
             ->add('title', 'text', array(
                 'label' => 'Назва'
+            ))
+            ->add('plural', 'choice', array(
+                'label' => 'Тип',
+                'choices'   => array(
+                    Group::T_PLURAL => 'Множинний',
+                    Group::T_UNITARY => 'Одиничний',
+                )
             ))
         ;
     }

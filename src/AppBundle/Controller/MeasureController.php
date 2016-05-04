@@ -48,7 +48,7 @@ class MeasureController extends Controller
 
         $measure = $em->getRepository('AppBundle:Measure')->findOneBy(array('id' => $id));
 
-        $form = $this->createForm(new MeasureType(), $measure);
+        $form = $this->createForm(new MeasureType($measure), $measure);
 
         $originalFields = new ArrayCollection();
 
@@ -74,8 +74,12 @@ class MeasureController extends Controller
                         $em->remove($field);
                     }
                 }
-                $measure->setValue(count($measure->getFields()));
-                $measure->setResult($measure->getCriterion()->getCoefficient() * $measure->getValue());
+                if ($measure->getCriterion()->isPlural()) {
+                    $measure->setValue(count($measure->getFields()));
+                    $measure->setResult($measure->getCriterion()->getCoefficient() * $measure->getValue());
+                } else {
+                    $measure->setResult($measure->getCriterion()->getCoefficient() * $measure->getValue());
+                }
                 $em->flush();
                 return $this->get('app.sender')->sendJson(
                     array(
@@ -90,10 +94,16 @@ class MeasureController extends Controller
             }
 
         }
+        $singleGroup = false;
+        if ($measure->getCriterion()->getGroup() && !$measure->getCriterion()->getGroup()->isPlural()) {
+            $groupedMeasure = $em->getRepository('AppBundle:Measure')->getGroupedMeasure($measure);
+            $singleGroup = $groupedMeasure ? true : false;
+        }
 
         $view = $this->render("AppBundle:Measure:form.html.twig", array(
             'form'      => $form->createView(),
-            'measure'   => $measure
+            'measure'   => $measure,
+            'singleGroup'   => $singleGroup
 
         ))->getContent();
 

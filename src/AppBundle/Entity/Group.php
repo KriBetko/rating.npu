@@ -10,6 +10,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Group
 {
+    const T_PLURAL      =   1;
+    const T_UNITARY     =   2;
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -22,6 +24,10 @@ class Group
      */
     protected $title;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $plural = 1;
     /**
      * @ORM\OneToMany(targetEntity="Criterion", mappedBy="group")
      */
@@ -43,6 +49,27 @@ class Group
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPlural()
+    {
+        return $this->plural;
+    }
+
+    /**
+     * @param mixed $plural
+     */
+    public function setPlural($plural)
+    {
+        $this->plural = $plural;
+    }
+
+    public function isPlural()
+    {
+        return $this->plural === 2 ? false : true;
     }
 
     /**

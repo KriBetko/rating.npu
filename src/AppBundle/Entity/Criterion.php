@@ -11,6 +11,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Criterion
 {
+    const T_PLURAL      =   1;
+    const T_UNITARY     =   2;
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -37,6 +39,11 @@ class Criterion
      * @ORM\Column(type="integer")
      */
     protected $type = 1;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $plural = 1;
 
     /**
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="criteria")
@@ -66,6 +73,29 @@ class Criterion
     {
         return $this->id;
     }
+    public function isPlural()
+    {
+        return $this->plural === 2 ? false : true;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getPlural()
+    {
+        return $this->plural;
+    }
+
+    /**
+     * @param mixed $plural
+     */
+    public function setPlural($plural)
+    {
+        $this->plural = $plural;
+    }
+
+
 
     /**
      * Set title

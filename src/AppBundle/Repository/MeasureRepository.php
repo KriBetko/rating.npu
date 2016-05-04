@@ -6,6 +6,30 @@ use FOS\UserBundle\Model\User;
 
 class MeasureRepository extends EntityRepository
 {
+    public function getGroupedMeasure($measure)
+    {
+        $qb = $this->createQueryBuilder('m');
+        $qb
+            ->select('m')
+            ->join('m.criterion', 'c')
+            ->join('c.group', 'g')
+            ->where('g.id = :mGroup')
+            ->andWhere('m.job = :job')
+            ->andWhere('m.year = :year')
+            ->andWhere('m.id != :id')
+            ->andWhere('m.value > 0')
+            ->setParameters(
+                [
+                    'mGroup' =>  $measure->getCriterion()->getGroup()->getId(),
+                    'job'   => $measure->getJob(),
+                    'year'  => $measure->getYear(),
+                    'id'    => $measure->getId()
+                ]);
+        return $qb->getQuery()->getResult();
+
+    }
+
+
     public function removeMeasures($ids, $year){
         $q = $this->getEntityManager()->createQuery('
                 DELETE FROM AppBundle:Measure m

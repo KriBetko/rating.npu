@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Entity\Group;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -49,6 +50,13 @@ class CriterionType extends AbstractType
                 'required'    => true,
                 'placeholder' => 'Категорія',
                 'empty_data'  => null
+            ))
+            ->add('plural', 'choice', array(
+                'label' => 'Тип',
+                'choices'   => array(
+                    Group::T_PLURAL => 'Множинний',
+                    Group::T_UNITARY => 'Одиничний',
+                )
             ))
         ;
     }
