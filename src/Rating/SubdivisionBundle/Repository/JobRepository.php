@@ -26,4 +26,14 @@ class JobRepository extends EntityRepository
             );
         return $codes = $qb->getQuery()->getResult();
     }
+    public function createJobQuery()
+    {
+        $qb = $this->createQueryBuilder('j');
+        $qb
+            ->select('j')
+            ->where('j.formEducation is null');
+
+        $result = $qb->getQuery()->getResult();
+        dump($result);die;
+    }
 }

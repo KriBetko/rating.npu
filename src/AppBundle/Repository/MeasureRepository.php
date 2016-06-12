@@ -3,6 +3,7 @@ namespace AppBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use FOS\UserBundle\Model\User;
+use Rating\SubdivisionBundle\Entity\Job;
 
 class MeasureRepository extends EntityRepository
 {
@@ -50,8 +51,49 @@ class MeasureRepository extends EntityRepository
                                         JOIN \Rating\SubdivisionBundle\Entity\Cathedra c WITH (j.cathedra = c.id)
                                         WHERE c.id= :cathedra
                                         GROUP BY u.id
+                                        ORDER By summa
                                     ');
         $query->setParameters(array('cathedra' => $cathedra->getId()));
+        $result =  $query->getResult();
+        return $result;
+    }
+
+    public function getRatings($year, Job $filterJob)
+    {
+        $em = $this->getEntityManager();
+        $subQuery = '';
+        $parameters = ['currentYear' => $year];
+        if ($filterJob->getCathedra()) {
+            $subQuery.= 'AND  c.id = :selectedCathedra ';
+            $parameters['selectedCathedra'] = $filterJob->getCathedra()->getId();
+        }
+        if ($filterJob->getInstitute()) {
+            $subQuery.= 'AND  ins.id = :selectedInstitute ';
+            $parameters['selectedInstitute'] = $filterJob->getInstitute()->getId();
+        }
+        if ($filterJob->getPosition()) {
+            $subQuery.= 'AND  pos.id = :selectedPosition ';
+            $parameters['selectedPosition'] = $filterJob->getPosition()->getId();
+        }
+        if ($filterJob->getAdditional()) {
+            $subQuery.= 'AND  (j.additional = 1 OR j.additional = 0) ';
+        } else {
+            $subQuery.= 'AND  j.additional = 0';
+        }
+        $query = $em->createQuery('SELECT  u.firstName AS fname, u.lastName AS lname, u.parentName AS pname, SUM (m.result) AS summa, u.id AS id, pos.title AS position, c.title AS cathedra, ins.title as institute
+                                   FROM \AppBundle\Entity\Measure m
+                                        LEFT JOIN \Rating\SubdivisionBundle\Entity\Job j WITH (j.id = m.job)
+                                        JOIN \Rating\UserBundle\Entity\User u WITH (j.user = u.id)
+                                        JOIN \AppBundle\Entity\Year y WITH (y.id = m.year)
+                                        JOIN \Rating\SubdivisionBundle\Entity\Position pos WITH (j.position = pos.id)
+                                        JOIN \Rating\SubdivisionBundle\Entity\Cathedra c WITH (j.cathedra = c.id)
+                                        JOIN \Rating\SubdivisionBundle\Entity\Institute ins WITH (c.institute = ins.id)
+                                        WHERE y.id = :currentYear
+                                        '.$subQuery.'
+                                        GROUP BY j.id
+                                        order by summa DESC
+                                    ');
+        $query->setParameters($parameters);
         $result =  $query->getResult();
         return $result;
     }

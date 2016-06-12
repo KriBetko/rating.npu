@@ -1,6 +1,9 @@
 <?php
 namespace Rating\SubdivisionBundle\Controller;
 
+use AppBundle\Entity\Year;
+use Rating\SubdivisionBundle\Entity\Job;
+use Rating\SubdivisionBundle\Form\FilterType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -40,6 +43,32 @@ class MainController extends Controller
             ]
         );
     }
+
+    /**
+     * @Route("/rating", name="rating_user")
+     */
+    public function ratingAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $year =  $request->query->get('job')['years'] ?: $this->get('year.manager')->getCurrentYear()->getId();
+
+        $filterJob = new Job();
+        $form = $this->createForm(new FilterType(), $filterJob, array(
+            'action' => $this->generateUrl('rating_user'),
+            'method' => 'GET',
+        ));
+        $form->add('submit', 'submit', array('label' => 'Фільтрувати',  'attr' => array(
+        'class' => 'btn btn-success')));
+        $form->handleRequest($request);
+        $users = $em->getRepository('AppBundle:Measure')->getRatings($year, $filterJob);
+        return $this->render('RatingSubdivisionBundle::rating.html.twig',
+            [
+                'users'         => $users,
+                'form'          => $form->createView()
+            ]
+        );
+    }
+
     /**
      * @Route("/cathedra/{id}", name="profile_cathedra_show")
      */

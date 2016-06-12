@@ -73,7 +73,7 @@ class OAuthProvider
             }
             if ($responseArray['hd'] == 'std.npu.edu.ua'){
                 $user->addRole('ROLE_USER');
-                $user->addRole('ROLE_STUDENT');
+                $user->addRole('ROLE_TEACHER');
             }
 
 
