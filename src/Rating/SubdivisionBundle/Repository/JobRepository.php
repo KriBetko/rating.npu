@@ -36,4 +36,10 @@ class JobRepository extends EntityRepository
         $result = $qb->getQuery()->getResult();
         dump($result);die;
     }
+    public function getGroupList()
+    {
+        $result = $this->_em->createQuery("SELECT DISTINCT j.group FROM RatingSubdivisionBundle:Job j  WHERE j.group IS NOT NULL")->getScalarResult();
+        $groups = array_map('current', $result);
+       return $groups;
+    }
 }

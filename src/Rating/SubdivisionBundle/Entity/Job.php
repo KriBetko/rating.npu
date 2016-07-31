@@ -13,7 +13,16 @@ class Job
     const FORM_DAILY        = 1;
     const FORM_EXTRAMURAL   = 2;
 
-     protected $formList =
+
+    // TODO refactor this
+    protected $formList =
+        [
+            self::FORM_DAILY        => 'Денна',
+            self::FORM_EXTRAMURAL   => 'Заочна'
+
+        ];
+
+    public static $fList =
         [
             self::FORM_DAILY        => 'Денна',
             self::FORM_EXTRAMURAL   => 'Заочна'

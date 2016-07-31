@@ -98,6 +98,41 @@ class MeasureRepository extends EntityRepository
         return $result;
     }
 
+
+    public function getStudentRatings($year, Job $filterJob)
+    {
+        $em = $this->getEntityManager();
+        $subQuery = '';
+        $parameters = ['currentYear' => $year];
+        if ($filterJob->getInstitute()) {
+            $subQuery.= 'AND  ins.id = :selectedInstitute ';
+            $parameters['selectedInstitute'] = $filterJob->getInstitute()->getId();
+        }
+        if ($filterJob->getFormEducation()) {
+            $subQuery.= 'AND  j.formEducation = :fromEd ';
+            $parameters['fromEd'] = $filterJob->getFormEducation();
+        }
+        if ($filterJob->getGroup()) {
+            $subQuery.= 'AND  j.group = :groupEd ';
+            $parameters['groupEd'] = $filterJob->getGroup();
+        }
+        $query = $em->createQuery('SELECT  u.firstName AS fname, u.lastName AS lname, u.parentName AS pname, SUM (m.result) AS summa, u.id AS id, ins.title as institute, j.group as groupEd, j.formEducation as formEd
+                                   FROM \AppBundle\Entity\Measure m
+                                        LEFT JOIN \Rating\SubdivisionBundle\Entity\Job j WITH (j.id = m.job)
+                                        JOIN \Rating\UserBundle\Entity\User u WITH (j.user = u.id)
+                                        JOIN \AppBundle\Entity\Year y WITH (y.id = m.year)
+                                        JOIN \Rating\SubdivisionBundle\Entity\Institute ins WITH (j.institute = ins.id)
+                                        WHERE y.id = :currentYear AND j.group is not null
+                                        '.$subQuery.'
+                                        GROUP BY j.id
+                                        order by summa DESC
+                                    ');
+        $query->setParameters($parameters);
+        $result =  $query->getResult();
+        return $result;
+    }
+
+
     public function getUserMeasures($year, $user)
     {
         $em = $this->getEntityManager();
