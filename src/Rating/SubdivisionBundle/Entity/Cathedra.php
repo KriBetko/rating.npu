@@ -30,7 +30,7 @@ class Cathedra
     protected $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Institute", inversedBy="cathedras")
+     * @ORM\ManyToOne(targetEntity="Rating\SubdivisionBundle\Entity\Institute", inversedBy="cathedras")
      * @ORM\JoinColumn(name="institute_id", referencedColumnName="id")
      */
     protected $institute;
@@ -159,7 +159,7 @@ class Cathedra
     /**
      * Get users
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return Collection
      */
     public function getUsers()
     {

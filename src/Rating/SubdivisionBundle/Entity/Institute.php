@@ -24,13 +24,15 @@ class Institute
      * @ORM\Column(type="string", length=100)
      */
     protected $title;
+
     /**
-     * @ORM\OneToOne(targetEntity="User)
+     * @ORM\OneToOne(targetEntity="Rating\UserBundle\Entity\User")
      * @ORM\JoinColumn(name="director", referencedColumnName="id")
      */
     protected $director;
+
     /**
-     * @ORM\ManyToMany(targetEntity="User", inversedBy="institutes")
+     * @ORM\ManyToMany(targetEntity="Rating\UserBundle\Entity\User", inversedBy="institutes")
      * @ORM\JoinTable(name="institutes_users")
      */
     protected $managers;
@@ -41,7 +43,7 @@ class Institute
     protected $description;
 
     /**
-     * @ORM\OneToMany(targetEntity="Cathedra", mappedBy="institute")
+     * @ORM\OneToMany(targetEntity="Rating\SubdivisionBundle\Entity\Cathedra", mappedBy="institute")
      */
     protected $cathedras;
 

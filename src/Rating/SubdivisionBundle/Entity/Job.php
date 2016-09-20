@@ -45,21 +45,21 @@ class Job
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Position")
+     * @ORM\ManyToOne(targetEntity="Rating\SubdivisionBundle\Entity\Position")
      * @ORM\JoinColumn(name="position_id", referencedColumnName="id")
      * @Assert\NotBlank(message="Будь ласка, оберіть Вашу посаду.", groups={"addJob"})
      */
     protected $position;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Cathedra")
+     * @ORM\ManyToOne(targetEntity="Rating\SubdivisionBundle\Entity\Cathedra")
      * @ORM\JoinColumn(name="cathedra_id", referencedColumnName="id")
      * @Assert\NotBlank(message="Будь ласка, оберіть кафедру.", groups={"addJob"})
      */
     protected $cathedra;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Institute")
+     * @ORM\ManyToOne(targetEntity="Rating\SubdivisionBundle\Entity\Institute")
      * @ORM\JoinColumn(name="institute_id", referencedColumnName="id")
      * @Assert\NotBlank(message="Будь ласка, оберіть інститут.", groups={"addJob"})
      */
