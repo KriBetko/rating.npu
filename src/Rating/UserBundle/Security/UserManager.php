@@ -34,6 +34,7 @@ class UserManager
         $user = new User();
         $user->setLastName($response->getGivenName());
         $user->setFirstName($response->getFamilyName());
+        $user->setParentName($response->getGivenName()); //TODO ParentName not found in GoogleAccount, fix this
         $user->setGoogleId($response->getId());
         $user->setEmail($response->getEmail());
         $user->setPicture($response->getPicture());
