@@ -22,9 +22,10 @@ class SecurityHandler implements AuthenticationSuccessHandlerInterface, Authenti
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token)
     {
-        dump('handler');die;
+        //dump('handler');die; TODO What?!
         $referer = $request->headers->get('referer');
-        if (empty($referer)) {
+        if (empty($referer))
+        {
             return new RedirectResponse($this->router->generate('homepage'));
         } else {
             return new RedirectResponse($referer);

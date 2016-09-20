@@ -2,8 +2,13 @@
 
 namespace Rating\UserBundle\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Rating\SubdivisionBundle\Entity\Cathedra;
+use Rating\SubdivisionBundle\Entity\Institute;
+use Rating\SubdivisionBundle\Entity\Job;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -122,6 +127,7 @@ class User implements UserInterface, \Serializable
     {
         $this->jobs = new ArrayCollection();
     }
+
     /**
      * @param mixed $googleId
      */
@@ -222,10 +228,10 @@ class User implements UserInterface, \Serializable
     /**
      * Add jobs
      *
-     * @param \Rating\SubdivisionBundle\Entity\Job $jobs
+     * @param Job $jobs
      * @return User
      */
-    public function addJob(\Rating\SubdivisionBundle\Entity\Job $jobs)
+    public function addJob(Job $jobs)
     {
         $this->jobs[] = $jobs;
 
@@ -235,9 +241,9 @@ class User implements UserInterface, \Serializable
     /**
      * Remove jobs
      *
-     * @param \Rating\SubdivisionBundle\Entity\Job $jobs
+     * @param Job $jobs
      */
-    public function removeJob(\Rating\SubdivisionBundle\Entity\Job $jobs)
+    public function removeJob(Job $jobs)
     {
         $this->jobs->removeElement($jobs);
     }
@@ -245,7 +251,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get jobs
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return Collection
      */
     public function getJobs()
     {
@@ -255,7 +261,7 @@ class User implements UserInterface, \Serializable
     /**
      * Set birthday
      *
-     * @param \DateTime $birthday
+     * @param DateTime $birthday
      * @return User
      */
     public function setBirthday($birthday)
@@ -268,7 +274,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get birthday
      *
-     * @return \DateTime 
+     * @return DateTime
      */
     public function getBirthday()
     {
@@ -278,10 +284,10 @@ class User implements UserInterface, \Serializable
     /**
      * Add institutes
      *
-     * @param \Rating\SubdivisionBundle\Entity\Institute $institutes
+     * @param Institute $institutes
      * @return User
      */
-    public function addInstitute(\Rating\SubdivisionBundle\Entity\Institute $institutes)
+    public function addInstitute(Institute $institutes)
     {
         $this->institutes[] = $institutes;
 
@@ -291,9 +297,9 @@ class User implements UserInterface, \Serializable
     /**
      * Remove institutes
      *
-     * @param \Rating\SubdivisionBundle\Entity\Institute $institutes
+     * @param Institute $institutes
      */
-    public function removeInstitute(\Rating\SubdivisionBundle\Entity\Institute $institutes)
+    public function removeInstitute(Institute $institutes)
     {
         $this->institutes->removeElement($institutes);
     }
@@ -301,7 +307,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get institutes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return Collection
      */
     public function getInstitutes()
     {
@@ -311,10 +317,10 @@ class User implements UserInterface, \Serializable
     /**
      * Add cathedras
      *
-     * @param \Rating\SubdivisionBundle\Entity\Cathedra $cathedras
+     * @param Cathedra $cathedras
      * @return User
      */
-    public function addCathedra(\Rating\SubdivisionBundle\Entity\Cathedra $cathedras)
+    public function addCathedra(Cathedra $cathedras)
     {
         $this->cathedras[] = $cathedras;
 
@@ -340,9 +346,9 @@ class User implements UserInterface, \Serializable
     /**
      * Remove cathedras
      *
-     * @param \Rating\SubdivisionBundle\Entity\Cathedra $cathedras
+     * @param Cathedra $cathedras
      */
-    public function removeCathedra(\Rating\SubdivisionBundle\Entity\Cathedra $cathedras)
+    public function removeCathedra(Cathedra $cathedras)
     {
         $this->cathedras->removeElement($cathedras);
     }
@@ -350,7 +356,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get cathedras
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return Collection
      */
     public function getCathedras()
     {
@@ -376,14 +382,17 @@ class User implements UserInterface, \Serializable
     {
         return null;
     }
+
     public function eraseCredentials()
     {
         return null;
     }
+
     public function getRoles()
     {
         return $this->roles;
     }
+
     /** @see \Serializable::serialize() */
     public function serialize()
     {
@@ -399,7 +408,9 @@ class User implements UserInterface, \Serializable
         ));
     }
 
-    /** @see \Serializable::unserialize() */
+    /** @see \Serializable::unserialize()
+     * @param string $serialized
+     */
     public function unserialize($serialized)
     {
         list (
@@ -413,11 +424,13 @@ class User implements UserInterface, \Serializable
             // $this->salt
             ) = unserialize($serialized);
     }
+
     public function addRole($role)
     {
         $this->roles[] = $role;
         return $this;
     }
+
     public function removeRole($role)
     {
         $this->roles[] = $role;
@@ -428,6 +441,7 @@ class User implements UserInterface, \Serializable
         }
         return $this;
     }
+
     public function isStudent()
     {
         if (in_array("ROLE_STUDENT", $this->getRoles())) {
@@ -435,6 +449,7 @@ class User implements UserInterface, \Serializable
         }
         return false;
     }
+
     public function isTeacher()
     {
         if (in_array("ROLE_TEACHER", $this->getRoles())) {
@@ -442,6 +457,7 @@ class User implements UserInterface, \Serializable
         }
         return false;
     }
+
     public function isAdmin()
     {
         if (in_array("ROLE_ADMIN", $this->getRoles())) {
@@ -449,6 +465,4 @@ class User implements UserInterface, \Serializable
         }
         return false;
     }
-
-
 }

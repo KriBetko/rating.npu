@@ -2,6 +2,7 @@
 
 namespace Rating\SubdivisionBundle\Form;
 
+use Rating\SubdivisionBundle\Entity\Job;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -14,6 +15,10 @@ class EducationType extends AbstractType
 {
     public $job;
 
+    /**
+     * EducationType constructor.
+     * @param Job $job
+     */
     public function __construct($job)
     {
         $this->job = $job;
@@ -81,7 +86,7 @@ class EducationType extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'job';
     }

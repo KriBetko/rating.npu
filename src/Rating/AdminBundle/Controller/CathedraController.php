@@ -2,6 +2,7 @@
 
 namespace Rating\AdminBundle\Controller;
 
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -34,12 +35,14 @@ class CathedraController extends Controller
             'entities' => $entities,
         );
     }
+
     /**
      * Creates a new Cathedra entity.
-
      * @Route("/", name="cathedra_create")
      * @Method("POST")
      * @Template("RatingAdminBundle:Cathedra:new.html.twig")
+     * @param Request $request
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createAction(Request $request)
     {
@@ -105,6 +108,8 @@ class CathedraController extends Controller
      * @Route("/{id}", name="cathedra_show")
      * @Method("GET")
      * @Template()
+     * @param $id
+     * @return array
      */
     public function showAction($id)
     {
@@ -130,6 +135,8 @@ class CathedraController extends Controller
      * @Route("/{id}/edit", name="cathedra_edit")
      * @Method("GET")
      * @Template()
+     * @param $id
+     * @return array
      */
     public function editAction($id)
     {
@@ -170,12 +177,16 @@ class CathedraController extends Controller
 
         return $form;
     }
+
     /**
      * Edits an existing Cathedra entity.
      *
      * @Route("/{id}", name="cathedra_update")
      * @Method("PUT")
      * @Template("RatingAdminBundle:Cathedra:edit.html.twig")
+     * @param Request $request
+     * @param $id
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function updateAction(Request $request, $id)
     {
@@ -203,11 +214,15 @@ class CathedraController extends Controller
             'delete_form' => $deleteForm->createView(),
         );
     }
+
     /**
      * Deletes a Cathedra entity.
      *
      * @Route("/{id}", name="cathedra_delete")
      * @Method("DELETE")
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request, $id)
     {
@@ -241,9 +256,8 @@ class CathedraController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('cathedra_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
-        ;
+            ->add('submit', SubmitType::class, array('label' => 'Delete'))
+            ->getForm();
     }
 
 }

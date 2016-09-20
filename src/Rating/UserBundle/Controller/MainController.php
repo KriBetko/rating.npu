@@ -12,6 +12,8 @@ class MainController extends Controller
 {
     /**
      * @Route("/google/check", name="google_check")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function checkAction(Request $request)
     {
@@ -42,8 +44,10 @@ class MainController extends Controller
 
     /**
      * @Route("/logout", name="logout")
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @internal param Request $request
      */
-    public function logoutAction(Request $request)
+    public function logoutAction()
     {
         $this->get('security.token_storage')->setToken(null);
         return $this->redirectToRoute('homepage');

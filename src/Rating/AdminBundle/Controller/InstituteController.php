@@ -2,6 +2,7 @@
 
 namespace Rating\AdminBundle\Controller;
 
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -37,12 +38,15 @@ class InstituteController extends Controller
             'entities' => $entities
         ));
     }
+
     /**
      * Creates a new Institute entity.
      *
      * @Route("/", name="institute_create")
      * @Method("POST")
      * @Template("RatingAdminBundle:Institute:new.html.twig")
+     * @param Request $request
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createAction(Request $request)
     {
@@ -108,6 +112,8 @@ class InstituteController extends Controller
      * @Route("/{id}", name="institute_show")
      * @Method("GET")
      * @Template()
+     * @param $id
+     * @return array
      */
     public function showAction($id)
     {
@@ -133,6 +139,8 @@ class InstituteController extends Controller
      * @Route("/{id}/edit", name="institute_edit")
      * @Method("GET")
      * @Template()
+     * @param $id
+     * @return array
      */
     public function editAction($id)
     {
@@ -173,12 +181,16 @@ class InstituteController extends Controller
 
         return $form;
     }
+
     /**
      * Edits an existing Institute entity.
      *
      * @Route("/{id}", name="institute_update")
      * @Method("PUT")
      * @Template("RatingAdminBundle:Institute:edit.html.twig")
+     * @param Request $request
+     * @param $id
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function updateAction(Request $request, $id)
     {
@@ -206,11 +218,15 @@ class InstituteController extends Controller
             'delete_form' => $deleteForm->createView(),
         );
     }
+
     /**
      * Deletes a Institute entity.
      *
      * @Route("/{id}", name="institute_delete")
      * @Method("DELETE")
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request, $id)
     {
@@ -244,8 +260,7 @@ class InstituteController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('institute_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
-        ;
+            ->add('submit', SubmitType::class, array('label' => 'Delete'))
+            ->getForm();
     }
 }

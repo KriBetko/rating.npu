@@ -16,8 +16,10 @@ class MainController extends Controller
 {
     /**
      * @Route("/management/", name="cathedras_list")
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @internal param Request $request
      */
-    public function listAction (Request $request)
+    public function listAction ()
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
@@ -47,6 +49,8 @@ class MainController extends Controller
 
     /**
      * @Route("/rating", name="rating_user")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function ratingAction(Request $request)
     {
@@ -72,6 +76,8 @@ class MainController extends Controller
 
     /**
      * @Route("/rating/student", name="rating_student")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function ratingStudentAction(Request $request)
     {
@@ -97,8 +103,11 @@ class MainController extends Controller
 
     /**
      * @Route("/cathedra/{id}", name="profile_cathedra_show")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @internal param Request $request
      */
-    public function showCathedraAction (Request $request, $id)
+    public function showCathedraAction ($id)
     {
         $em = $this->getDoctrine()->getManager();
         $cathedra = $em->getRepository("RatingSubdivisionBundle:Cathedra")->findOneById($id);
@@ -118,8 +127,11 @@ class MainController extends Controller
 
     /**
      * @Route("/user/{id}/show", name="profile_user_show")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @internal param Request $request
      */
-    public function showUserAction (Request $request, $id)
+    public function showUserAction ($id)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository("RatingUserBundle:User")->findOneById($id);
@@ -138,11 +150,13 @@ class MainController extends Controller
 
     /**
      * @Route("/institute/{id}", name="profile_institute_show")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @internal param Request $request
      */
-    public function showInstituteAction (Request $request, $id)
+    public function showInstituteAction ($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $user = $this->getUser();
         $institute = $em->getRepository("RatingSubdivisionBundle:Institute")->findOneById($id);
 
         return $this->render('RatingSubdivisionBundle::cathedras.html.twig',

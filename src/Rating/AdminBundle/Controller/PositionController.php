@@ -2,6 +2,7 @@
 
 namespace Rating\AdminBundle\Controller;
 
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -35,12 +36,15 @@ class PositionController extends Controller
             'entities' => $entities,
         );
     }
+
     /**
      * Creates a new Position entity.
      *
      * @Route("/", name="position_create")
      * @Method("POST")
      * @Template("RatingAdminBundle:Position:new.html.twig")
+     * @param Request $request
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createAction(Request $request)
     {
@@ -105,6 +109,8 @@ class PositionController extends Controller
      * @Route("/{id}", name="position_show")
      * @Method("GET")
      * @Template()
+     * @param $id
+     * @return array
      */
     public function showAction($id)
     {
@@ -130,6 +136,8 @@ class PositionController extends Controller
      * @Route("/{id}/edit", name="position_edit")
      * @Method("GET")
      * @Template()
+     * @param $id
+     * @return array
      */
     public function editAction($id)
     {
@@ -169,12 +177,16 @@ class PositionController extends Controller
 
         return $form;
     }
+
     /**
      * Edits an existing Position entity.
      *
      * @Route("/{id}", name="position_update")
      * @Method("PUT")
      * @Template("RatingAdminBundle:Position:edit.html.twig")
+     * @param Request $request
+     * @param $id
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function updateAction(Request $request, $id)
     {
@@ -202,11 +214,15 @@ class PositionController extends Controller
             'delete_form' => $deleteForm->createView(),
         );
     }
+
     /**
      * Deletes a Position entity.
      *
      * @Route("/{id}", name="position_delete")
      * @Method("DELETE")
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request, $id)
     {
@@ -240,8 +256,7 @@ class PositionController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('position_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
-        ;
+            ->add('submit', SubmitType::class, array('label' => 'Delete'))
+            ->getForm();
     }
 }

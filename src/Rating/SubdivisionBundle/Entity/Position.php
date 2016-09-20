@@ -35,7 +35,7 @@ class Position
     /**
      * Set title
      *
-     * @param string $titl
+     * @param string $title
      * @return Institute
      */
     public function setTitle($title)

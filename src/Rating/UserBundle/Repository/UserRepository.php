@@ -2,10 +2,9 @@
 namespace Rating\UserBundle\Repository;
 
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\User\UserProviderInterface;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 class UserRepository extends EntityRepository implements UserProviderInterface
 {
@@ -19,16 +18,20 @@ class UserRepository extends EntityRepository implements UserProviderInterface
 
         if (null === $user) {
             return null;
-            $message = sprintf(
+            /*$message = sprintf(
                 'Unable to find an active admin AppBundle:User object identified by "%s".',
                 $username
             );
-            throw new UsernameNotFoundException($message);
+            throw new UsernameNotFoundException($message);*/
         }
 
         return $user;
     }
 
+    /**
+     * @param UserInterface $user
+     * @return null|object
+     */
     public function refreshUser(UserInterface $user)
     {
         $class = get_class($user);

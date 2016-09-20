@@ -2,12 +2,7 @@
 
 namespace Rating\ProfileBundle\Controller;
 
-use FOS\UserBundle\Event\FilterUserResponseEvent;
-use FOS\UserBundle\Event\GetResponseUserEvent;
 use Rating\SubdivisionBundle\Form\EducationType;
-use Rating\UserBundle\Form\Type\ChangePasswordFormType;
-use FOS\UserBundle\FOSUserEvents;
-use FOS\UserBundle\Model\UserInterface;
 use Rating\SubdivisionBundle\Form\JobType;
 use Rating\SubdivisionBundle\Entity\Job;
 use Rating\UserBundle\Form\UserType;
@@ -47,6 +42,8 @@ class ProfileController extends Controller
 
     /**
      * @Route("/async/save/job", name="profile_save_job")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function asyncSaveJobAction(Request $request)
     {
@@ -74,6 +71,9 @@ class ProfileController extends Controller
 
     /**
      * @Route("/async/edit/job/{id}", name="profile_edit_job")
+     * @param Request $request
+     * @param null $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function asyncEditJobAction(Request $request, $id = null)
     {
@@ -106,8 +106,10 @@ class ProfileController extends Controller
 
     /**
      * @Route("/async/remove/job/{id}", name="profile_remove_job")
+     * @param null $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function asyncRemoveJobAction(Request $request, $id = null)
+    public function asyncRemoveJobAction($id = null)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
@@ -123,6 +125,8 @@ class ProfileController extends Controller
 
     /**
      * @Route("/edit", name="my_profile_edit")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function editProfileAction(Request $request)
     {

@@ -1,7 +1,10 @@
 <?php
 namespace Rating\SubdivisionBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Rating\UserBundle\Entity\User;
 
 /**
  * @ORM\Entity
@@ -22,12 +25,12 @@ class Institute
      */
     protected $title;
     /**
-     * @ORM\OneToOne(targetEntity="Rating\UserBundle\Entity\User")
+     * @ORM\OneToOne(targetEntity="User)
      * @ORM\JoinColumn(name="director", referencedColumnName="id")
      */
     protected $director;
     /**
-     * @ORM\ManyToMany(targetEntity="Rating\UserBundle\Entity\User", inversedBy="institutes")
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="institutes")
      * @ORM\JoinTable(name="institutes_users")
      */
     protected $managers;
@@ -47,8 +50,8 @@ class Institute
      */
     public function __construct()
     {
-        $this->cathedras = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->managers = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->cathedras = new ArrayCollection();
+        $this->managers = new ArrayCollection();
     }
 
     /**
@@ -64,7 +67,7 @@ class Institute
     /**
      * Set title
      *
-     * @param string $titl
+     * @param string $title
      * @return Institute
      */
     public function setTitle($title)
@@ -110,10 +113,10 @@ class Institute
     /**
      * Add cathedras
      *
-     * @param \Rating\SubdivisionBundle\Entity\Cathedra $cathedras
+     * @param Cathedra $cathedras
      * @return Institute
      */
-    public function addCathedra(\Rating\SubdivisionBundle\Entity\Cathedra $cathedras)
+    public function addCathedra(Cathedra $cathedras)
     {
         $this->cathedras[] = $cathedras;
 
@@ -123,9 +126,9 @@ class Institute
     /**
      * Remove cathedras
      *
-     * @param \Rating\SubdivisionBundle\Entity\Cathedra $cathedras
+     * @param Cathedra $cathedras
      */
-    public function removeCathedra(\Rating\SubdivisionBundle\Entity\Cathedra $cathedras)
+    public function removeCathedra(Cathedra $cathedras)
     {
         $this->cathedras->removeElement($cathedras);
     }
@@ -133,7 +136,7 @@ class Institute
     /**
      * Get cathedras
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return Collection
      */
     public function getCathedras()
     {
@@ -141,14 +144,13 @@ class Institute
     }
 
 
-
     /**
      * Set director
      *
-     * @param \Rating\UserBundle\Entity\User $director
+     * @param User $director
      * @return Institute
      */
-    public function setDirector(\Rating\UserBundle\Entity\User $director = null)
+    public function setDirector(User $director = null)
     {
         $this->director = $director;
 
@@ -158,7 +160,7 @@ class Institute
     /**
      * Get director
      *
-     * @return \Rating\UserBundle\Entity\User 
+     * @return User
      */
     public function getDirector()
     {
@@ -168,10 +170,10 @@ class Institute
     /**
      * Add managers
      *
-     * @param \Rating\UserBundle\Entity\User $managers
+     * @param User $managers
      * @return Institute
      */
-    public function addManager(\Rating\UserBundle\Entity\User $managers)
+    public function addManager(User $managers)
     {
         $this->managers[] = $managers;
 
@@ -181,9 +183,9 @@ class Institute
     /**
      * Remove managers
      *
-     * @param \Rating\UserBundle\Entity\User $managers
+     * @param User $managers
      */
-    public function removeManager(\Rating\UserBundle\Entity\User $managers)
+    public function removeManager(User $managers)
     {
         $this->managers->removeElement($managers);
     }
@@ -191,7 +193,7 @@ class Institute
     /**
      * Get managers
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return Collection
      */
     public function getManagers()
     {

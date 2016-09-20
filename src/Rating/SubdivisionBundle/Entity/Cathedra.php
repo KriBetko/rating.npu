@@ -1,7 +1,9 @@
 <?php
 namespace Rating\SubdivisionBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Rating\UserBundle\Entity\User;
 
 /**
  * @ORM\Entity
@@ -47,8 +49,8 @@ class Cathedra
 
     public function __construct()
     {
-        $this->managers = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->managers = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     /**
@@ -110,10 +112,10 @@ class Cathedra
     /**
      * Set institute
      *
-     * @param \Rating\SubdivisionBundle\Entity\Institute $institute
+     * @param Institute $institute
      * @return Cathedra
      */
-    public function setInstitute(\Rating\SubdivisionBundle\Entity\Institute $institute = null)
+    public function setInstitute(Institute $institute = null)
     {
         $this->institute = $institute;
 
@@ -123,7 +125,7 @@ class Cathedra
     /**
      * Get institute
      *
-     * @return \Rating\SubdivisionBundle\Entity\Institute 
+     * @return Institute
      */
     public function getInstitute()
     {
@@ -134,10 +136,10 @@ class Cathedra
     /**
      * Add users
      *
-     * @param \Rating\UserBundle\Entity\User $users
+     * @param User $users
      * @return Cathedra
      */
-    public function addUser(\Rating\UserBundle\Entity\User $users)
+    public function addUser(User $users)
     {
         $this->users[] = $users;
 
@@ -147,9 +149,9 @@ class Cathedra
     /**
      * Remove users
      *
-     * @param \Rating\UserBundle\Entity\User $users
+     * @param User $users
      */
-    public function removeUser(\Rating\UserBundle\Entity\User $users)
+    public function removeUser(User $users)
     {
         $this->users->removeElement($users);
     }
@@ -167,10 +169,10 @@ class Cathedra
     /**
      * Set director
      *
-     * @param \Rating\UserBundle\Entity\User $director
+     * @param User $director
      * @return Cathedra
      */
-    public function setDirector(\Rating\UserBundle\Entity\User $director = null)
+    public function setDirector(User $director = null)
     {
         $this->director = $director;
 
@@ -190,10 +192,10 @@ class Cathedra
     /**
      * Add managers
      *
-     * @param \Rating\UserBundle\Entity\User $managers
+     * @param User $managers
      * @return Cathedra
      */
-    public function addManager(\Rating\UserBundle\Entity\User $managers)
+    public function addManager(User $managers)
     {
         $this->managers[] = $managers;
 
@@ -203,9 +205,9 @@ class Cathedra
     /**
      * Remove managers
      *
-     * @param \Rating\UserBundle\Entity\User $managers
+     * @param User $managers
      */
-    public function removeManager(\Rating\UserBundle\Entity\User $managers)
+    public function removeManager(User $managers)
     {
         $this->managers->removeElement($managers);
     }

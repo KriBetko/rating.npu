@@ -2,7 +2,9 @@
 namespace Rating\SubdivisionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Rating\UserBundle\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="Rating\SubdivisionBundle\Repository\JobRepository")
@@ -181,8 +183,6 @@ class Job
         $this->specialization = $specialization;
     }
 
-
-
     /**
      * Get id
      *
@@ -242,10 +242,10 @@ class Job
     /**
      * Set user
      *
-     * @param \Rating\UserBundle\Entity\User $user
+     * @param User $user
      * @return Job
      */
-    public function setUser(\Rating\UserBundle\Entity\User $user = null)
+    public function setUser(User $user = null)
     {
         $this->user = $user;
 
@@ -255,7 +255,7 @@ class Job
     /**
      * Get user
      *
-     * @return \Rating\UserBundle\Entity\User 
+     * @return User
      */
     public function getUser()
     {
@@ -265,10 +265,10 @@ class Job
     /**
      * Set position
      *
-     * @param \Rating\SubdivisionBundle\Entity\Position $position
+     * @param Position $position
      * @return Job
      */
-    public function setPosition(\Rating\SubdivisionBundle\Entity\Position $position = null)
+    public function setPosition(Position $position = null)
     {
         $this->position = $position;
 
@@ -278,7 +278,7 @@ class Job
     /**
      * Get position
      *
-     * @return \Rating\SubdivisionBundle\Entity\Position 
+     * @return Position
      */
     public function getPosition()
     {
@@ -288,10 +288,10 @@ class Job
     /**
      * Set cathedra
      *
-     * @param \Rating\SubdivisionBundle\Entity\Cathedra $cathedra
+     * @param Cathedra $cathedra
      * @return Job
      */
-    public function setCathedra(\Rating\SubdivisionBundle\Entity\Cathedra $cathedra = null)
+    public function setCathedra(Cathedra $cathedra = null)
     {
         $this->cathedra = $cathedra;
 
@@ -301,7 +301,7 @@ class Job
     /**
      * Get cathedra
      *
-     * @return \Rating\SubdivisionBundle\Entity\Cathedra 
+     * @return Cathedra
      */
     public function getCathedra()
     {
@@ -311,10 +311,10 @@ class Job
     /**
      * Set institute
      *
-     * @param \Rating\SubdivisionBundle\Entity\Institute $institute
+     * @param Institute $institute
      * @return Job
      */
-    public function setInstitute(\Rating\SubdivisionBundle\Entity\Institute $institute = null)
+    public function setInstitute(Institute $institute = null)
     {
         $this->institute = $institute;
 
@@ -324,7 +324,7 @@ class Job
     /**
      * Get institute
      *
-     * @return \Rating\SubdivisionBundle\Entity\Institute 
+     * @return Institute
      */
     public function getInstitute()
     {

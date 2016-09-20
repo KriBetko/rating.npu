@@ -9,6 +9,12 @@ class OAuthProvider
 {
     protected $session, $doctrine, $admins;
 
+    /**
+     * OAuthProvider constructor.
+     * @param $session
+     * @param $doctrine
+     * @param $service_container
+     */
     public function __construct($session, $doctrine, $service_container)
     {
         $this->session = $session;
@@ -48,7 +54,7 @@ class OAuthProvider
         $email = $response->getEmail();
         $firstname = $response->getNickname();
         $surname = $response->getRealName();
-        $avatar = $response->getProfilePicture();
+        //$avatar = $response->getProfilePicture();
 
 
         $qb = $this->doctrine->getManager()->createQueryBuilder();
@@ -67,9 +73,12 @@ class OAuthProvider
             $user->setGoogleId($google_id);
             $user->setEmail($email);
             $user->setParentName($firstname);
-            if ($responseArray['hd'] == 'npu.edu.ua'){
+
+            if ($responseArray['hd'] == 'npu.edu.ua')
+            {
                 $user->addRole('ROLE_USER');
                 $user->addRole('ROLE_TEACHER');
+
             }
             if ($responseArray['hd'] == 'std.npu.edu.ua'){
                 $user->addRole('ROLE_USER');
