@@ -3,8 +3,10 @@
 namespace Rating\UserBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UserType extends AbstractType
 {
@@ -15,7 +17,7 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
-         $builder->add('email', 'text', array(
+         $builder->add('email', TextType::class, array(
              'disabled' => true,
              'attr' => array(
                  'class' => 'form-control',
@@ -43,17 +45,17 @@ class UserType extends AbstractType
             'label' => 'По-батькові'
         ))
 
-            ->add('birthday', 'date', array(
+            ->add('birthday', DateType::class, array(
                 'widget' => 'single_text',
                 'label'  => 'Дата народження'
             ))
         ;
     }
-    
+
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'Rating\UserBundle\Entity\User',

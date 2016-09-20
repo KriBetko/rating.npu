@@ -4,7 +4,7 @@ namespace Rating\UserBundle\Security;
 
 use Rating\UserBundle\Entity\User;
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
-use Symfony\Component\Routing\Router;
+
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 

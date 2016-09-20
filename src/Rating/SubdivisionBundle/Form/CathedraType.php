@@ -2,9 +2,12 @@
 
 namespace Rating\SubdivisionBundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CathedraType extends AbstractType
 {
@@ -15,20 +18,20 @@ class CathedraType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', 'text', array(
+            ->add('title', TextType::class, array(
                 'label' => 'Назва'
             ))
-            ->add('description', 'textarea', array(
+            ->add('description', TextareaType::class, array(
                 'label' => 'Короткий опис',
                 'required' => false
             ))
 
-            ->add('institute', 'entity', array(
+            ->add('institute', EntityType::class, array(
                 'class' => 'RatingSubdivisionBundle:Institute',
-                'property' => 'title',
+                'choice_label' => 'title',
                 'label' => 'Институт'
             ))
-            ->add('director', 'entity', array(
+            ->add('director', EntityType::class, array(
                 'class' => 'RatingUserBundle:User',
                 'label' => 'Директор',
                 'required'    => false,
@@ -36,7 +39,7 @@ class CathedraType extends AbstractType
                 'empty_data'  => null
             ))
 
-            ->add('managers', 'entity', array(
+            ->add('managers', EntityType::class, array(
                 'class' => 'RatingUserBundle:User',
                 'label' => 'Керівники',
                 'empty_value' => null,
@@ -46,11 +49,11 @@ class CathedraType extends AbstractType
             ))
         ;
     }
-    
+
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'Rating\SubdivisionBundle\Entity\Cathedra'

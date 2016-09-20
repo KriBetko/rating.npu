@@ -13,10 +13,10 @@ use Rating\SubdivisionBundle\Entity\Job;
 use Rating\UserBundle\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+
+
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
 
 /**
  * @Route("/profile")

@@ -2,9 +2,11 @@
 
 namespace AppBundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class YearType extends AbstractType
 {
@@ -23,24 +25,24 @@ class YearType extends AbstractType
                 'label' => 'Дозволити редагування?',
                 'required' => false
             ))
-            ->add('title', 'text', array(
+            ->add('title', TextType::class, array(
                 'label' => 'Назва'
             ))
 
-            ->add('criteria', 'entity', array(
+            ->add('criteria', EntityType::class, array(
                 'label' => "Список критеріїв",
                 'class' => 'AppBundle:Criterion',
-                'property' => 'title',
+                'choice_label' => 'title',
                 'multiple' => true,
                 'expanded' => true
             ))
         ;
     }
-    
+
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Year'

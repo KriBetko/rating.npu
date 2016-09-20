@@ -4,9 +4,11 @@ namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use AppBundle\Form\FieldType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MeasureType extends AbstractType
 {
@@ -23,11 +25,11 @@ class MeasureType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         if ($this->measure->isPlural()){
-            $builder->add('value', 'integer', array(
+            $builder->add('value', IntegerType::class, array(
                 'label' => false
             ));
         } else {
-            $builder->add('value', 'checkbox', array(
+            $builder->add('value', CheckboxType::class, array(
                 'label' => $this->measure->getTitle(),
                 'required'  => false,
 
@@ -44,7 +46,7 @@ class MeasureType extends AbstractType
                 ))
             ;
         }
-        $builder->add('fields', 'collection', array(
+        $builder->add('fields', CollectionType::class, array(
                 'type' => new FieldType(),
                     'label' =>false,
                     'allow_add'    => true,
@@ -55,11 +57,11 @@ class MeasureType extends AbstractType
         ;
 
     }
-    
+
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Measure'

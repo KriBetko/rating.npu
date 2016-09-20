@@ -2,10 +2,13 @@
 
 namespace Rating\SubdivisionBundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Doctrine\ORM\EntityRepository;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EducationType extends AbstractType
 {
@@ -24,9 +27,9 @@ class EducationType extends AbstractType
     {
         $builder
 
-            ->add('institute', 'entity', array(
+            ->add('institute', EntityType::class, array(
                 'class' => 'RatingSubdivisionBundle:Institute',
-                'property' => 'title',
+                'choice_label' => 'title',
                 'label' => 'Інститут',
                 'attr' => array(
                     'class' => 'form-control'
@@ -34,7 +37,7 @@ class EducationType extends AbstractType
                 'required'    => true,
                 'empty_data'  => null
             ))
-            ->add('formEducation', 'choice', array(
+            ->add('formEducation', ChoiceType::class, array(
                 'label'     => 'Форма навчання',
                 'choices'    => $this->job->getFormList(),
                 'required'    => true,
@@ -42,19 +45,19 @@ class EducationType extends AbstractType
 
 
             ))
-            ->add('entryYear', 'date', array(
+            ->add('entryYear', DateType::class, array(
                 'years' => range(2008, date('Y')),
                 'label' => 'Рік вступу',
                 'widget'    => 'choice',
                 'months'    => array(1),
                 'days'      => array(1)
             ))
-            ->add('specialization', 'text', array(
+            ->add('specialization', TextType::class, array(
                 'label'     => 'Спеціальність',
                 'required'  => false
 
             ))
-            ->add('group', 'text', array(
+            ->add('group', TextType::class, array(
                     'label'     => 'Група',
                     'required'  => false
 
@@ -63,11 +66,11 @@ class EducationType extends AbstractType
         ;
 
     }
-    
+
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'Rating\SubdivisionBundle\Entity\Job',

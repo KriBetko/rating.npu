@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Rating\SubdivisionBundle\Entity\Institute;
 use Rating\SubdivisionBundle\Form\InstituteType;
-use Symfony\Component\HttpFoundation\Response;
+
 
 /**
  * Institute controller.

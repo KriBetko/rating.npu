@@ -2,15 +2,21 @@
 
 namespace Rating\SubdivisionBundle\Form;
 
+use Rating\SubdivisionBundle\Entity\Job;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class JobType extends AbstractType
 {
     public $instituteId;
 
+    /**
+     * @param Job $job
+     */
     public function __construct($job)
     {
         $this->instituteId = ($job->getInstitute()) ? $job->getInstitute()->getId() : null;
@@ -24,9 +30,9 @@ class JobType extends AbstractType
     {
         $builder
 
-            ->add('institute', 'entity', array(
+            ->add('institute', EntityType::class, array(
                 'class' => 'RatingSubdivisionBundle:Institute',
-                'property' => 'title',
+                'choice_label' => 'title',
                 'label' => 'Факультет',
                 'attr' => array(
                     'class' => 'form-control'
@@ -37,13 +43,13 @@ class JobType extends AbstractType
             ))
 
 
-            ->add('cathedra', 'entity', array(
+            ->add('cathedra', EntityType::class, array(
                 'class' => 'RatingSubdivisionBundle:Cathedra',
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('c')
                         ->orderBy('c.title', 'ASC');
                 },
-                'property' => 'title',
+                'choice_label' => 'title',
                 'label' => 'Кафедра',
                 'attr' => array(
                     'class' => 'form-control'
@@ -54,13 +60,13 @@ class JobType extends AbstractType
             ))
             
 
-            ->add('position', 'entity', array(
+            ->add('position', EntityType::class, array(
                 'class' => 'RatingSubdivisionBundle:Position',
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('c')
                         ->orderBy('c.title', 'ASC');
                 },
-                'property' => 'title',
+                'choice_label' => 'title',
                 'label' => 'Посада',
                 'attr' => array(
                     'class' => 'form-control'
@@ -69,8 +75,8 @@ class JobType extends AbstractType
                 'placeholder' => 'Оберіть посаду',
                 'empty_data'  => null
             ))
-            ->add('bet', 'number', array(
-                'precision' => 2,
+            ->add('bet', NumberType::class, array(
+                'scale' => 2,
                 'label'     => 'Ставка'
 
             ))
@@ -79,11 +85,11 @@ class JobType extends AbstractType
             ));
 
     }
-    
+
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'Rating\SubdivisionBundle\Entity\Job',
@@ -94,7 +100,7 @@ class JobType extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'job';
     }

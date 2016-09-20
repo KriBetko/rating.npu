@@ -4,11 +4,12 @@ namespace Rating\SubdivisionBundle\Form;
 
 use Doctrine\ORM\EntityManager;
 use Rating\SubdivisionBundle\Entity\Job;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\ORM\EntityRepository;
-use Symfony\Component\Validator\Constraints\Choice;
 
 class FilterStudentType extends AbstractType
 {
@@ -28,13 +29,13 @@ class FilterStudentType extends AbstractType
     {
         $builder
 
-            ->add('years', 'entity', array(
+            ->add('years', EntityType::class, array(
                 'class' => 'AppBundle\Entity\Year',
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('c')
                         ->orderBy('c.id', 'ASC');
                 },
-                'property' => 'title',
+                'choice_label' => 'title',
                 'label' => 'Рік',
                 'attr' => array(
                     'class' => 'form-control'
@@ -43,9 +44,9 @@ class FilterStudentType extends AbstractType
                 'required'    => true
             ))
 
-            ->add('institute', 'entity', array(
+            ->add('institute', EntityType::class, array(
                 'class' => 'RatingSubdivisionBundle:Institute',
-                'property' => 'title',
+                'choice_label' => 'title',
                 'label' => 'Факультет',
                 'attr' => array(
                     'class' => 'form-control'
@@ -55,7 +56,7 @@ class FilterStudentType extends AbstractType
                 'empty_data'  => null
             ))
 
-            ->add('formEducation', 'choice', array(
+            ->add('formEducation', ChoiceType::class, array(
                 'choices' => Job::$fList,
                 'empty_value' => 'Не обрано',
                 'label' => 'Форма навчання',
@@ -68,7 +69,7 @@ class FilterStudentType extends AbstractType
 
             ))
 
-            ->add('group', 'choice', array(
+            ->add('group', ChoiceType::class, array(
                 'choices' =>
                     $this->em->getRepository('RatingSubdivisionBundle:Job')->getGroupList()
                 ,
@@ -80,11 +81,11 @@ class FilterStudentType extends AbstractType
           ;
 
     }
-    
+
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'Rating\SubdivisionBundle\Entity\Job'

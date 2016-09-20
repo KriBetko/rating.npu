@@ -3,9 +3,12 @@
 namespace AppBundle\Form;
 
 use AppBundle\Entity\Group;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CriterionType extends AbstractType
 {
@@ -16,7 +19,7 @@ class CriterionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', 'text', array(
+            ->add('title', TextType::class, array(
                 'label' => 'Назва'
             ))
             ->add('coefficient', null, array(
@@ -29,9 +32,9 @@ class CriterionType extends AbstractType
 
 
 
-            ->add('group', 'entity', array(
+            ->add('group', EntityType::class, array(
                 'class' => 'AppBundle:Group',
-                'property' => 'title',
+                'choice_label' => 'title',
                 'label' => 'Групи критеріїв',
                 'attr' => array(
                     'class' => 'form-control'
@@ -40,9 +43,9 @@ class CriterionType extends AbstractType
                 'placeholder' => 'Група критерїів',
                 'empty_data'  => null
             ))
-            ->add('category', 'entity', array(
+            ->add('category', EntityType::class, array(
                 'class' => 'AppBundle:Category',
-                'property' => 'title',
+                'choice_label' => 'title',
                 'label' => 'Категрія',
                 'attr' => array(
                     'class' => 'form-control'
@@ -51,7 +54,7 @@ class CriterionType extends AbstractType
                 'placeholder' => 'Категорія',
                 'empty_data'  => null
             ))
-            ->add('plural', 'choice', array(
+            ->add('plural', ChoiceType::class, array(
                 'label' => 'Тип',
                 'choices'   => array(
                     Group::T_PLURAL => 'Множинний',
@@ -60,11 +63,11 @@ class CriterionType extends AbstractType
             ))
         ;
     }
-    
+
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Criterion'

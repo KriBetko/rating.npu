@@ -1,7 +1,7 @@
 <?php
 namespace Rating\SubdivisionBundle\Controller;
 
-use AppBundle\Entity\Year;
+
 use Rating\SubdivisionBundle\Entity\Job;
 use Rating\SubdivisionBundle\Form\FilterStudentType;
 use Rating\SubdivisionBundle\Form\FilterType;
