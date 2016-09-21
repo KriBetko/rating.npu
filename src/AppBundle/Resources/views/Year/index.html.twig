@@ -1,10 +1,9 @@
 {% extends '::admin.html.twig' %}
 {% block title %} Навчальні роки{% endblock %}
 {% block body -%}
-    <a class="btn btn-primary" href="{{ path('admin_index') }}">{{ 'Назад' }}</a>
-    <a class="btn btn-success pull-right" href="{{ path('year_new') }}">{{ 'Додати Рік' }}</a>
-    <br>
     <h1>Навчальні роки</h1>
+    <a class="btn btn-success pull-right" href="{{ path('year_new') }}">{{ 'Додати Рік' }}</a>
+    <br><br><br>
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -17,9 +16,9 @@
         <tbody>
         {% for entity in entities %}
             <tr  {% if entity.active == true %}style="background-color: lavender"{% endif %}>
-                <td><a href="{{ path('year_edit', { 'id': entity.id }) }}">{{ loop.index }}</a></td>
+                <td class="col-md-1"><a href="{{ path('year_edit', { 'id': entity.id }) }}">{{ loop.index }}</a></td>
                 <td>{{ entity.title }}</td>
-                <td>
+                <td class="col-md-2">
                     <a class="btn btn-info btn-mini" href="{{ path('year_edit', { 'id': entity.id }) }}" title="Редагувати">
                         <span  class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                     </a>

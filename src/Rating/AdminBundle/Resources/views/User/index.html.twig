@@ -2,11 +2,6 @@
 
 {% block body -%}
     <h1>Користувачі</h1>
-    <br><br>
-    <a class="btn btn-primary" href="{{ path('admin_index') }}">
-        {{ 'Назад' }}
-    </a>
-    <br><br>
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -21,23 +16,22 @@
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td>{{ loop.index }}</td>
+                <td class="col-md-1">{{ loop.index }}</td>
                 <td>{{ entity.firstName }}</td>
                 <td>{{ entity.lastName }}</td>
                 <td>{{ entity.parentName }}</td>
                 <td>{{ entity.email }}</td>
-                <td class="td-center">
+                <td class="td-center col-md-1">
                     {% if  entity.isAdmin() %}
                         <a href="{{ path('change_role', {'id': entity.id}) }}" class="btn btn-success btn-mini">
-                        <span  class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                    </a>
+                            <span  class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        </a>
                     {% else %}
                         <a  href="{{ path('change_role', {'id': entity.id}) }}"  class="btn btn-danger btn-mini">
                             <span  class="glyphicon glyphicon-minus" aria-hidden="true"></span>
                         </a>
                     {% endif %}
                 </td>
-
             </tr>
         {% endfor %}
         </tbody>

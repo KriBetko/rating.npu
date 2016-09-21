@@ -1,10 +1,9 @@
 {% extends '::admin.html.twig' %}
 {% block title %} Критерії{% endblock %}
 {% block body -%}
-    <a class="btn btn-primary" href="{{ path('admin_index') }}">{{ 'Назад' }}</a>
-    <a class="btn btn-success pull-right" href="{{ path('criterion_new') }}">{{ 'Додати Критерій' }}</a>
-    <br>
     <h1>Критерії</h1>
+    <a class="btn btn-success pull-right" href="{{ path('criterion_new') }}">{{ 'Додати Критерій' }}</a>
+    <br><br><br>
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -21,15 +20,15 @@
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('criterion_edit', { 'id': entity.id }) }}">{{ loop.index }}</a></td>
+                <td class="col-md-1"><a href="{{ path('criterion_edit', { 'id': entity.id }) }}">{{ loop.index }}</a></td>
                 <td>{{ entity.title }}</td>
-                <td>{{ entity.coefficient }}</td>
+                <td class="col-md-1">{{ entity.coefficient }}</td>
                 <td>{{ entity.reference }}</td>
                 {#<td>{{ entity.type }}</td>#}
                 <td>{% if entity.category is not null %}{{ entity.category.title }}{% endif %}</td>
                 <td>{% if entity.group is not null %}{{ entity.group.title }}{% endif %}</td>
 
-                <td>
+                <td class="col-md-1">
                     <a class="btn btn-info btn-mini" href="{{ path('criterion_edit', { 'id': entity.id }) }}">
                         <span  class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                     </a>

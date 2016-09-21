@@ -1,11 +1,9 @@
 {% extends '::admin.html.twig' %}
 
 {% block body -%}
-    <a class="btn btn-primary" href="{{ path('admin_index') }}">{{ 'Назад' }}</a>
-    <a class="btn btn-success pull-right" href="{{ path('position_new') }}">Додати посаду</a>
-    <br>
     <h1>Посади</h1>
-
+    <a class="btn btn-success pull-right" href="{{ path('position_new') }}">Додати посаду</a>
+    <br><br><br>
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -17,9 +15,9 @@
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('position_edit', { 'id': entity.id }) }}">{{ loop.index }}</a></td>
+                <td class="col-md-1"><a href="{{ path('position_edit', { 'id': entity.id }) }}">{{ loop.index }}</a></td>
                 <td>{{ entity.title }}</td>
-                <td class="center-block">
+                <td class="center-block col-md-1">
                     <a class="btn btn-info btn-mini" href="{{ path('position_edit', { 'id': entity.id }) }}">
                         <span  class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                     </a>
