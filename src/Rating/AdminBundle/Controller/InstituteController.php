@@ -15,7 +15,7 @@ use Rating\SubdivisionBundle\Form\InstituteType;
 /**
  * Institute controller.
  *
- * @Route("/admin/institute")
+ * @Route("/institute")
  */
 class InstituteController extends Controller
 {

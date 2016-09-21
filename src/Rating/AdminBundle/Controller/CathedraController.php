@@ -14,7 +14,7 @@ use Rating\SubdivisionBundle\Form\CathedraType;
 /**
  * Cathedra controller.
  *
- * @Route("/admin/cathedra")
+ * @Route("/cathedra")
  */
 class CathedraController extends Controller
 {

@@ -35,7 +35,7 @@ class EducationType extends AbstractType
             ->add('institute', EntityType::class, array(
                 'class' => 'RatingSubdivisionBundle:Institute',
                 'choice_label' => 'title',
-                'label' => 'Інститут',
+                'label' => 'Факультет',
                 'attr' => array(
                     'class' => 'form-control'
                 ),

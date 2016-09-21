@@ -147,7 +147,7 @@ class Category
             case self::TYPE_CATHEDRA:
                 return "Для кафедри";
             case self::TYPE_INSTITUTE:
-                return "Для інституту";
+                return "Для факультету";
             default:
                 return "Не обрано";
         }

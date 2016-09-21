@@ -61,7 +61,7 @@ class Job
     /**
      * @ORM\ManyToOne(targetEntity="Rating\SubdivisionBundle\Entity\Institute")
      * @ORM\JoinColumn(name="institute_id", referencedColumnName="id")
-     * @Assert\NotBlank(message="Будь ласка, оберіть інститут.", groups={"addJob"})
+     * @Assert\NotBlank(message="Будь ласка, оберіть факультет.", groups={"addJob"})
      */
     protected $institute;
 

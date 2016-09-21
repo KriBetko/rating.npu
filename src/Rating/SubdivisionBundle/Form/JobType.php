@@ -38,7 +38,7 @@ class JobType extends AbstractType
                     'class' => 'form-control'
                 ),
                 'required'    => true,
-                'placeholder' => 'Оберіть факультет(інститут)',
+                'placeholder' => 'Оберіть факультет',
                 'empty_data'  => null
             ))
 

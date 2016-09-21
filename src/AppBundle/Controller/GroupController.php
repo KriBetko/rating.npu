@@ -35,6 +35,7 @@ class GroupController extends Controller
             'entities' => $entities,
         );
     }
+    
     /**
      * Creates a new Group entity.
      *

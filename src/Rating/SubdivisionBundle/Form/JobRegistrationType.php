@@ -26,7 +26,7 @@ class JobRegistrationType extends AbstractType
                 'class' => 'form-control'
             ),
             'required'    => true,
-            'placeholder' => 'Оберіть інститут',
+            'placeholder' => 'Оберіть факультет',
             'empty_data'  => null
             ))
 

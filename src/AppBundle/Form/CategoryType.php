@@ -25,7 +25,7 @@ class CategoryType extends AbstractType
                     1 => 'Для викладачів',
                     2 => 'Для студентів',
                     3 => 'Для кафедри',
-                    4 => 'Для інститута'
+                    4 => 'Для факульету'
                 ),
                 'required' => false,
 

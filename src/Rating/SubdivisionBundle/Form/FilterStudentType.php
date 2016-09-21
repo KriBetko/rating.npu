@@ -52,7 +52,7 @@ class FilterStudentType extends AbstractType
                     'class' => 'form-control'
                 ),
                 'required'    => false,
-                'placeholder' => 'Оберіть факультет(інститут)',
+                'placeholder' => 'Оберіть факультет',
                 'empty_data'  => null
             ))
 
