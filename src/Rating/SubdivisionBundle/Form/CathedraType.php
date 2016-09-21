@@ -29,7 +29,7 @@ class CathedraType extends AbstractType
             ->add('institute', EntityType::class, array(
                 'class' => 'RatingSubdivisionBundle:Institute',
                 'choice_label' => 'title',
-                'label' => 'Институт'
+                'label' => 'Фалькутет'
             ))
             ->add('director', EntityType::class, array(
                 'class' => 'RatingUserBundle:User',

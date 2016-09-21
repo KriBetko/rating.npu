@@ -21,7 +21,7 @@ class JobRegistrationType extends AbstractType
             ->add('institute', EntityType::class, array(
             'class' => 'RatingSubdivisionBundle:Institute',
             'choice_label' => 'title',
-            'label' => 'Институт',
+            'label' => 'Факультет',
             'attr' => array(
                 'class' => 'form-control'
             ),
