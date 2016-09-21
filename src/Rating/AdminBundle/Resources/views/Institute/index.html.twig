@@ -3,9 +3,8 @@
 {% block title %} Факультети{% endblock %}
 
 {% block body -%}
-    <a class="btn btn-primary" href="{{ path('admin_index') }}">
-        {{ 'Назад' }}
-    </a>
+    <a class="btn btn-primary" href="{{ path('admin_index') }}">{{ 'Назад' }}</a>
+    <a class="btn btn-success pull-right" href="{{ path('institute_new') }}">{{ 'Додати Факультет' }}</a>
     <br>
     <h1>Факультети</h1>
     <table class="table table-bordered">
@@ -37,7 +36,4 @@
         </tbody>
     </table>
     <br>
-    <a class="btn btn-success" href="{{ path('institute_new') }}">
-        {{ 'Додати Факультет' }}
-    </a>
 {% endblock %}

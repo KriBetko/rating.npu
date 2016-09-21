@@ -1,9 +1,8 @@
 {% extends '::admin.html.twig' %}
 {% block title %} Кафедри{% endblock %}
 {% block body -%}
-    <a class="btn btn-primary" href="{{ path('admin_index') }}">
-        {{ 'Назад' }}
-    </a>
+    <a class="btn btn-primary" href="{{ path('admin_index') }}">{{ 'Назад' }}</a>
+    <a class="btn btn-success pull-right" href="{{ path('cathedra_new') }}">{{ 'Додати Кафедру' }}</a>
     <br>
     <h1>Кафедри</h1>
     <table class="table table-bordered">
@@ -34,8 +33,4 @@
         {% endfor %}
         </tbody>
     </table>
-    <br>
-    <a class="btn btn-success" href="{{ path('cathedra_new') }}">
-        {{ 'Додати Кафедру' }}
-    </a>
 {% endblock %}

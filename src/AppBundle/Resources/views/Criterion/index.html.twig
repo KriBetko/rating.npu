@@ -1,9 +1,8 @@
 {% extends '::admin.html.twig' %}
 {% block title %} Критерії{% endblock %}
 {% block body -%}
-    <a class="btn btn-primary" href="{{ path('admin_index') }}">
-        {{ 'Назад' }}
-    </a>
+    <a class="btn btn-primary" href="{{ path('admin_index') }}">{{ 'Назад' }}</a>
+    <a class="btn btn-success pull-right" href="{{ path('criterion_new') }}">{{ 'Додати Критерій' }}</a>
     <br>
     <h1>Критерії</h1>
     <table class="table table-bordered">
@@ -39,8 +38,4 @@
         {% endfor %}
         </tbody>
     </table>
-    <br>
-    <a class="btn btn-success" href="{{ path('criterion_new') }}">
-        {{ 'Додати Критерій' }}
-    </a>
 {% endblock %}
