@@ -37,6 +37,19 @@
                     <strong>Успіх!</strong>  Дані успішно відредаговані!
                 </div>
             {% endfor %}
+
+            {% set currentPath = app.request.attributes.get('_route') %}
+            <ul class="nav nav-tabs" style="margin-bottom: 50px">
+                <li {% if currentPath == 'user' %}class="active" {% endif %}><a href="{{ path('user') }}">Користувачі</a></li>
+                <li {% if currentPath == 'institutes' %}class="active" {% endif %}><a href="{{ path('institutes') }}">Факультети</a></li>
+                <li {% if currentPath == 'cathedras' %}class="active" {% endif %}><a href="{{ path('cathedras') }}">Кафедри</a></li>
+                <li {% if currentPath == 'position' %}class="active" {% endif %}><a href="{{ path('position') }}">Посади</a></li>
+                <li {% if currentPath == 'year' %}class="active" {% endif %}><a href="{{ path('year') }}">Навчальні роки</a></li>
+                <li {% if currentPath == 'criterion' %}class="active" {% endif %}><a href="{{ path('criterion') }}">Критерії</a></li>
+                <li {% if currentPath == 'group' %}class="active" {% endif %}><a href="{{ path('group') }}">Групи критерїів</a></li>
+                <li {% if currentPath == 'category' %}class="active" {% endif %}><a href="{{ path('category') }}">Категорії критеріїв</a></li>
+            </ul>
+
             {% block body %}
 
             {% endblock %}

@@ -10,7 +10,7 @@ class DefaultController extends Controller
 {
     /**
      * @Route("/", name="admin_index")
-     * @Template()
+     * @Template("RatingAdminBundle::index.html.twig")
      */
     public function indexAction()
     {
