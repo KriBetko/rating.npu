@@ -1,15 +1,13 @@
 {% extends '::profile.html.twig' %}
 {% block title %} Особова картка {% endblock %}
 {% block body -%}
-    <br><br>
-    <select id="year-select" class="form-control" style="width: 190px; margin-bottom: 40px">
+    <select id="year-select" class="form-control" style="width: 190px; margin-bottom: 40px" title="Оберіть навчальний рік">
         {% for y in years  %}
             <option value="{{ y.id }}" {% if y.id == year.id %}selected="selected"{% endif %}>{{ y.title }}</option>
         {% endfor %}
     </select>
     {% set editable = year.editable %}
     {% for job in measures %}
-
         <div class="jobs_container">
         <h4 style="position: relative">{% if app.user.isStudent %} {{ job.job.institute.title }} - {{ job.job.group }} {% else %} {{ job.job.cathedra.institute.title }} - {{ job.job.cathedra.title }}{% endif %} <b></b></h4>
         <div class="category-accordion">
