@@ -43,7 +43,7 @@ class Category
      */
     public function __construct()
     {
-        $this->criteria = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->criteria = new ArrayCollection();
     }
 
 
@@ -110,7 +110,7 @@ class Category
      * @param \AppBundle\Entity\Criterion $criteria
      * @return Category
      */
-    public function addCriterium(\AppBundle\Entity\Criterion $criteria)
+    public function addCriterium(Criterion $criteria)
     {
         $this->criteria[] = $criteria;
 
@@ -122,7 +122,7 @@ class Category
      *
      * @param \AppBundle\Entity\Criterion $criteria
      */
-    public function removeCriterium(\AppBundle\Entity\Criterion $criteria)
+    public function removeCriterium(Criterion $criteria)
     {
         $this->criteria->removeElement($criteria);
     }
@@ -130,7 +130,7 @@ class Category
     /**
      * Get criteria
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return ArrayCollection|\Doctrine\Common\Collections\Collection
      */
     public function getCriteria()
     {

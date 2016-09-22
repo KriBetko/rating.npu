@@ -42,6 +42,8 @@ class GroupController extends Controller
      * @Route("/", name="group_create")
      * @Method("POST")
      * @Template("AppBundle:Group:new.html.twig")
+     * @param Request $request
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createAction(Request $request)
     {
@@ -107,6 +109,8 @@ class GroupController extends Controller
      * @Route("/{id}", name="group_show")
      * @Method("GET")
      * @Template()
+     * @param $id
+     * @return array
      */
     public function showAction($id)
     {
@@ -130,6 +134,8 @@ class GroupController extends Controller
      * @Route("/{id}/edit", name="group_edit")
      * @Method("GET")
      * @Template()
+     * @param $id
+     * @return array
      */
     public function editAction($id)
     {
@@ -169,12 +175,16 @@ class GroupController extends Controller
 
         return $form;
     }
+
     /**
      * Edits an existing Group entity.
      *
      * @Route("/{id}", name="group_update")
      * @Method("PUT")
      * @Template("AppBundle:Group:edit.html.twig")
+     * @param Request $request
+     * @param $id
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function updateAction(Request $request, $id)
     {

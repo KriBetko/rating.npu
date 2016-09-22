@@ -2,8 +2,6 @@
 namespace Rating\UserBundle\Auth;
 
 use Rating\UserBundle\Entity\User;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-
 
 class OAuthProvider
 {
@@ -48,7 +46,7 @@ class OAuthProvider
         {
             $token = new User();
             return $token;
-            return new RedirectResponse($this->container->get('router')->generate('homepage'));
+            //return new RedirectResponse($this->container->get('router')->generate('homepage'));
         }
         $google_id = $response->getUsername(); /* An ID like: 112259658235204980084 */
         $email = $response->getEmail();

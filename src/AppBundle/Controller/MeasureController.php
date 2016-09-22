@@ -18,8 +18,10 @@ class MeasureController extends Controller
     /**
      * @Route("/profile/measure/{yearId}", name="my_measure")
      * @Method("GET")
+     * @param null $yearId
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function myAction(Request $request, $yearId = null)
+    public function myAction($yearId = null)
     {
         $em = $this->getDoctrine()->getManager();
         $yearEntity = $em->getRepository('AppBundle:Year')->findOneBy(['id' => $yearId]);
@@ -39,11 +41,13 @@ class MeasureController extends Controller
 
     /**
      * @Route("/profile/measure/edit/{id}", name="edit_measure")
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-        $user = $this->getUser();
 
         $measure = $em->getRepository('AppBundle:Measure')->findOneBy(array('id' => $id));
 

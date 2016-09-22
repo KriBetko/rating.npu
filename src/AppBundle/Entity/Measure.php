@@ -70,7 +70,7 @@ class Measure
      */
     public function __construct()
     {
-        $this->fields = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->fields = new ArrayCollection();
     }
 
     /**
@@ -113,7 +113,7 @@ class Measure
      * @param \AppBundle\Entity\Criterion $criterion
      * @return Measure
      */
-    public function setCriterion(\AppBundle\Entity\Criterion $criterion = null)
+    public function setCriterion(Criterion $criterion = null)
     {
         $this->criterion = $criterion;
 
@@ -136,7 +136,7 @@ class Measure
      * @param \AppBundle\Entity\Year $year
      * @return Measure
      */
-    public function setYear(\AppBundle\Entity\Year $year = null)
+    public function setYear(Year $year = null)
     {
         $this->year = $year;
 
@@ -159,7 +159,7 @@ class Measure
      * @param \AppBundle\Entity\Field $fields
      * @return Measure
      */
-    public function addField(\AppBundle\Entity\Field $fields)
+    public function addField(Field $fields)
     {
         $fields->setMeasure($this);
         $this->fields->add($fields);
@@ -172,7 +172,7 @@ class Measure
      *
      * @param \AppBundle\Entity\Field $fields
      */
-    public function removeField(\AppBundle\Entity\Field $fields)
+    public function removeField(Field $fields)
     {
         $this->fields->removeElement($fields);
     }
@@ -180,7 +180,7 @@ class Measure
     /**
      * Get fields
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return ArrayCollection|\Doctrine\Common\Collections\Collection
      */
     public function getFields()
     {
@@ -190,10 +190,10 @@ class Measure
     /**
      * Set job
      *
-     * @param \Rating\SubdivisionBundle\Entity\Job $job
+     * @param Job|\Rating\SubdivisionBundle\Entity\Job $job
      * @return Measure
      */
-    public function setJob(\Rating\SubdivisionBundle\Entity\Job $job = null)
+    public function setJob(Job $job = null)
     {
         $this->job = $job;
 

@@ -268,6 +268,10 @@ class UserController extends Controller
      */
     public function changeRoleAction($id)
     {
+        /**
+         * @var User $user
+         */
+
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('RatingUserBundle:User')->findOneById($id);
         if ($user->isAdmin() ){

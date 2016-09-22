@@ -35,12 +35,15 @@ class YearController extends Controller
             'entities' => $entities,
         );
     }
+
     /**
      * Creates a new Year entity.
      *
      * @Route("/", name="year_create")
      * @Method("POST")
      * @Template("AppBundle:Year:new.html.twig")
+     * @param Request $request
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createAction(Request $request)
     {
@@ -106,6 +109,8 @@ class YearController extends Controller
      * @Route("/{id}/edit", name="year_edit")
      * @Method("GET")
      * @Template()
+     * @param $id
+     * @return array
      */
     public function editAction($id)
     {
@@ -144,12 +149,16 @@ class YearController extends Controller
 
         return $form;
     }
+
     /**
      * Edits an existing Year entity.
      *
      * @Route("/{id}", name="year_update")
      * @Method("PUT")
      * @Template("AppBundle:Year:edit.html.twig")
+     * @param Request $request
+     * @param $id
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function updateAction(Request $request, $id)
     {
@@ -175,13 +184,14 @@ class YearController extends Controller
             'edit_form'   => $editForm->createView(),
         );
     }
+
     /**
      * @Route("/generate/measures/{year}", name="generate_measures")
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @internal param $year
      */
-    public function generateMeasureAction($year)
+    public function generateMeasureAction()
     {
-        $year = $this->getDoctrine()->getManager()->getRepository('AppBundle:Year')->findOneById($year);
-        $manager = $this->get('year.manager')->generateMeasureForAllUser($year);
         return $this->redirect($this->generateUrl('year'));
     }
 }

@@ -159,7 +159,7 @@ class Cathedra
     /**
      * Get users
      *
-     * @return Collection
+     * @return ArrayCollection|Collection
      */
     public function getUsers()
     {

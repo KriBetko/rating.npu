@@ -2,6 +2,8 @@
 namespace Rating\SubdivisionBundle\Controller;
 
 
+use Rating\SubdivisionBundle\Entity\Cathedra;
+use Rating\SubdivisionBundle\Entity\Institute;
 use Rating\SubdivisionBundle\Entity\Job;
 use Rating\SubdivisionBundle\Form\FilterStudentType;
 use Rating\SubdivisionBundle\Form\FilterType;
@@ -21,18 +23,25 @@ class MainController extends Controller
      */
     public function listAction ()
     {
+        /**
+         * @var Cathedra $c
+         * @var Institute $i
+         */
+
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
 
         $cathedras = $user->getCathedras()->toArray();
         $cathedrasIDs = [];
-        foreach ($cathedras as $c) {
+        foreach ($cathedras as $c)
+        {
             $cathedrasIDs[] = $c->getId();
         }
-        $institutes = $user->getInstitutes()->toArray();
 
+        $institutes = $user->getInstitutes()->toArray();
         $institutesIDs = [];
-        foreach ($institutes as $i) {
+        foreach ($institutes as $i)
+        {
             $institutesIDs[] = $i->getId();
         }
 

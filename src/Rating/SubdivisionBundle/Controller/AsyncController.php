@@ -1,6 +1,7 @@
 <?php
 namespace Rating\SubdivisionBundle\Controller;
 
+use Rating\SubdivisionBundle\Entity\Institute;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,6 +16,9 @@ class AsyncController extends Controller
     public function getCathedrasAction ($id)
     {
         $em = $this->getDoctrine()->getManager();
+        /**
+         * @var Institute $institute
+         */
         $institute = $em->getRepository('RatingSubdivisionBundle:Institute')->findOneById($id);
 
         $output = '';

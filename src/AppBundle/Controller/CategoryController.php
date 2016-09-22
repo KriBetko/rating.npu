@@ -35,12 +35,15 @@ class CategoryController extends Controller
             'entities' => $entities,
         );
     }
+
     /**
      * Creates a new Category entity.
      *
      * @Route("/", name="category_create")
      * @Method("POST")
      * @Template("AppBundle:Category:new.html.twig")
+     * @param Request $request
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createAction(Request $request)
     {
@@ -107,6 +110,8 @@ class CategoryController extends Controller
      * @Route("/{id}/edit", name="category_edit")
      * @Method("GET")
      * @Template()
+     * @param $id
+     * @return array
      */
     public function editAction($id)
     {
@@ -147,12 +152,16 @@ class CategoryController extends Controller
 
         return $form;
     }
+
     /**
      * Edits an existing Category entity.
      *
      * @Route("/{id}", name="category_update")
      * @Method("PUT")
      * @Template("AppBundle:Category:edit.html.twig")
+     * @param Request $request
+     * @param $id
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function updateAction(Request $request, $id)
     {

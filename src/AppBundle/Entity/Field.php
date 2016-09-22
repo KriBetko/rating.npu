@@ -68,7 +68,7 @@ class Field
      * @param \AppBundle\Entity\Measure $measure
      * @return Field
      */
-    public function setMeasure(\AppBundle\Entity\Measure $measure = null)
+    public function setMeasure(Measure $measure = null)
     {
         $this->measure = $measure;
 

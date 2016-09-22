@@ -35,12 +35,15 @@ class CriterionController extends Controller
             'entities' => $entities,
         );
     }
+
     /**
      * Creates a new Criterion entity.
      *
      * @Route("/", name="criterion_create")
      * @Method("POST")
      * @Template("AppBundle:Criterion:new.html.twig")
+     * @param Request $request
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createAction(Request $request)
     {
@@ -107,6 +110,8 @@ class CriterionController extends Controller
      * @Route("/{id}/edit", name="criterion_edit")
      * @Method("GET")
      * @Template()
+     * @param $id
+     * @return array
      */
     public function editAction($id)
     {
@@ -145,12 +150,16 @@ class CriterionController extends Controller
 
         return $form;
     }
+
     /**
      * Edits an existing Criterion entity.
      *
      * @Route("/{id}", name="criterion_update")
      * @Method("PUT")
      * @Template("AppBundle:Criterion:edit.html.twig")
+     * @param Request $request
+     * @param $id
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function updateAction(Request $request, $id)
     {

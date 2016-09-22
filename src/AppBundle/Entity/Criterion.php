@@ -195,7 +195,7 @@ class Criterion
      * @param \AppBundle\Entity\Category $category
      * @return Criterion
      */
-    public function setCategory(\AppBundle\Entity\Category $category = null)
+    public function setCategory(Category $category = null)
     {
         $this->category = $category;
 
@@ -218,7 +218,7 @@ class Criterion
      * @param \AppBundle\Entity\Group $group
      * @return Criterion
      */
-    public function setGroup(\AppBundle\Entity\Group $group = null)
+    public function setGroup(Group $group = null)
     {
         $this->group = $group;
 

@@ -6,7 +6,6 @@ use AppBundle\Entity\Measure;
 use AppBundle\Entity\Year;
 use Doctrine\ORM\EntityManager;
 use Rating\SubdivisionBundle\Entity\Job;
-use Rating\UserBundle\Entity\User;
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 
 class MeasureManager
@@ -38,14 +37,6 @@ class MeasureManager
 
         $this->em->persist($measure);
         return $measure;
-    }
-
-    public function getMeasureUser(User $user)
-    {
-        $year = $this->em->getRepository('AppBundle:Year')->findOneByActive();
-        foreach ($year->getCriteria() as $criterion) {
-
-        }
     }
 
     public function removeByCriterionIds($ids, $year){

@@ -142,12 +142,12 @@
                 var countInput = fields.length;
 
                 if (count > countInput){
-                    for(i = 0; count - countInput  > i; i++){
+                    for(var i = 0; count - countInput  > i; i++){
                         addTagForm( $('ol.fields'), $newLinkLi);
                     }
                 }
                 if (count < countInput){
-                    for(i = 0; countInput - count > i; i++){
+                    for(var i = 0; countInput - count > i; i++){
                         fields[i].remove();
                     }
                 }

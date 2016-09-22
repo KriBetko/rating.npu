@@ -248,7 +248,6 @@ class CathedraController extends Controller
      * Creates a form to delete a Cathedra entity by id.
      *
      * @param mixed $id The entity id
-     *
      * @return \Symfony\Component\Form\Form The form
      */
     private function createDeleteForm($id)
