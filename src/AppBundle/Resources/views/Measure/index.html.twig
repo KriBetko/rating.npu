@@ -1,6 +1,7 @@
 {% extends '::profile.html.twig' %}
 {% block title %} Особова картка {% endblock %}
 {% block body -%}
+    <br><br>
     <select id="year-select" class="form-control" style="width: 190px; margin-bottom: 40px">
         {% for y in years  %}
             <option value="{{ y.id }}" {% if y.id == year.id %}selected="selected"{% endif %}>{{ y.title }}</option>

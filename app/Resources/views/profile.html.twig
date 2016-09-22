@@ -19,7 +19,8 @@
     </head>
     <body>
         <div>
-            <header style="margin-bottom: 50px" class="wrapper container">
+            <header class="wrapper container">
+                <h3>Рейтенгова система НПУ ім. М. П. Драгоманова</h3>
                 {% set currentPath = app.request.attributes.get('_route') %}
                 <ul class="nav nav-tabs">
                     <li role="presentation" {% if currentPath ==  'my_profile' %}class="active" {% endif %}><a href="{{ path('my_profile') }}">Мій Профіль</a></li>
