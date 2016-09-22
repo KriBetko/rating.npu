@@ -23,7 +23,7 @@ class UserManager
         $user->addRole('ROLE_STUDENT');
         return $user;
     }
-    
+
     public function createTeacher($response)
     {
         $user = $this->create($response);
