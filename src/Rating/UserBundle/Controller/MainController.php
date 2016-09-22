@@ -30,7 +30,6 @@ class MainController extends Controller
                         $user = $um->createStudent($response);
                     }
                     $em->persist($user);
-
                 }
             $um->update($user, $response);
             $em->flush();

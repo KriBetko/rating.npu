@@ -23,18 +23,20 @@ class UserManager
         $user->addRole('ROLE_STUDENT');
         return $user;
     }
+    
     public function createTeacher($response)
     {
         $user = $this->create($response);
         $user->addRole('ROLE_TEACHER');
         return $user;
     }
+
     protected function create($response)
     {
         $user = new User();
         $user->setLastName($response->getGivenName());
         $user->setFirstName($response->getFamilyName());
-        $user->setParentName($response->getGivenName()); //TODO ParentName not found in GoogleAccount, fix this
+        $user->setParentName(""); //TODO ParentName not found in GoogleAccount, fix this
         $user->setGoogleId($response->getId());
         $user->setEmail($response->getEmail());
         $user->setPicture($response->getPicture());
