@@ -118,7 +118,7 @@ $(document).ready(function(){
         ko.bindingHandlers.multiselect = {
             after: ['options', 'value', 'selectedOptions'],
 
-            init: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
+            init: function (element, valueAccessor, allBindings) {
                 var $element = $(element);
                 var config = ko.toJS(valueAccessor());
 
@@ -182,7 +182,7 @@ $(document).ready(function(){
                 });
             },
 
-            update: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
+            update: function (element, valueAccessor) {
                 var $element = $(element);
                 var config = ko.toJS(valueAccessor());
 
@@ -221,7 +221,7 @@ $(document).ready(function(){
         this.originalOptions = this.$select.clone()[0].options;
         this.query = '';
         this.searchTimeout = null;
-        this.lastToggledInput = null
+        this.lastToggledInput = null;
 
         this.options.multiple = this.$select.attr('multiple') === "multiple";
         this.options.onChange = $.proxy(this.options.onChange, this);
@@ -246,7 +246,7 @@ $(document).ready(function(){
         }
 
         this.$select.hide().after(this.$container);
-    };
+    }
 
     Multiselect.prototype = {
 
@@ -295,10 +295,9 @@ $(document).ready(function(){
              * Updates the title of the button similar to the buttonText function.
              *
              * @param {jQuery} options
-             * @param {jQuery} select
              * @returns {@exp;selected@call;substr}
              */
-            buttonTitle: function(options, select) {
+            buttonTitle: function (options, select) {
                 if (options.length === 0) {
                     return this.nonSelectedText;
                 }
@@ -798,10 +797,8 @@ $(document).ready(function(){
 
         /**
          * Creates a divider using the given select option.
-         *
-         * @param {jQuery} element
          */
-        createDivider: function(element) {
+        createDivider: function (element) {
             var $divider = $(this.options.templates.divider);
             this.$ul.append($divider);
         },
@@ -1391,7 +1388,6 @@ $(document).ready(function(){
         /**
          * Get all selected options.
          *
-         * @returns {jQUery}
          */
         getSelected: function() {
             return $('option', this.$select).filter(":selected");
