@@ -26,6 +26,7 @@ class JobRepository extends EntityRepository
             );
         return $codes = $qb->getQuery()->getResult();
     }
+
     public function createJobQuery()
     {
         $qb = $this->createQueryBuilder('j');
@@ -36,6 +37,7 @@ class JobRepository extends EntityRepository
         $result = $qb->getQuery()->getResult();
         dump($result);die;
     }
+
     public function getGroupList()
     {
         $result = $this->_em->createQuery("SELECT DISTINCT j.group FROM RatingSubdivisionBundle:Job j  WHERE j.group IS NOT NULL")->getScalarResult();

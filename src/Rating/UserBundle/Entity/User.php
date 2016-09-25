@@ -5,6 +5,7 @@ namespace Rating\UserBundle\Entity;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\IntegerType;
 use Doctrine\ORM\Mapping as ORM;
 use Rating\SubdivisionBundle\Entity\Cathedra;
 use Rating\SubdivisionBundle\Entity\Institute;
@@ -51,6 +52,7 @@ class User implements UserInterface, \Serializable
      * )
      */
     protected $firstName;
+
     /**
      * @ORM\Column(type="string", length=255)
      *
@@ -64,6 +66,7 @@ class User implements UserInterface, \Serializable
      * )
      */
     protected $lastName;
+
     /**
      * @ORM\Column(type="string", length=255)
      *
@@ -77,6 +80,11 @@ class User implements UserInterface, \Serializable
      * )
      */
     protected $parentName;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $rating;
 
     /**
      * @return mixed
@@ -467,15 +475,17 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Set roles
-     *
-     * @param array $roles
-     * @return User
+     * @param IntegerType $rating
+     * @return $this
      */
-    public function setRoles($roles)
+    public function setRating($rating)
     {
-        $this->roles = $roles;
-
+        $this->rating = $rating;
         return $this;
+    }
+
+    public function getRating()
+    {
+        return $this->rating;
     }
 }

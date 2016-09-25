@@ -35,6 +35,10 @@
                         {% endif %}
                     </p></div>
             </div>
+            <div class="row">
+                <div class="col-md-9"><b>Рейтинг:</b></div>
+                <div class="col-md-9">{{ user.rating }}</div>
+            </div>
             <div class="text-right">
                 <a href="{{ path('my_profile_edit') }}" class="btn btn-success">Редагувати</a>
             </div>
