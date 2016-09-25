@@ -465,4 +465,17 @@ class User implements UserInterface, \Serializable
         }
         return false;
     }
+
+    /**
+     * Set roles
+     *
+     * @param array $roles
+     * @return User
+     */
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
 }
