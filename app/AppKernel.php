@@ -21,7 +21,8 @@ class AppKernel extends Kernel
             new Rating\ProfileBundle\RatingProfileBundle(),
             new Rating\UserBundle\RatingUserBundle(),
             new System\AppBundle\SystemAppBundle(),
-            new Rating\SubdivisionBundle\RatingSubdivisionBundle()
+            new Rating\SubdivisionBundle\RatingSubdivisionBundle(),
+            new Symfony\Bundle\AsseticBundle\AsseticBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

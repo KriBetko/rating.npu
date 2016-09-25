@@ -34,6 +34,20 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    form:
+        resources: ['bootstrap_3_layout.html.twig']
+
+# Assetic Configuration
+assetic:
+     debug:          "%kernel.debug%"
+     use_controller: false
+     read_from:      "%kernel.root_dir%/../web"
+     filters:
+         cssrewrite: ~
+         lessphp:
+             apply_to: "\.less$"
+             formatter: "compressed"
+             preserve_comments: false
 
 # Doctrine Configuration
 doctrine:
