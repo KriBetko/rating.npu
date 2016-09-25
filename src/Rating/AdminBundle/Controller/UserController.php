@@ -18,7 +18,6 @@ use Rating\UserBundle\Form\UserType;
  */
 class UserController extends Controller
 {
-
     /**
      * Lists all User entities.
      *
@@ -280,6 +279,25 @@ class UserController extends Controller
             $user->addRole('ROLE_ADMIN');
         }
         $em->flush();
+        return $this->redirect($this->generateUrl('user'));
+    }
+
+    /**
+     * @Route("/change/block/{id}", name="block_user")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function blockAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        /*** @var User $user */
+        $user = $em->getRepository('RatingUserBundle:User')->findOneById($id);
+
+        $user->setBlock(!$user->isBlock());
+
+        $em->flush();
+
         return $this->redirect($this->generateUrl('user'));
     }
 }

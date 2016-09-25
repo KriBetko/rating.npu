@@ -10,6 +10,7 @@
                 <th>Ім'я</th>
                 <th>По-батькові</th>
                 <th>Email</th>
+                <th>Блок</th>
                 <th>Адмін</th>
             </tr>
         </thead>
@@ -22,13 +23,24 @@
                 <td>{{ entity.parentName }}</td>
                 <td>{{ entity.email }}</td>
                 <td class="td-center col-md-1">
+                    {% if  entity.isBlock() %}
+                        <a href="{{ path('block_user', {'id': entity.id}) }}" class="btn btn-success btn-mini">
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        </a>
+                    {% else %}
+                        <a  href="{{ path('block_user', {'id': entity.id}) }}"  class="btn btn-danger btn-mini">
+                            <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+                        </a>
+                    {% endif %}
+                </td>
+                <td class="td-center col-md-1">
                     {% if  entity.isAdmin() %}
                         <a href="{{ path('change_role', {'id': entity.id}) }}" class="btn btn-success btn-mini">
-                            <span  class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                         </a>
                     {% else %}
                         <a  href="{{ path('change_role', {'id': entity.id}) }}"  class="btn btn-danger btn-mini">
-                            <span  class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+                            <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
                         </a>
                     {% endif %}
                 </td>

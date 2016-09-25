@@ -5,6 +5,7 @@ namespace Rating\UserBundle\Entity;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\BooleanType;
 use Doctrine\DBAL\Types\IntegerType;
 use Doctrine\ORM\Mapping as ORM;
 use Rating\SubdivisionBundle\Entity\Cathedra;
@@ -122,6 +123,11 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(type="string", nullable=true, length=256)
      */
     protected $googleId;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $Block;
 
     /**
      * @return mixed
@@ -487,5 +493,16 @@ class User implements UserInterface, \Serializable
     public function getRating()
     {
         return $this->rating;
+    }
+
+    public function setBlock($bool)
+    {
+        $this->Block = $bool;
+        return $this;
+    }
+
+    public function isBlock()
+    {
+        return $this->Block;
     }
 }
