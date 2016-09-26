@@ -147,4 +147,14 @@ class MeasureController extends Controller
 
         $em->flush();
     }
+
+    private function calculateCathedraRating($cathedra)
+    {
+        //TODO
+    }
+
+    private function caculateFacultieRating($facultie)
+    {
+        //TODO
+    }
 }

@@ -47,6 +47,11 @@ class Cathedra
      */
     protected $managers;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $rating;
+
     public function __construct()
     {
         $this->managers = new ArrayCollection();
@@ -159,7 +164,7 @@ class Cathedra
     /**
      * Get users
      *
-     * @return ArrayCollection|Collection
+     * @return ArrayCollection
      */
     public function getUsers()
     {
@@ -220,5 +225,16 @@ class Cathedra
     public function getManagers()
     {
         return $this->managers;
+    }
+
+    public function getRating()
+    {
+        return $this->rating;
+    }
+
+    public function setRating($rating)
+    {
+        $this->$this->rating = $rating;
+        return $this;
     }
 }

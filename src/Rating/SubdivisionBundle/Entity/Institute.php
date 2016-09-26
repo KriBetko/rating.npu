@@ -48,6 +48,11 @@ class Institute
     protected $cathedras;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    protected $rating;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -200,5 +205,16 @@ class Institute
     public function getManagers()
     {
         return $this->managers;
+    }
+
+    public function getRating()
+    {
+        return $this->rating;
+    }
+
+    public function setRating($rating)
+    {
+        $this->$this->rating = $rating;
+        return $this;
     }
 }
