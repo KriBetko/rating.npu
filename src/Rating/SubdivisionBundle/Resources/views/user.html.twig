@@ -26,16 +26,17 @@
                             {% for group in category.grouped %}
                                 <div>{{ group.title }}</div>
                                 {% for single in group.singles %}
-                                    <div style="margin-left: 100px; width:500px; display: inline-block">{{ single.criteria_title }}</div>
-                                    <div style="width: 200px; display: inline-block">{{ single.criteria_coefficient }}</div>
-                                    <div style="width: 200px; display: inline-block">{{ single.measure.value }}</div>
-                                    <div style="width: 50px; display: inline-block">
-                                        <a data-target="#modalMeasure" data-toggle="modal"  class="btn btn-info btn-xs edit-measure-link" data-id="{{ single.measure.id }}" data-href="{{ path('edit_measure', {'id': single.measure.id}) }}" title="Редагувати">
-                                            <span  class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                        </a>
+                                    <div class="item-criteria-{% if loop.index is even %}even{% else %}odd{% endif %}">
+                                        <div style="margin-left: 100px; width:500px; display: inline-block">{{ single.criteria_title }}</div>
+                                        <div style="width: 200px; display: inline-block">{{ single.criteria_coefficient }}</div>
+                                        <div style="width: 200px; display: inline-block">{{ single.measure.value }}</div>
+                                        <div style="width: 50px; display: inline-block">
+                                            <a data-target="#modalMeasure" data-toggle="modal"  class="btn btn-info btn-xs edit-measure-link" data-id="{{ single.measure.id }}" data-href="{{ path('edit_measure', {'id': single.measure.id}) }}" title="Редагувати">
+                                                <span  class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                            </a>
+                                        </div>
+                                        <div class="measure_total measure_{{ single.measure.id }}" style="display: inline-block; width:  70px">{{ single.criteria_coefficient * single.measure.value }}</div>
                                     </div>
-                                    <div class="measure_total measure_{{ single.measure.id }}" style="display: inline-block; width:  70px">{{ single.criteria_coefficient * single.measure.value }}</div>
-
                                 {% endfor %}
                                 <br><br>
                             {% endfor %}
