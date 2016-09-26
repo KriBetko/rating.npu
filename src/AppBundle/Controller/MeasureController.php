@@ -37,9 +37,9 @@ class MeasureController extends Controller
         return $this->render('AppBundle:Measure:index.html.twig', array(
             'measures' => $measures,
             'years' => $this->get('year.manager')->getYears(),
-            'year' => $year
+            'year' => $year,
+            'block' => $user->isBlock()
         ));
-
     }
 
     /**
@@ -50,75 +50,78 @@ class MeasureController extends Controller
      */
     public function editAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getManager();
+        if(!$this->getUser()->isBlock())
+        {
+            $em = $this->getDoctrine()->getManager();
 
-        $measure = $em->getRepository('AppBundle:Measure')->findOneBy(array('id' => $id));
+            $measure = $em->getRepository('AppBundle:Measure')->findOneBy(array('id' => $id));
 
-        $form = $this->createForm(new MeasureType($measure), $measure);
+            $form = $this->createForm(new MeasureType($measure), $measure);
 
-        $originalFields = new ArrayCollection();
+            $originalFields = new ArrayCollection();
 
-        foreach ($measure->getFields() as $field) {
-            $originalFields->add($field);
-        }
-
-        if ($request->getMethod() == 'POST') {
-            $form->handleRequest($request);
-            if ($form->isValid()) {
-                foreach ($originalFields as $field) {
-                    if (false === $measure->getFields()->contains($field)) {
-                        $field->setMeasure(null);
-                        $em->remove($field);
-                    }
-                }
-
-                foreach ($measure->getFields() as $field) {
-
-                    if (!$field->getTitle()) {
-                        $field->setMeasure(null);
-                        $measure->removeField($field);
-                        $em->remove($field);
-                    }
-                }
-
-                if ($measure->getCriterion()->isPlural()) {
-                    $measure->setValue(count($measure->getFields()));
-                    $measure->setResult($measure->getCriterion()->getCoefficient() * $measure->getValue());
-                } else {
-                    $measure->setResult($measure->getCriterion()->getCoefficient() * $measure->getValue());
-                }
-
-                $em->flush();
-
-                $this->calculateUserRating($measure->getResult());
-
-                return $this->get('app.sender')->sendJson(
-                    array(
-                        'status' => 1,
-                        'measure' => $measure->getId(),
-                        'total' => $measure->getValue() * $measure->getCriterion()->getCoefficient(),
-                        'category' => $measure->getCriterion()->getCategory()->getId(),
-                        'value' => $measure->getValue(),
-                        'job' => $measure->getJob()->getId()
-                    )
-                );
+            foreach ($measure->getFields() as $field) {
+                $originalFields->add($field);
             }
+
+            if ($request->getMethod() == 'POST') {
+                $form->handleRequest($request);
+                if ($form->isValid()) {
+                    foreach ($originalFields as $field) {
+                        if (false === $measure->getFields()->contains($field)) {
+                            $field->setMeasure(null);
+                            $em->remove($field);
+                        }
+                    }
+
+                    foreach ($measure->getFields() as $field) {
+
+                        if (!$field->getTitle()) {
+                            $field->setMeasure(null);
+                            $measure->removeField($field);
+                            $em->remove($field);
+                        }
+                    }
+
+                    if ($measure->getCriterion()->isPlural()) {
+                        $measure->setValue(count($measure->getFields()));
+                        $measure->setResult($measure->getCriterion()->getCoefficient() * $measure->getValue());
+                    } else {
+                        $measure->setResult($measure->getCriterion()->getCoefficient() * $measure->getValue());
+                    }
+
+                    $em->flush();
+
+                    $this->calculateUserRating($measure->getResult());
+
+                    return $this->get('app.sender')->sendJson(
+                        array(
+                            'status' => 1,
+                            'measure' => $measure->getId(),
+                            'total' => $measure->getValue() * $measure->getCriterion()->getCoefficient(),
+                            'category' => $measure->getCriterion()->getCategory()->getId(),
+                            'value' => $measure->getValue(),
+                            'job' => $measure->getJob()->getId()
+                        )
+                    );
+                }
+            }
+
+            $singleGroup = false;
+            if ($measure->getCriterion()->getGroup() && !$measure->getCriterion()->getGroup()->isPlural()) {
+                $groupedMeasure = $em->getRepository('AppBundle:Measure')->getGroupedMeasure($measure);
+                $singleGroup = $groupedMeasure ? true : false;
+            }
+
+            $view = $this->render("AppBundle:Measure:form.html.twig", array(
+                'form' => $form->createView(),
+                'measure' => $measure,
+                'singleGroup' => $singleGroup
+
+            ))->getContent();
+
+            return $this->get('app.sender')->sendJson(array('status' => 1, 'view' => $view));
         }
-
-        $singleGroup = false;
-        if ($measure->getCriterion()->getGroup() && !$measure->getCriterion()->getGroup()->isPlural()) {
-            $groupedMeasure = $em->getRepository('AppBundle:Measure')->getGroupedMeasure($measure);
-            $singleGroup = $groupedMeasure ? true : false;
-        }
-
-        $view = $this->render("AppBundle:Measure:form.html.twig", array(
-            'form' => $form->createView(),
-            'measure' => $measure,
-            'singleGroup' => $singleGroup
-
-        ))->getContent();
-
-        return $this->get('app.sender')->sendJson(array('status' => 1, 'view' => $view));
     }
 
     private function calculateUserRating($result)
@@ -126,7 +129,7 @@ class MeasureController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         /*** @var \Rating\UserBundle\Entity\User $user */
-        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $user = $this->getUser();
 
         /*** @var IntegerType $rating */
         $rating = 0;

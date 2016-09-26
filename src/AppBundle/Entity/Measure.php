@@ -1,7 +1,9 @@
 <?php
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Rating\SubdivisionBundle\Entity\Job;
 use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity
@@ -190,7 +192,7 @@ class Measure
     /**
      * Set job
      *
-     * @param Job|\Rating\SubdivisionBundle\Entity\Job $job
+     * @param Job $job
      * @return Measure
      */
     public function setJob(Job $job = null)
