@@ -6,8 +6,8 @@
         {% block stylesheets %}
             {% stylesheets filter='cssrewrite'
             '@RatingMainBundle/Resources/public/css/reset.css'
-            '@RatingMainBundle/Resources/public/css/bootstrap.min.css'
-            '@RatingMainBundle/Resources/public/css/bootstrap-theme.min.css'
+            '@bootstrap_css'
+            '@bootstrap_theme_css'
             '@RatingMainBundle/Resources/public/less/*'
             output='css/general.css' %}
                 <link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
@@ -22,8 +22,8 @@
         </div>
         {% block javascripts %}
             {% javascripts
-            '@RatingMainBundle/Resources/public/scripts/jquery.min.js'
-            '@RatingMainBundle/Resources/public/scripts/bootstrap.min.js'
+            '@jquery_js'
+            '@bootstrap_js'
             '@RatingMainBundle/Resources/public/scripts/ajax.form.js'
             '@RatingMainBundle/Resources/public/scripts/app.js'
             %}

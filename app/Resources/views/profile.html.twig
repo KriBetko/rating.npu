@@ -4,10 +4,10 @@
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}
-            {% stylesheets  filter='cssrewrite'
+            {% stylesheets
             '@RatingMainBundle/Resources/public/css/reset.css'
-            '@RatingMainBundle/Resources/public/css/bootstrap.min.css'
-            '@RatingMainBundle/Resources/public/css/bootstrap-theme.min.css'
+            '@bootstrap_css'
+            '@bootstrap_theme_css'
             'bundles/ratingmain/css/jquery-ui.min.css'
             '@RatingMainBundle/Resources/public/less/*'
             output='css/general.css'
@@ -44,9 +44,9 @@
         </div>
         {% block javascripts %}
             {% javascripts
-            '@RatingMainBundle/Resources/public/scripts/jquery.min.js'
-            '@RatingMainBundle/Resources/public/scripts/jquery-ui.min.js'
-            '@RatingMainBundle/Resources/public/scripts/bootstrap.min.js'
+            '@jquery_js'
+            '@jqueryui_js'
+            '@bootstrap_js'
             '@RatingMainBundle/Resources/public/scripts/ajax.form.js'
             '@RatingMainBundle/Resources/public/scripts/app.js'
             %}

@@ -1,3 +1,5 @@
+/web/assetic/
+/web/fonts/
 /web/css/
 /web/js/
 /web/bundles/
@@ -5,11 +7,9 @@
 /app/cache/*
 /app/config/parameters.yml
 /app/logs/*
-!app/cache/.gitkeep
-!app/logs/.gitkeep
-/app/phpunit.xml
-/build/
 /vendor/
 /bin/
-/composer.phar
 /.idea/*
+Будет удалено .idea/
+Будет удалено src/RatingBundle/
+Будет удалено tests/

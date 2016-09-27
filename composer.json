@@ -24,7 +24,9 @@
         "google/apiclient": "^2.0",
         "symfony/assetic-bundle": "^2.8",
         "leafo/lessphp": "^0.5.0",
-        "symfony/intl": "^3.1"
+        "twitter/bootstrap": "^3.3",
+        "components/jquery": "^3.1",
+        "components/jqueryui": "^1.12"
     },
     "require-dev": {
         "sensio/generator-bundle": "~3.0",
