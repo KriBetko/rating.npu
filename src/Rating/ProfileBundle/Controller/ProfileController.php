@@ -8,8 +8,6 @@ use Rating\SubdivisionBundle\Entity\Job;
 use Rating\UserBundle\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-
-
 use Symfony\Component\HttpFoundation\Request;
 
 
@@ -134,14 +132,12 @@ class ProfileController extends Controller
         $user = $this->getUser();
         $form = $this->createForm(new UserType(), $user);
 
-
         if ($request->getMethod() == 'POST'){
             $form->handleRequest($request);
             if ($form->isValid()){
                 $em->flush();
                 $this->addFlash('success_update', '1');
                 return $this->redirect($this->generateUrl('my_profile'));
-
             }
         }
 

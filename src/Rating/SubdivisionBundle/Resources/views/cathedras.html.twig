@@ -3,7 +3,7 @@
 {% block content %}
     <div id="wrapper" class="after-navbar-2 container">
         {% for i in institutes %}
-            <ul>
+            <ul class="cathedras">
                 <li>
                     <b style="
                             {% if i.director is not null and i.director.id == app.user.id or i.id in institutesIDs %}
@@ -14,7 +14,7 @@
                 </li>
                 {% set cath = i.cathedras  %}
                 <li>
-                    <ol style="margin-left: 40px;">
+                    <ul style="margin-left: 40px;">
                         {% for c in cath %}
                             <li>
                                 <i>
@@ -25,7 +25,7 @@
                                 </i>
                             </li>
                         {% endfor %}
-                    </ol>
+                    </ul>
                 </li>
             </ul>
         {% endfor %}
