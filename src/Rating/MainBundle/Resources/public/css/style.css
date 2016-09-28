@@ -1,0 +1,22 @@
+.footer
+{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: #f5f5f5;
+}
+
+.after-navbar-1
+{
+    margin-top: 75px;
+}
+
+.after-navbar-2
+{
+    margin-top: 125px;
+}
+
+.after-navbar-admin
+{
+    margin-top: 216px;
+}

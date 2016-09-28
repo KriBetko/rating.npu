@@ -1,11 +1,9 @@
-{% extends '::admin.html.twig' %}
+{% extends '@RatingAdmin/index.html.twig' %}
 
-{% block body -%}
-    <a class="btn btn-primary" href="{{ path('position') }}">Назад</a>
-    <br>
-    <h3>Редагувати Посаду</h3>
-    {% form_theme edit_form 'bootstrap_3_layout.html.twig' %}
-    <div class="admin-form">
-         {{ form(edit_form) }}
+{% block content %}
+    <div id="wrapper" class="after-navbar-admin container">
+        <br>
+        <h3>Редагувати Посаду</h3>
+        <div class="admin-form">{{ form(edit_form) }}</div>
     </div>
 {% endblock %}

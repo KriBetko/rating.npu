@@ -1,11 +1,11 @@
-{% extends '::admin.html.twig' %}
+{% extends '@RatingAdmin/index.html.twig' %}
+
 {% block title %}Редагування Факультету{% endblock %}
-{% block body -%}
-    <a class="btn btn-primary back-btn" href="{{ path('institutes') }}">{{ 'Назад' }}</a>
-    <br>
-    <h3>Редагування Інтистуту</h3>
-    {% form_theme edit_form 'bootstrap_3_layout.html.twig' %}
-    <div class="admin-form">
-        {{ form(edit_form) }}
+
+{% block content%}
+    <div id="wrapper" class="after-navbar-admin container">
+        <br>
+        <h3>Редагування Інтистуту</h3>
+        <div class="admin-form">{{ form(edit_form) }}</div>
     </div>
 {% endblock %}

@@ -1,124 +1,130 @@
-{% extends "::profile.html.twig" %}
-{% block title%}Мій профіль{% endblock %}
-{% block body %}
-    <div class="row">
-        <div class="col-md-8">
+{% extends '@RatingMain/base.html.twig' %}
+
+{% block title %}Мій профиль{% endblock %}
+
+{% block navbar %}{% include '@RatingProfile/Profile/user-navbar.html.twig' %}{% endblock %}
+
+{% block content %}
+    <div class="after-navbar-2 container">
+        <div class="row">
             {% for flashMessage in app.session.flashbag.get('success_update') %}
                 <div class="alert alert-success">
                     Дані успішно збережені!
                 </div>
             {% endfor %}
-            <h1>Персональні відомості</h1>
+            <h2>Персональні відомості</h2>
             <hr>
             <div class="row">
-                <div class="col-md-9"><b>Прізвище:</b></div>
-                <div class="col-md-15"><p>{{ user.firstName }}</p></div>
+                <div class="col-md-2"><b>Прізвище:</b></div>
+                <div class="col-md-2"><p>{{ user.firstName }}</p></div>
             </div>
             <div class="row">
-                <div class="col-md-9"><b>Ім'я:</b></div>
-                <div class="col-md-15"><p>{{ user.lastName }}</p></div>
+                <div class="col-md-2"><b>Ім'я:</b></div>
+                <div class="col-md-2"><p>{{ user.lastName }}</p></div>
             </div>
             <div class="row">
-                <div class="col-md-9"><b>По-батькові:</b></div>
-                <div class="col-md-15"><p>{{ user.parentName }}</p></div>
-            </div> <div class="row">
-                <div class="col-md-9"><b>Email:</b></div>
-                <div class="col-md-15"><p>{{ user.email }}</p></div>
+                <div class="col-md-2"><b>По-батькові:</b></div>
+                <div class="col-md-2"><p>{{ user.parentName }}</p></div>
             </div>
             <div class="row">
-                <div class="col-md-9"><b>Дата народження:</b></div>
-                <div class="col-md-15"><p>
+                <div class="col-md-2"><b>Email:</b></div>
+                <div class="col-md-2"><p>{{ user.email }}</p></div>
+            </div>
+            <div class="row">
+                <div class="col-md-2"><b>Дата народження:</b></div>
+                <div class="col-md-2">
+                    <p>
                         {% if user.birthday is not null %}
-                        {{ user.birthday|date('d.m.Y') }}
+                            {{ user.birthday|date('d.m.Y') }}
                         {% else %}
                             Не вказана
                         {% endif %}
-                    </p></div>
+                    </p>
+                </div>
             </div>
             <div class="row">
-                <div class="col-md-9"><b>Рейтинг:</b></div>
-                <div class="col-md-9">{{ user.rating }}</div>
+                <div class="col-md-2"><b>Рейтинг:</b></div>
+                <div class="col-md-2">{{ user.rating }}</div>
             </div>
             <div class="text-right">
-                <a href="{{ path('my_profile_edit') }}" class="btn btn-success">Редагувати</a>
+                <a href="{{ path('my_profile_edit') }}" class="btn btn-success">
+                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                    Редагувати
+                </a>
             </div>
+            <hr>
         </div>
-        <div class="col-md-24">
 
-            <h3 class="center-block">{% if is_granted('ROLE_TEACHER') %}Місце роботи {% else %}Місце навчання{% endif %}</h3>
+        <div class="row">
+            <h2>Місце роботи</h2>
             <hr>
             <div id="table-jobs-block">
                 {{ include(tableView) }}
             </div>
             <div class="text-right">
-            <a href="" class="btn btn-success" data-toggle="modal" data-target="#modalJob">Додати</a>
+                <a href="" class="btn btn-success" data-toggle="modal" data-target="#modalJob">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    Додати
+                </a>
             </div>
+            <hr>
         </div>
-    </div>
-    {# START MODAL add Job #}
-    <div class="modal fade" id="modalJob" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">{% if is_granted('ROLE_TEACHER') %} Додати нове місце роботи {% else %} Додати нове місце навчання{% endif %}</h4>
-                </div>
-                <div class="modal-body" id="form-block">
-                    {{ include(formView) }}
-                </div>
-                <div class="modal-footer">
-                    {#<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>#}
-                    <button id="form-job-sender" type="button" class="btn btn-primary">Зберегти</button>
-                </div>
 
-            </div>
-        </div>
-    </div>
-    {# END MODAL add Job #}
-
-    {# START MODAL remove Job #}
-    <div class="modal fade" id="modalRemoveJob" tabindex="-2" role="dialog" aria-labelledby="myModalLabel" data-id="">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">{% if is_granted('ROLE_TEACHER') %}Видалення місця роботи  {% else %} Видалення місця навчання{% endif %}</h4>
-                </div>
-                <div class="modal-body" id="form-block">
-                    {% if is_granted('ROLE_TEACHER') %} Ви дійсно бажаєте видалити дане місце роботи? {% else %} Ви дійсно бажаєте видалити дане місце навчання? {% endif %}
-                </div>
-                <div class="modal-footer center-block">
-                    <a data-href="{{ path('profile_remove_job') }}" id="removeJob" type="button" class="btn btn-danger">ТАК</a>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">НІ</button>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    {# END MODAL remove Job #}
-
-    {# START MODAL edit Job #}
-    <div class="modal fade" id="modalEditJob" tabindex="-3" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">{% if is_granted('ROLE_TEACHER') %} Редагування місця роботи {% else %} Редагування місця навчання {% endif %}</h4>
-                </div>
-                <div class="modal-body" id="form-edit-block">
-
-                </div>
-                <div class="modal-footer center-block">
-                    <button data-dismiss="modal"  id="sender-edit-form" type="button" class="btn btn-primary">Оновити</button>
+        <div class="modal fade" id="modalJob" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">{% if is_granted('ROLE_TEACHER') %} Додати нове місце роботи {% else %} Додати нове місце навчання{% endif %}</h4>
+                    </div>
+                    <div class="modal-body" id="form-block">
+                        {{ include(formView) }}
+                    </div>
+                    <div class="modal-footer">
+                        {#<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>#}
+                        <button id="form-job-sender" type="button" class="btn btn-primary">Зберегти</button>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="modalRemoveJob" tabindex="-2" role="dialog" aria-labelledby="myModalLabel" data-id="">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">{% if is_granted('ROLE_TEACHER') %}Видалення місця роботи  {% else %} Видалення місця навчання{% endif %}</h4>
+                    </div>
+                    <div class="modal-body" id="form-block">
+                        {% if is_granted('ROLE_TEACHER') %} Ви дійсно бажаєте видалити дане місце роботи? {% else %} Ви дійсно бажаєте видалити дане місце навчання? {% endif %}
+                    </div>
+                    <div class="modal-footer center-block">
+                        <a data-href="{{ path('profile_remove_job') }}" id="removeJob" type="button" class="btn btn-danger">ТАК</a>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">НІ</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalEditJob" tabindex="-3" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">{% if is_granted('ROLE_TEACHER') %} Редагування місця роботи {% else %} Редагування місця навчання {% endif %}</h4>
+                    </div>
+                    <div class="modal-body" id="form-edit-block">
+
+                    </div>
+                    <div class="modal-footer center-block">
+                        <button data-dismiss="modal"  id="sender-edit-form" type="button" class="btn btn-primary">Оновити</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    {# END MODAL edit Job #}
 {% endblock %}
-
-
-
 
 {% block javascripts %}
     {{ parent() }}

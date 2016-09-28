@@ -1,6 +1,6 @@
-{% extends  "::profile.html.twig"%}
+{% extends  "@RatingProfile/Profile/index.html.twig"%}
 
-{% block body %}
+{% block content %}
     <ul>
     {% for i in institutes %}
         <li><a href="{{ path("inst") }}">{{ i.title }}</a></li>

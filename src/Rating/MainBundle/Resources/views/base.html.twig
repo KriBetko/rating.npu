@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}
+            {% stylesheets
+            '@bootstrap_css'
+            'bundles/ratingmain/css/jquery-ui.min.css'
+            '@RatingMainBundle/Resources/public/less/*'
+            '@RatingMainBundle/Resources/public/css/style.css' %}
+            <link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
+            {% endstylesheets %}
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+
+    <body>
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">
+                        Інформаційно-аналітична система самооцінювання освітньої діяльності НПУ ім. М.П. Драгоманова
+                    </a>
+                </div>
+            </div>
+            {% block navbar %}{% endblock %}
+        </nav>
+
+        {% block content %}{% endblock %}
+
+        <footer class="footer panel-footer">
+            <div class="container">
+                <p>by Ivan Kolodrivskiy</p>
+            </div>
+        </footer>
+
+        {% block javascripts %}
+            {% javascripts
+            '@jquery_js'
+            '@jqueryui_js'
+            '@bootstrap_js'
+            '@RatingMainBundle/Resources/public/scripts/ajax.form.js'
+            '@RatingMainBundle/Resources/public/scripts/app.js' %}
+            <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+        {% endblock %}
+    </body>
+</html>

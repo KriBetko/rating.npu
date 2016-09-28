@@ -23,7 +23,7 @@ class UserController extends Controller
      *
      * @Route("/", name="user")
      * @Method("GET")
-     * @Template()
+     * @Template("@RatingAdmin/User/index.html.twig")
      */
     public function indexAction()
     {

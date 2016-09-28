@@ -1,16 +1,14 @@
-{% extends '::base.html.twig' %}
+{% extends '@RatingAdmin/index.html.twig' %}
 
-{% block body -%}
+{% block content %}
     <h1>User edit</h1>
 
     {{ form(edit_form) }}
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('user') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('user') }}">Back to the list</a>
+        </li>
+        <li>{{ form(delete_form) }}</li>
+    </ul>
 {% endblock %}

@@ -1,39 +1,41 @@
-{% extends  "::profile.html.twig"%}
+{% extends  "@RatingProfile/Profile/index.html.twig"%}
 
-{% block body %}
-    <style>
-        .form-group{
-            margin-bottom: 50px;
-            display: inline-block;
-            margin-right: 29px;
-        }
-        #job .form-group:last-child{
-            margin-right: 0;
-        }
-    </style>
-    <div class="filers">
-        {{ form(form) }}
+{% block content %}
+    <div id="wrapper" class="after-navbar-2 container">
+        <style>
+            .form-group{
+                margin-bottom: 50px;
+                display: inline-block;
+                margin-right: 29px;
+            }
+            #job .form-group:last-child{
+                margin-right: 0;
+            }
+        </style>
+        <div class="filers">
+            {{ form(form) }}
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ПІБ</th>
+                    <th>Факультет</th>
+                    <th>Кафедра</th>
+                    <th>Посада</th>
+                    <th>Рейтинг</th>
+                </tr>
+            </thead>
+            {% for u in users %}
+                <tr>
+                    <td>{{ u.fname }} {{ u.lname }} {{ u.pname }}</td>
+                    <td>{{ u.institute }}</td>
+                    <td>{{ u.cathedra }}</td>
+                    <td>{{ u.position }}</td>
+                    <td>{{ u.summa }}</td>
+                </tr>
+            {% endfor %}
+        </table>
     </div>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>ПІБ</th>
-                <th>Факультет</th>
-                <th>Кафедра</th>
-                <th>Посада</th>
-                <th>Рейтинг</th>
-            </tr>
-        </thead>
-        {% for u in users %}
-            <tr>
-                <td>{{ u.fname }} {{ u.lname }} {{ u.pname }}</td>
-                <td>{{ u.institute }}</td>
-                <td>{{ u.cathedra }}</td>
-                <td>{{ u.position }}</td>
-                <td>{{ u.summa }}</td>
-            </tr>
-        {% endfor %}
-    </table>
 {% endblock %}
 
 {% block javascripts %}

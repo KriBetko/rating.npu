@@ -1,8 +1,7 @@
-{% extends '::base.html.twig' %}
+{% extends '@RatingAdmin/index.html.twig' %}
 
 {% block body -%}
     <h1>Position</h1>
-
     <table class="record_properties">
         <tbody>
             <tr>
@@ -16,17 +15,13 @@
         </tbody>
     </table>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('position') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('position_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('position') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('position_edit', { 'id': entity.id }) }}">Edit</a>
+        </li>
+        <li>{{ form(delete_form) }}</li>
+    </ul>
 {% endblock %}

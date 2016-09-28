@@ -1,29 +1,31 @@
-{% extends '::admin.html.twig' %}
+{% extends '@RatingAdmin/index.html.twig' %}
 
-{% block body -%}
-    <h1>Посади</h1>
-    <a class="btn btn-success pull-right" href="{{ path('position_new') }}">Додати посаду</a>
-    <br><br><br>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Назва</th>
-                <th>Дії</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td class="col-md-1"><a href="{{ path('position_edit', { 'id': entity.id }) }}">{{ loop.index }}</a></td>
-                <td>{{ entity.title }}</td>
-                <td class="center-block col-md-1">
-                    <a class="btn btn-info btn-mini" href="{{ path('position_edit', { 'id': entity.id }) }}">
-                        <span  class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                    </a>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    {% endblock %}
+{% block content %}
+    <div class="after-navbar-admin container">
+        <h1>Посади</h1>
+        <a class="btn btn-success pull-right" href="{{ path('position_new') }}">Додати посаду</a>
+        <br><br><br>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Назва</th>
+                    <th>Дії</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td class="col-md-1"><a href="{{ path('position_edit', { 'id': entity.id }) }}">{{ loop.index }}</a></td>
+                    <td>{{ entity.title }}</td>
+                    <td class="td-center col-md-1">
+                        <a class="btn btn-info btn-mini" href="{{ path('position_edit', { 'id': entity.id }) }}">
+                            <span  class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

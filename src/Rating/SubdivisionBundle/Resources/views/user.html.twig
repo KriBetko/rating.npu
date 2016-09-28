@@ -1,6 +1,8 @@
-{% extends '::profile.html.twig' %}
-{% block title %} Особ1ова картка {% endblock %}
-{% block body -%}
+{% extends '@RatingProfile/Profile/index.html.twig' %}
+
+{% block title %}Особова картка{% endblock %}
+
+{% block content %}
     {% for job in measures %}
         <div class="jobs_container">
             <h4 style="position: relative">{% if app.user.isStudent %} {{ job.job.institute.title }} - {{ job.job.group }} {% else %} {{ job.job.cathedra.institute.title }} - {{ job.job.cathedra.title }}{% endif %} <b></b></h4>

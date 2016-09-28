@@ -1,11 +1,10 @@
-{% extends '::admin.html.twig' %}
+{% extends '@RatingAdmin/index.html.twig' %}
+
 {% block title %}Створити Кафедру{% endblock %}
-{% block body -%}
+
+{% block content %}
     <a class="btn btn-primary back-btn" href="{{ path('cathedras') }}">{{ 'Назад' }}</a>
     <br>
     <h3>Створити Кафедру</h3>
-    {% form_theme form 'bootstrap_3_layout.html.twig' %}
-    <div class="admin-form">
-        {{ form(form) }}
-    </div>
+    <div class="admin-form">{{ form(form) }}</div>
 {% endblock %}

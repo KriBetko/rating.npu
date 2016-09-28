@@ -1,36 +1,35 @@
-{% extends '::admin.html.twig' %}
+{% extends '@RatingAdmin/index.html.twig' %}
 
 {% block title %} Факультети{% endblock %}
 
-{% block body -%}
-    <h1>Факультети</h1>
-    <a class="btn btn-success pull-right" href="{{ path('institute_new') }}">{{ 'Додати Факультет' }}</a>
-    <br><br><br>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Назва</th>
-                <th>Опис</th>
-                <th>Дії</th>
-            </tr>
-        </thead>
-        <tbody>
-
-        {% for entity in entities %}
-            <tr>
-                <td class="col-md-1"><a href="{{ path('institute_edit', { 'id': entity.id }) }}">{{ loop.index }}</a></td>
-                <td>{{ entity.title }}</td>
-                <td>{{ entity.description }}</td>
-                <td class="col-md-1">
-                    <a class="btn btn-info btn-mini" href="{{ path('institute_edit', { 'id': entity.id }) }}">
-                        <span  class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                    </a>
-                </td>
-            </tr>
-        {% endfor %}
-
-        </tbody>
-    </table>
-    <br>
+{% block content %}
+    <div class="after-navbar-admin container">
+        <h1>Факультети</h1>
+        <a class="btn btn-success pull-right" href="{{ path('institute_new') }}">{{ 'Додати Факультет' }}</a>
+        <br><br><br>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Назва</th>
+                    <th>Опис</th>
+                    <th>Дії</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entity in entities %}
+                    <tr>
+                        <td class="col-md-1"><a href="{{ path('institute_edit', { 'id': entity.id }) }}">{{ loop.index }}</a></td>
+                        <td>{{ entity.title }}</td>
+                        <td>{{ entity.description }}</td>
+                        <td class="td-center col-md-1">
+                            <a class="btn btn-info btn-mini" href="{{ path('institute_edit', { 'id': entity.id }) }}">
+                                <span  class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

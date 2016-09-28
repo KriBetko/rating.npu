@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Адміністративна панель</a>
+        </div>
+        <ul class="nav navbar-nav">
+            {% set currentPath = app.request.attributes.get('_route') %}
+            <li {% if currentPath == 'user' %}class="active"{% endif %}>
+                <a href="{{ path('user') }}">Користувачі</a>
+            </li>
+            <li {% if currentPath == 'institutes' %}class="active"{% endif %}>
+                <a href="{{ path('institutes') }}">Факультети</a>
+            </li>
+            <li {% if currentPath == 'cathedras' %}class="active"{% endif %}>
+                <a href="{{ path('cathedras') }}">Кафедри</a>
+            </li>
+            <li {% if currentPath == 'position' %}class="active"{% endif %}>
+                <a href="{{ path('position') }}">Посади</a>
+            </li>
+            <li role="presentation" class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                    Критерії
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ path('rating_user') }}">Критерії</a></li>
+                    <li><a href="{{ path('rating_user') }}">Групи критеріїв</a></li>
+                    <li><a href="{{ path('rating_user') }}">Категорії критеріїв</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>

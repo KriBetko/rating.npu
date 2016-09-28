@@ -1,17 +1,11 @@
-{% extends '::admin.html.twig' %}
-{% block body %}
-<!--<ul>
-    <li><a href="{{ path('user') }}">Користувачі</a></li>
-    <br>
-    <li><a href="{{ path('institutes') }}">Факультети</a></li>
-    <li><a href="{{ path('cathedras') }}">Кафедри</a></li>
-    <li><a href="{{ path('position') }}">Посади</a></li>
-    <br>
-    <li><a href="{{ path('year') }}">Навчальні роки</a></li>
-    <br>
-    <li><a href="{{ path('criterion') }}">Критерії</a></li>
-    <li><a href="{{ path('group') }}">Групи критерїів</a></li>
-    <br>
-    <li><a href="{{ path('category') }}">Категорії критеріїв</a></li>
-</ul>-->
+{% extends '@RatingMain/base.html.twig' %}
+
+{% block title %}Мій профиль{% endblock %}
+
+{% block navbar %}
+    {% include '@RatingProfile/Profile/user-navbar.html.twig' %}
+    <hr>
+    {% include '@RatingAdmin/admin-navbar.html.twig' %}
 {% endblock %}
+
+{% block content %}{% endblock %}

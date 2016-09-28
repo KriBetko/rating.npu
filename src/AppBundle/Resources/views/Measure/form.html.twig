@@ -1,6 +1,5 @@
-
-<form  novalidate id="form-edit-measure"
-       action="{{ path('edit_measure', {'id': measure.id}) }}" {{ form_enctype(form) }} method="POST" class="">
+<form novalidate id="form-edit-measure"
+      action="{{ path('edit_measure', {'id': measure.id}) }}" {{ form_enctype(form) }} method="POST" class="">
     <div class="form-group form-error-block">
         {% set editable = measure.year.editable %}
 
@@ -31,27 +30,25 @@
                         </div>
                         {{ form.vars.value.value }}
                     {% endif %}
-
                 </div>
             {% endif %}
-
         </div>
 
         {% if not singleGroup %}
-                    <br><hr><br>
-                    {% if editable and measure.criterion.isPlural() %}
-                    <ol  class="fields" id="field-ol" data-prototype="{{ form_widget(form.fields.vars.prototype)|e }}">
-                        {% for field in form.fields %}
-                            <li class="input-field">{{ form_row(field.title) }}</li>
-                        {% endfor %}
-                    </ol>
-                    {% else %}
-                        <ol {% if not measure.criterion.isPlural() %}style="display: none" {% endif %}>
-                            {% for field in form.fields %}
-                                <li>{{ form_row(field.title, { 'attr':{'disabled':'disabled'} }) }}</li>
-                            {% endfor %}
-                        </ol>
-                    {% endif %}
+            <br><hr><br>
+            {% if editable and measure.criterion.isPlural() %}
+            <ol  class="fields" id="field-ol" data-prototype="{{ form_widget(form.fields.vars.prototype)|e }}">
+                {% for field in form.fields %}
+                    <li class="input-field">{{ form_row(field.title) }}</li>
+                {% endfor %}
+            </ol>
+            {% else %}
+                <ol {% if not measure.criterion.isPlural() %}style="display: none" {% endif %}>
+                    {% for field in form.fields %}
+                        <li>{{ form_row(field.title, { 'attr':{'disabled':'disabled'} }) }}</li>
+                    {% endfor %}
+                </ol>
+            {% endif %}
         {% endif %}
     </div>
    {{ form_rest(form) }}

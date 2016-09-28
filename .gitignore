@@ -10,6 +10,3 @@
 /vendor/
 /bin/
 /.idea/*
-Будет удалено .idea/
-Будет удалено src/RatingBundle/
-Будет удалено tests/
