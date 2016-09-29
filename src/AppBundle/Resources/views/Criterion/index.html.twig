@@ -1,40 +1,52 @@
-{% extends '::admin.html.twig' %}
-{% block title %} Критерії{% endblock %}
-{% block body -%}
-    <h1>Критерії</h1>
-    <a class="btn btn-success pull-right" href="{{ path('criterion_new') }}">{{ 'Додати Критерій' }}</a>
-    <br><br><br>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Назва</th>
-                <th>Коефіцієнт</th>
-                <th>Опис</th>
-                <th>Категорія</th>
-                <th>Група</th>
-                {#<th>Тип</th>#}
-                <th>Дії</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td class="col-md-1"><a href="{{ path('criterion_edit', { 'id': entity.id }) }}">{{ loop.index }}</a></td>
-                <td>{{ entity.title }}</td>
-                <td class="col-md-1">{{ entity.coefficient }}</td>
-                <td>{{ entity.reference }}</td>
-                {#<td>{{ entity.type }}</td>#}
-                <td>{% if entity.category is not null %}{{ entity.category.title }}{% endif %}</td>
-                <td>{% if entity.group is not null %}{{ entity.group.title }}{% endif %}</td>
+{% extends '@RatingAdmin/index.html.twig' %}
 
-                <td class="col-md-1">
-                    <a class="btn btn-info btn-mini" href="{{ path('criterion_edit', { 'id': entity.id }) }}">
-                        <span  class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+{% block title %} Критерії{% endblock %}
+
+{% block content %}
+    <div id="wrapper" class="after-navbar-admin container">
+        <div class="row">
+            <h2>
+                Критерії
+                <span class="pull-right">
+                    <a class="btn btn-success pull-right" href="{{ path('criterion_new') }}">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                        Додати Критерій
                     </a>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                </span>
+            </h2>
+        </div>
+        <br>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Назва</th>
+                    <th>Коефіцієнт</th>
+                    <th>Опис</th>
+                    <th>Категорія</th>
+                    <th>Група</th>
+                    {#<th>Тип</th>#}
+                    <th>Дії</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td class="col-md-1"><a href="{{ path('criterion_edit', { 'id': entity.id }) }}">{{ loop.index }}</a></td>
+                    <td>{{ entity.title }}</td>
+                    <td class="col-md-1">{{ entity.coefficient }}</td>
+                    <td>{{ entity.reference }}</td>
+                    {#<td>{{ entity.type }}</td>#}
+                    <td>{% if entity.category is not null %}{{ entity.category.title }}{% endif %}</td>
+                    <td>{% if entity.group is not null %}{{ entity.group.title }}{% endif %}</td>
+                    <td class="td-center col-md-1">
+                        <a class="btn btn-info btn-mini" href="{{ path('criterion_edit', { 'id': entity.id }) }}">
+                            <span  class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

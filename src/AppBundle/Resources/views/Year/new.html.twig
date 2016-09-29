@@ -1,13 +1,12 @@
-{% extends '::admin.html.twig' %}
+{% extends '@RatingAdmin/index.html.twig' %}
+
 {% block title %}Створення Навчального Року{% endblock %}
-{% block body -%}
-    <a class="btn btn-primary back-btn" href="{{ path('year') }}">{{ 'Назад' }}</a>
-    <br>
 
-    <h3>Створення Навчального Року</h3>
-
-    {% form_theme form 'bootstrap_3_layout.html.twig' %}
-    <div class="admin-form">
-        {{ form(form) }}
+{% block content %}
+    <div id="wrapper" class="after-navbar-admin container">
+        <h3>Створення Навчального Року</h3>
+        <div class="admin-form">
+            {{ form(form) }}
+        </div>
     </div>
 {% endblock %}

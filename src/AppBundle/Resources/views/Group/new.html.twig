@@ -1,12 +1,12 @@
-{% extends '::admin.html.twig' %}
+{% extends '@RatingAdmin/index.html.twig' %}
+
 {% block title %}Створення Групи Критеріїв{% endblock %}
-{% block body -%}
-    <h3>Створення Групи критеріїв</h3>
-    <br>
-    <a class="btn btn-primary back-btn" href="{{ path('group') }}">{{ 'Назад' }}</a>
-    <br>
-    {% form_theme form 'bootstrap_3_layout.html.twig' %}
-    <div class="admin-form">
-        {{ form(form) }}
+
+{% block content %}
+    <div id="wrapper" class="after-navbar-admin container">
+        <h3>Створення Групи критеріїв</h3>
+        <div class="admin-form">
+            {{ form(form) }}
+        </div>
     </div>
 {% endblock %}

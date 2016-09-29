@@ -19,7 +19,7 @@
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#">
+                    <a class="navbar-brand">
                         Інформаційно-аналітична система самооцінювання освітньої діяльності НПУ ім. М.П. Драгоманова
                     </a>
                 </div>
@@ -29,9 +29,9 @@
 
         {% block content %}{% endblock %}
 
-        <footer class="footer panel-footer">
+        <footer class="panel-footer">
             <div class="container">
-                <p>by Ivan Kolodrivskiy</p>
+                <p class="text-center">Copyright 2016</p>
             </div>
         </footer>
 
@@ -41,7 +41,8 @@
             '@jqueryui_js'
             '@bootstrap_js'
             '@RatingMainBundle/Resources/public/scripts/ajax.form.js'
-            '@RatingMainBundle/Resources/public/scripts/app.js' %}
+            '@RatingMainBundle/Resources/public/scripts/app.js'
+            '@RatingMainBundle/Resources/public/scripts/main.js'%}
             <script src="{{ asset_url }}"></script>
             {% endjavascripts %}
         {% endblock %}

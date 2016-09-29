@@ -1,12 +1,12 @@
-{% extends '::admin.html.twig' %}
-{% block title %}Створення Категорії{% endblock %}
-{% block body -%}
-    <a class="btn btn-primary back-btn" href="{{ path('category') }}">{{ 'Назад' }}</a>
-    <br>
-    <h3>Створення Категорії</h3>
+{% extends '@RatingAdmin/index.html.twig' %}
 
-    {% form_theme form 'bootstrap_3_layout.html.twig' %}
-    <div class="admin-form">
-        {{ form(form) }}
+{% block title %}Створення Категорії{% endblock %}
+
+{% block content %}
+    <div id="wrapper" class="after-navbar-admin container">
+        <h3>Створення Категорії</h3>
+        <div class="admin-form">
+            {{ form(form) }}
+        </div>
     </div>
 {% endblock %}
