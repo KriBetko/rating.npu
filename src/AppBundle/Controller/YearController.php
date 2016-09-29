@@ -2,14 +2,15 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Year;
+use AppBundle\Form\YearType;
+use Doctrine\ORM\EntityManager;
 use Rating\UserBundle\Entity\User;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use AppBundle\Entity\Year;
-use AppBundle\Form\YearType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Year controller.
@@ -163,6 +164,9 @@ class YearController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
+        /**
+         * @var $em EntityManager
+         */
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('AppBundle:Year')->find($id);
@@ -174,9 +178,8 @@ class YearController extends Controller
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
 
-       if ($editForm->isValid())
-       {
-           $this->changeUserAvailableYear();
+        if ($editForm->isValid()) {
+            $this->changeUserAvailableYear();
             $em->flush();
             $this->addFlash('success_edit', 'success');
             return $this->redirect($this->generateUrl('year'));
@@ -188,6 +191,23 @@ class YearController extends Controller
         );
     }
 
+    private function changeUserAvailableYear()
+    {
+        $em = $this->getDoctrine()->getManager();
+        /*** @var Year $year */
+        $year = $this->get('year.manager')->getCurrentYear();
+
+        $users = $em->getRepository('RatingUserBundle:User')->findAll();
+
+        /*** @var User $user */
+        foreach ($users as $user)
+        {
+            $user->setAvailableYeaR($year->getId());
+        }
+
+        $em->flush();
+    }
+
     /**
      * @Route("/generate/measures/{year}", name="generate_measures")
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -196,23 +216,5 @@ class YearController extends Controller
     public function generateMeasureAction()
     {
         return $this->redirect($this->generateUrl('year'));
-    }
-
-    private function changeUserAvailableYear()
-    {
-        $em = $this->getDoctrine()->getManager();
-        /*** @var Year $year */
-        $year = $this->get('year.manager')->getCurrentYear();
-
-        /*** @var User $user */
-        foreach ($user as $em->getRepository('RatingUserBundle:User')->findAll())
-        {
-            $user->setAvailableYeaR($year->getId());
-        }
-
-        $em->flush();
-
-
-
     }
 }
