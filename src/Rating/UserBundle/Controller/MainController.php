@@ -1,12 +1,11 @@
 <?php
 namespace Rating\UserBundle\Controller;
 
+use AppBundle\Entity\Year;
 use Rating\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-
 use Symfony\Component\Routing\Annotation\Route;
-
 
 class MainController extends Controller
 {
@@ -19,18 +18,30 @@ class MainController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $um = $this->get('user.manager');
+
+        /*** @var \Google_Service_Oauth2_Userinfoplus $response */
         $response = $this->get('google.oauth')->getResponse();
-        if ($response) {
+        if ($response)
+        {
             $user = $em->getRepository('RatingUserBundle:User')->loadUserByUsername($response->getId());
-                if (!$user ) {
-                    if ($response->getHd() == 'npu.edu.ua'){
-                        $user = $um->createTeacher($response);
-                    }
-                    if ($response->getHd() == 'std.npu.edu.ua'){
-                        $user = $um->createStudent($response);
-                    }
-                    $em->persist($user);
+
+            if (!$user )
+            {
+                /** @var Year $year */
+                $year = $this->get('year.manager')->getCurrentYear();
+
+                if ($response->getHd() == 'npu.edu.ua')
+                {
+                    $user = $um->createTeacher($response, $year->getId());
                 }
+                elseif ($response->getHd() == 'std.npu.edu.ua')
+                {
+                    $user = $um->createStudent($response, $year->getId());
+                }
+
+                $em->persist($user);
+            }
+
             $um->update($user, $response);
             $em->flush();
             $um->authorize($user, $request);

@@ -125,9 +125,9 @@ class User implements UserInterface, \Serializable
     protected $googleId;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Year")
+     * @ORM\Column(type="integer", nullable=true)
      */
-    private $availableYear;
+    private $availableYearId;
 
     /**
      * @return mixed
@@ -495,15 +495,9 @@ class User implements UserInterface, \Serializable
         return $this->rating;
     }
 
-    public function setBlock($bool)
-    {
-        $this->Block = $bool;
-        return $this;
-    }
-
     public function isBlock()
     {
-        return $this->availableYear == null;
+        return $this->availableYearId == null;
     }
 
     /**
@@ -521,36 +515,20 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Add availableYear
-     *
-     * @param \AppBundle\Entity\Year $availableYear
-     *
-     * @return User
-     */
-    public function addAvailableYear(\AppBundle\Entity\Year $availableYear)
-    {
-        $this->availableYear[] = $availableYear;
-
-        return $this;
-    }
-
-    /**
-     * Remove availableYear
-     *
-     * @param \AppBundle\Entity\Year $availableYear
-     */
-    public function removeAvailableYear(\AppBundle\Entity\Year $availableYear)
-    {
-        $this->availableYear->removeElement($availableYear);
-    }
-
-    /**
-     * Get availableYear
-     *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return integer
      */
     public function getAvailableYear()
     {
-        return $this->availableYear;
+        return $this->availableYearId;
+    }
+
+    /**
+     * @param $yearId
+     * @return $this
+     */
+    public function setAvailableYeaR($yearId)
+    {
+        $this->availableYearId = $yearId;
+        return $this;
     }
 }

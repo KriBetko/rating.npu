@@ -4,7 +4,6 @@ namespace Rating\UserBundle\Security;
 
 use Rating\UserBundle\Entity\User;
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
-
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
@@ -14,24 +13,39 @@ class UserManager
 
     public function __construct(Container $container)
     {
-        $this->container    = $container;
+        $this->container = $container;
     }
 
-    public function createStudent($response)
+    /**
+     * @param \Google_Service_Oauth2_Userinfoplus $response
+     * @param integer $year
+     * @return User
+     */
+    public function createStudent($response, $year)
     {
-        $user = $this->create($response);
+        $user = $this->create($response, $year);
         $user->addRole('ROLE_STUDENT');
         return $user;
     }
 
-    public function createTeacher($response)
+    /**
+     * @param \Google_Service_Oauth2_Userinfoplus $response
+     * @param integer $year
+     * @return User
+     */
+    public function createTeacher($response, $year)
     {
-        $user = $this->create($response);
+        $user = $this->create($response, $year);
         $user->addRole('ROLE_TEACHER');
         return $user;
     }
 
-    protected function create($response)
+    /**
+     * @param \Google_Service_Oauth2_Userinfoplus$response
+     * @param integer $year
+     * @return User
+     */
+    protected function create($response, $year)
     {
         $user = new User();
         $user->setLastName($response->getGivenName());
@@ -41,15 +55,24 @@ class UserManager
         $user->setEmail($response->getEmail());
         $user->setPicture($response->getPicture());
         $user->addRole('ROLE_USER');
-        $user->addRole('ROLE_ADMIN');
+        $user->addRole('ROLE_ADMIN'); //TODO Delete admin role in prodServer
+        $user->setAvailableYeaR($year);
         return $user;
     }
 
+    /**
+     * @param User $user
+     * @param \Google_Service_Oauth2_Userinfoplus $response
+     */
     public function update($user, $response)
     {
         $user->setPicture($response->getPicture());
     }
 
+    /**
+     * @param User $user
+     * @param $request
+     */
     public function authorize($user, $request)
     {
         $token = new UsernamePasswordToken($user, null, "main", $user->getRoles());

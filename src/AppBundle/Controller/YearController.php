@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use Rating\UserBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -167,13 +168,15 @@ class YearController extends Controller
         $entity = $em->getRepository('AppBundle:Year')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Year entity.');
+             throw $this->createNotFoundException('Unable to find Year entity.');
         }
 
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
 
-        if ($editForm->isValid()) {
+       if ($editForm->isValid())
+       {
+           $this->changeUserAvailableYear();
             $em->flush();
             $this->addFlash('success_edit', 'success');
             return $this->redirect($this->generateUrl('year'));
@@ -193,5 +196,23 @@ class YearController extends Controller
     public function generateMeasureAction()
     {
         return $this->redirect($this->generateUrl('year'));
+    }
+
+    private function changeUserAvailableYear()
+    {
+        $em = $this->getDoctrine()->getManager();
+        /*** @var Year $year */
+        $year = $this->get('year.manager')->getCurrentYear();
+
+        /*** @var User $user */
+        foreach ($user as $em->getRepository('RatingUserBundle:User')->findAll())
+        {
+            $user->setAvailableYeaR($year->getId());
+        }
+
+        $em->flush();
+
+
+
     }
 }

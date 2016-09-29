@@ -2,6 +2,7 @@
 
 namespace Rating\AdminBundle\Controller;
 
+use AppBundle\Entity\Year;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -294,7 +295,16 @@ class UserController extends Controller
         /*** @var User $user */
         $user = $em->getRepository('RatingUserBundle:User')->findOneById($id);
 
-        $user->setBlock(!$user->isBlock());
+        /*** @var Year $year */
+        if($user->isBlock())
+        {
+            $year = $this->get('year.manager')->getCurrentYear();
+            $user->setAvailableYeaR($year->getId());
+        }
+        else
+        {
+            $user->setAvailableYeaR(null);
+        }
 
         $em->flush();
 
