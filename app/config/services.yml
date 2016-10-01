@@ -1,3 +1,3 @@
 imports:
-  - { resource: @SystemAppBundle/Resources/config/services.yml }
-  - { resource: @RatingUserBundle/Resources/config/services.yml }
+  - { resource: '@SystemAppBundle/Resources/config/services.yml' }
+  - { resource: '@RatingUserBundle/Resources/config/services.yml' }

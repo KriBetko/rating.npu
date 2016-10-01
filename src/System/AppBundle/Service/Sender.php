@@ -3,7 +3,8 @@ namespace System\AppBundle\Service;
 
 use Symfony\Component\HttpFoundation\Response;
 
-class Sender {
+class Sender
+{
     public function sendJson($data)
     {
         $response = new Response(json_encode($data));

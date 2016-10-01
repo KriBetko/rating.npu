@@ -3,14 +3,14 @@ services:
         class: AppBundle\Manager\MeasureManager
         public: true
         arguments:
-            - @doctrine.orm.default_entity_manager
-            - @service_container
+            - '@doctrine.orm.default_entity_manager'
+            - '@service_container'
     year.manager:
         class: AppBundle\Manager\YearManager
         public: true
         arguments:
-            - @doctrine.orm.default_entity_manager
-            - @service_container
+            - '@doctrine.orm.default_entity_manager'
+            - '@service_container'
 
     security_handler:
         class: Rating\UserBundle\Auth\SecurityHandler
