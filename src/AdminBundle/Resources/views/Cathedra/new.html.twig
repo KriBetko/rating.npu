@@ -1,0 +1,10 @@
+{% extends '@Admin/index.html.twig' %}
+
+{% block title %}Створити Кафедру{% endblock %}
+
+{% block content %}
+    <a class="btn btn-primary back-btn" href="{{ path('cathedras') }}">{{ 'Назад' }}</a>
+    <br>
+    <h3>Створити Кафедру</h3>
+    <div class="admin-form">{{ form(form) }}</div>
+{% endblock %}

@@ -5,12 +5,12 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Year;
 use AppBundle\Form\YearType;
 use Doctrine\ORM\EntityManager;
-use Rating\UserBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use UserBundle\Entity\User;
 
 /**
  * Year controller.
@@ -197,7 +197,7 @@ class YearController extends Controller
         /*** @var Year $year */
         $year = $this->get('year.manager')->getCurrentYear();
 
-        $users = $em->getRepository('RatingUserBundle:User')->findAll();
+        $users = $em->getRepository('UserBundle:User')->findAll();
 
         /*** @var User $user */
         foreach ($users as $user)

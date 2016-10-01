@@ -1,0 +1,220 @@
+{% extends '@Main/base.html.twig' %}
+
+{% block title %}Мій профиль{% endblock %}
+
+{% block navbar %}{% include '@Main/user-navbar.html.twig' %}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        {% for flashMessage in app.session.flashbag.get('success_update') %}
+            <div class="alert alert-success">
+                Дані успішно збережені!
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="row">
+        <h2>
+            Персональні відомості
+            <span class="pull-right">
+                <a href="{{ path('my_profile_edit') }}" class="btn btn-success">
+                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                    Редагувати
+                </a>
+            </span>
+        </h2>
+    </div>
+
+    <div class="row">
+        <br>
+        <div class="row">
+            <div class="col-md-2"><b>Прізвище:</b></div>
+            <div class="col-md-2"><p>{{ user.firstName }}</p></div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"><b>Ім'я:</b></div>
+            <div class="col-md-2"><p>{{ user.lastName }}</p></div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"><b>По-батькові:</b></div>
+            <div class="col-md-2"><p>{{ user.parentName }}</p></div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"><b>Email:</b></div>
+            <div class="col-md-2"><p>{{ user.email }}</p></div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"><b>Дата народження:</b></div>
+            <div class="col-md-2">
+                <p>
+                    {% if user.birthday is not null %}
+                        {{ user.birthday|date('d.m.Y') }}
+                    {% else %}
+                        Не вказана
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"><b>Рейтинг:</b></div>
+            <div class="col-md-2">{{ user.rating }}</div>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <h2>
+            Місце роботи
+            <span class="pull-right">
+                <a href="" class="btn btn-success" data-toggle="modal" data-target="#modalJob">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    Додати
+                </a>
+            </span>
+        </h2>
+        <br>
+        <div id="table-jobs-block">
+            {{ include(tableView) }}
+        </div>
+
+        <div class="modal fade" id="modalJob" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">{% if is_granted('ROLE_TEACHER') %} Додати нове місце роботи {% else %} Додати нове місце навчання{% endif %}</h4>
+                    </div>
+                    <div class="modal-body" id="form-block">
+                        {{ include(formView) }}
+                    </div>
+                    <div class="modal-footer">
+                        {#<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>#}
+                        <button id="form-job-sender" type="button" class="btn btn-primary">Зберегти</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalRemoveJob" tabindex="-2" role="dialog" aria-labelledby="myModalLabel" data-id="">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">{% if is_granted('ROLE_TEACHER') %}Видалення місця роботи  {% else %} Видалення місця навчання{% endif %}</h4>
+                    </div>
+                    <div class="modal-body" id="form-block">
+                        {% if is_granted('ROLE_TEACHER') %} Ви дійсно бажаєте видалити дане місце роботи? {% else %} Ви дійсно бажаєте видалити дане місце навчання? {% endif %}
+                    </div>
+                    <div class="modal-footer center-block">
+                        <a data-href="{{ path('profile_remove_job') }}" id="removeJob" type="button" class="btn btn-danger">ТАК</a>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">НІ</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalEditJob" tabindex="-3" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">{% if is_granted('ROLE_TEACHER') %} Редагування місця роботи {% else %} Редагування місця навчання {% endif %}</h4>
+                    </div>
+                    <div class="modal-body" id="form-edit-block">
+
+                    </div>
+                    <div class="modal-footer center-block">
+                        <button data-dismiss="modal"  id="sender-edit-form" type="button" class="btn btn-primary">Оновити</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        function initAddJobForm (){
+            getCathedrasList('#job_institute', '#job_cathedra');
+            $('#form-job-sender').click(function(){
+                $('#form-job').ajaxSubmit({
+                    'success': function(e){
+                        if (e.status == 0)
+                        {
+                            $('#form-block').html(e.view);
+                        }
+                        else if(e.status = 1)
+                        {
+                            $('#modalJob').modal('hide');
+                            $('#form-job').clearForm();
+                            $('#table-jobs-block').html(e.view);
+                        }
+                        return false;
+                    }
+                });
+            });
+
+        }
+        $(document).ready(function(){
+
+            initAddJobForm();
+
+            $(document.body).on('click', '.remove-job-link', function(){
+               $('#removeJob').attr('data-id', $(this).attr('data-id'));
+            });
+
+            $(document.body).on('submit', '#form-job, #form-edit-job', function(e){
+                e.preventDefault();
+            });
+
+            $('#removeJob').click(function(){
+                $.ajax({
+                    method: "post",
+                    url:  $(this).attr('data-href')+'/'+$(this).attr('data-id')
+                })
+                .done(function(e) {
+                    if (e.status == 1){
+                        $('#modalRemoveJob').modal('hide');
+                        $('#table-jobs-block').html(e.view);
+                    }
+
+                });
+            });
+
+            $('#sender-edit-form').click(function(e){
+                e.preventDefault();
+                e.stopPropagation();
+                $('#form-edit-job').ajaxSubmit({
+                    'success': function(e){
+                        if (e.status == 0)
+                        {
+                            $('#form-edit-block').html(e.view);
+                            getCathedrasList('#job_institute', '#job_cathedra');
+                        }
+                        else if (e.status = 1)
+                        {
+                            $('#modalEditJob').modal('hide');
+                            $('#form-edit-job').clearForm();
+                            $('#table-jobs-block').html(e.view);
+                        }
+                        return false;
+                    }
+                });
+            });
+
+            $(document.body).on('click', '.edit-job-link', function(){
+                $.ajax({
+                    method: "get",
+                    url:  $(this).attr('data-href')+'/'+$(this).attr('data-id')
+                })
+                .done(function(e) {
+                    $('#form-edit-block').html(e.view);
+
+                });
+            });
+
+        });
+    </script>
+{% endblock javascripts%}
+

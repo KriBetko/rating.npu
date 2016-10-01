@@ -4,27 +4,27 @@ system_app:
     prefix:   /
 
 rating_subdivision:
-    resource: "@RatingSubdivisionBundle/Controller/"
+    resource: "@SubdivisionBundle/Controller/"
     type:     annotation
     prefix:   /
 
 rating_admin:
-    resource: "@RatingAdminBundle/Controller/"
+    resource: "@AdminBundle/Controller/"
     type:     annotation
     prefix:   /admin
 
 rating_teachers:
-    resource: "@RatingUserBundle/Controller/"
+    resource: "@UserBundle/Controller/"
     type:     annotation
     prefix:   /
 
 rating_profile:
-    resource: "@RatingProfileBundle/Controller/"
+    resource: "@ProfileBundle/Controller/"
     type:     annotation
     prefix:   /
 
 rating_main:
-    resource: "@RatingMainBundle/Controller/"
+    resource: "@MainBundle/Controller/"
     type:     annotation
     prefix:   /
 

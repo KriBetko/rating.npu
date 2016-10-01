@@ -1,7 +1,7 @@
 <?php
 
-use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
+use Symfony\Component\HttpKernel\Kernel;
 
 class AppKernel extends Kernel
 {
@@ -16,12 +16,12 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new AppBundle\AppBundle(),
-            new Rating\AdminBundle\RatingAdminBundle(),
-            new Rating\MainBundle\RatingMainBundle(),
-            new Rating\ProfileBundle\RatingProfileBundle(),
-            new Rating\UserBundle\RatingUserBundle(),
+            new AdminBundle\AdminBundle(),
+            new MainBundle\MainBundle(),
+            new ProfileBundle\ProfileBundle(),
+            new UserBundle\UserBundle(),
             new System\AppBundle\SystemAppBundle(),
-            new Rating\SubdivisionBundle\RatingSubdivisionBundle(),
+            new SubdivisionBundle\SubdivisionBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle()
         );
 

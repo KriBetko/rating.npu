@@ -5,7 +5,7 @@ use AppBundle\Entity\Criterion;
 use AppBundle\Entity\Measure;
 use AppBundle\Entity\Year;
 use Doctrine\ORM\EntityManager;
-use Rating\SubdivisionBundle\Entity\Job;
+use SubdivisionBundle\Entity\Job;
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 
 class MeasureManager

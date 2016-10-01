@@ -7,7 +7,7 @@ security:
     providers:
         main:
             entity:
-                class: RatingUserBundle:User
+                class: UserBundle:User
                 property: email
 
 

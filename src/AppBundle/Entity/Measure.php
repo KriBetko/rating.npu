@@ -3,8 +3,9 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Rating\SubdivisionBundle\Entity\Job;
+use SubdivisionBundle\Entity\Job;
 use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="AppBundle\Repository\MeasureRepository")
@@ -20,7 +21,7 @@ class Measure
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Rating\SubdivisionBundle\Entity\Job")
+     * @ORM\ManyToOne(targetEntity="SubdivisionBundle\Entity\Job")
      * @ORM\JoinColumn(name="job_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $job;
@@ -46,6 +47,18 @@ class Measure
      * @ORM\OneToMany(targetEntity="Field", mappedBy="measure", cascade={"persist"})
      */
     protected $fields;
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    protected $result = 0;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->fields = new ArrayCollection();
+    }
 
     /**
      * @return mixed
@@ -64,18 +77,6 @@ class Measure
     }
 
     /**
-     * @ORM\Column(type="float", nullable=true)
-     */
-    protected $result = 0;
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->fields = new ArrayCollection();
-    }
-
-    /**
      * Get id
      *
      * @return integer 
@@ -83,6 +84,16 @@ class Measure
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get value
+     *
+     * @return integer
+     */
+    public function getValue()
+    {
+        return $this->value;
     }
 
     /**
@@ -99,15 +110,14 @@ class Measure
     }
 
     /**
-     * Get value
+     * Get criterion
      *
-     * @return integer 
+     * @return \AppBundle\Entity\Criterion
      */
-    public function getValue()
+    public function getCriterion()
     {
-        return $this->value;
+        return $this->criterion;
     }
-
 
     /**
      * Set criterion
@@ -123,13 +133,13 @@ class Measure
     }
 
     /**
-     * Get criterion
+     * Get year
      *
-     * @return \AppBundle\Entity\Criterion 
+     * @return \AppBundle\Entity\Year
      */
-    public function getCriterion()
+    public function getYear()
     {
-        return $this->criterion;
+        return $this->year;
     }
 
     /**
@@ -143,16 +153,6 @@ class Measure
         $this->year = $year;
 
         return $this;
-    }
-
-    /**
-     * Get year
-     *
-     * @return \AppBundle\Entity\Year 
-     */
-    public function getYear()
-    {
-        return $this->year;
     }
 
     /**
@@ -190,6 +190,16 @@ class Measure
     }
 
     /**
+     * Get job
+     *
+     * @return \SubdivisionBundle\Entity\Job
+     */
+    public function getJob()
+    {
+        return $this->job;
+    }
+
+    /**
      * Set job
      *
      * @param Job $job
@@ -200,15 +210,5 @@ class Measure
         $this->job = $job;
 
         return $this;
-    }
-
-    /**
-     * Get job
-     *
-     * @return \Rating\SubdivisionBundle\Entity\Job 
-     */
-    public function getJob()
-    {
-        return $this->job;
     }
 }

@@ -4,7 +4,6 @@ namespace AppBundle\Manager;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Year;
 use Doctrine\ORM\EntityManager;
-
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 
 class YearManager
@@ -20,7 +19,7 @@ class YearManager
     public function generateMeasureForAllUser(Year $year, $user = false)
     {
         $measureManager = $this->container->get('measure');
-        $repository = $this->em->getRepository('RatingSubdivisionBundle:Job');
+        $repository = $this->em->getRepository('SubdivisionBundle:Job');
         $jobs = ($user) ? $repository->findBy(['user' => $user]) : $repository->findAll();
         $criteria = $year->getCriteria()->toArray();
         $this->clearDeletedMeasureForAllUser($year, $criteria);

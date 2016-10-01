@@ -1,0 +1,31 @@
+{% extends  "ProfileBundle:Profile:index.html.twig" %}
+
+{% block content %}
+    {% for i in institutes %}
+        <ul class="cathedras">
+            <li>
+                <b style="
+                {% if i.director is not null and i.director.id == app.user.id or i.id in institutesIDs %}
+                        text-decoration: underline;
+                {% endif %}">
+                    <a href="{{ path("profile_institute_show", {'id': i.id}) }}">{{ i.title }}</a>
+                </b>
+            </li>
+            {% set cath = i.cathedras %}
+            <li>
+                <ul style="margin-left: 40px;">
+                    {% for c in cath %}
+                        <li>
+                            <i>
+                                <a style="
+                                {% if c.director is not null and c.director.id == app.user.id or c.id in cathedrasIDs %}
+                                        text-decoration: underline;
+                                {% endif %}" href="{{ path("profile_cathedra_show", {'id': c.id}) }}">{{ c.title }}</a>
+                            </i>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
+        </ul>
+    {% endfor %}
+{% endblock %}

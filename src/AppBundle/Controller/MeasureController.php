@@ -8,9 +8,9 @@ use AppBundle\Entity\Year;
 use AppBundle\Form\MeasureType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Types\IntegerType;
-use Rating\SubdivisionBundle\Entity\Job;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use SubdivisionBundle\Entity\Job;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -128,13 +128,13 @@ class MeasureController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        /*** @var \Rating\UserBundle\Entity\User $user */
+        /*** @var \UserBundle\Entity\User $user */
         $user = $this->getUser();
 
         /*** @var IntegerType $rating */
         $rating = 0;
 
-        $jobs = $em->getRepository('RatingSubdivisionBundle:Job')->findUserJobs($user);
+        $jobs = $em->getRepository('SubdivisionBundle:Job')->findUserJobs($user);
         /*** @var Job $job */
         foreach ($jobs as $job)
         {

@@ -13,5 +13,5 @@ services:
             - '@service_container'
 
     security_handler:
-        class: Rating\UserBundle\Auth\SecurityHandler
+        class: UserBundle\Auth\SecurityHandler
         arguments:  [router]

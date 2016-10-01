@@ -2,7 +2,7 @@
 namespace AppBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Rating\SubdivisionBundle\Entity\Job;
+use SubdivisionBundle\Entity\Job;
 
 class MeasureRepository extends EntityRepository
 {
@@ -45,9 +45,9 @@ class MeasureRepository extends EntityRepository
         $em = $this->getEntityManager();
         $query = $em->createQuery('SELECT  u.firstName AS fname, u.lastName AS lname, u.parentName AS pname, SUM (m.result) AS summa, u.id AS id
                                    FROM \AppBundle\Entity\Measure m
-                                        LEFT JOIN \Rating\SubdivisionBundle\Entity\Job j WITH (j.id = m.job)
-                                        JOIN \Rating\UserBundle\Entity\User u WITH (j.user = u.id)
-                                        JOIN \Rating\SubdivisionBundle\Entity\Cathedra c WITH (j.cathedra = c.id)
+                                        LEFT JOIN \SubdivisionBundle\Entity\Job j WITH (j.id = m.job)
+                                        JOIN \UserBundle\Entity\User u WITH (j.user = u.id)
+                                        JOIN \SubdivisionBundle\Entity\Cathedra c WITH (j.cathedra = c.id)
                                         WHERE c.id= :cathedra
                                         GROUP BY u.id
                                         ORDER By summa
@@ -81,12 +81,12 @@ class MeasureRepository extends EntityRepository
         }
         $query = $em->createQuery('SELECT  u.firstName AS fname, u.lastName AS lname, u.parentName AS pname, SUM (m.result) AS summa, u.id AS id, pos.title AS position, c.title AS cathedra, ins.title as institute
                                    FROM \AppBundle\Entity\Measure m
-                                        LEFT JOIN \Rating\SubdivisionBundle\Entity\Job j WITH (j.id = m.job)
-                                        JOIN \Rating\UserBundle\Entity\User u WITH (j.user = u.id)
+                                        LEFT JOIN \SubdivisionBundle\Entity\Job j WITH (j.id = m.job)
+                                        JOIN \UserBundle\Entity\User u WITH (j.user = u.id)
                                         JOIN \AppBundle\Entity\Year y WITH (y.id = m.year)
-                                        JOIN \Rating\SubdivisionBundle\Entity\Position pos WITH (j.position = pos.id)
-                                        JOIN \Rating\SubdivisionBundle\Entity\Cathedra c WITH (j.cathedra = c.id)
-                                        JOIN \Rating\SubdivisionBundle\Entity\Institute ins WITH (c.institute = ins.id)
+                                        JOIN \SubdivisionBundle\Entity\Position pos WITH (j.position = pos.id)
+                                        JOIN \SubdivisionBundle\Entity\Cathedra c WITH (j.cathedra = c.id)
+                                        JOIN \SubdivisionBundle\Entity\Institute ins WITH (c.institute = ins.id)
                                         WHERE y.id = :currentYear
                                         '.$subQuery.'
                                         GROUP BY j.id
@@ -117,10 +117,10 @@ class MeasureRepository extends EntityRepository
         }
         $query = $em->createQuery('SELECT  u.firstName AS fname, u.lastName AS lname, u.parentName AS pname, SUM (m.result) AS summa, u.id AS id, ins.title as institute, j.group as groupEd, j.formEducation as formEd
                                    FROM \AppBundle\Entity\Measure m
-                                        LEFT JOIN \Rating\SubdivisionBundle\Entity\Job j WITH (j.id = m.job)
-                                        JOIN \Rating\UserBundle\Entity\User u WITH (j.user = u.id)
+                                        LEFT JOIN \SubdivisionBundle\Entity\Job j WITH (j.id = m.job)
+                                        JOIN \UserBundle\Entity\User u WITH (j.user = u.id)
                                         JOIN \AppBundle\Entity\Year y WITH (y.id = m.year)
-                                        JOIN \Rating\SubdivisionBundle\Entity\Institute ins WITH (j.institute = ins.id)
+                                        JOIN \SubdivisionBundle\Entity\Institute ins WITH (j.institute = ins.id)
                                         WHERE y.id = :currentYear AND j.group is not null
                                         '.$subQuery.'
                                         GROUP BY j.id
@@ -136,7 +136,7 @@ class MeasureRepository extends EntityRepository
     {
         $em = $this->getEntityManager();
         $jobQuery =  $em->createQuery('SELECT  j
-                                   FROM Rating\SubdivisionBundle\Entity\Job j
+                                   FROM SubdivisionBundle\Entity\Job j
                                    WHERE j.user = :user
                                    ORDER BY j.additional ASC
 
@@ -151,7 +151,7 @@ class MeasureRepository extends EntityRepository
                                    LEFT JOIN \AppBundle\Entity\Criterion cr WITH (cr.id = m.criterion)
                                    LEFT JOIN \AppBundle\Entity\Group g WITH (cr.group = g.id)
                                    LEFT JOIN \AppBundle\Entity\Year y WITH (y.id = m.year)
-                                   LEFT JOIN \Rating\SubdivisionBundle\Entity\Job j WITH (j.id = m.job)
+                                   LEFT JOIN \SubdivisionBundle\Entity\Job j WITH (j.id = m.job)
                                    LEFT JOIN \AppBundle\Entity\Category ca WITH (ca.id = cr.category)
                                    WHERE j.user = :user AND m.year = :year
 
