@@ -3,6 +3,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="AppBundle\Repository\FieldRepository")
@@ -32,11 +33,21 @@ class Field
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
     }
 
     /**
@@ -53,13 +64,13 @@ class Field
     }
 
     /**
-     * Get title
+     * Get measure
      *
-     * @return string 
+     * @return \AppBundle\Entity\Measure
      */
-    public function getTitle()
+    public function getMeasure()
     {
-        return $this->title;
+        return $this->measure;
     }
 
     /**
@@ -73,15 +84,5 @@ class Field
         $this->measure = $measure;
 
         return $this;
-    }
-
-    /**
-     * Get measure
-     *
-     * @return \AppBundle\Entity\Measure 
-     */
-    public function getMeasure()
-    {
-        return $this->measure;
     }
 }

@@ -31,7 +31,6 @@ class EducationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-
             ->add('institute', EntityType::class, array(
                 'class' => 'SubdivisionBundle:Institute',
                 'choice_label' => 'title',
@@ -39,36 +38,35 @@ class EducationType extends AbstractType
                 'attr' => array(
                     'class' => 'form-control'
                 ),
-                'required'    => true,
-                'empty_data'  => null
+                'required' => true,
+                'empty_data' => null
             ))
             ->add('formEducation', ChoiceType::class, array(
-                'label'     => 'Форма навчання',
-                'choices'    => $this->job->getFormList(),
-                'required'    => true,
-                'empty_data'  => null
+                'label' => 'Форма навчання',
+                'choices' => $this->job->getFormList(),
+                'required' => true,
+                'empty_data' => null
 
 
             ))
             ->add('entryYear', DateType::class, array(
                 'years' => range(2008, date('Y')),
                 'label' => 'Рік вступу',
-                'widget'    => 'choice',
-                'months'    => array(1),
-                'days'      => array(1)
+                'widget' => 'choice',
+                'months' => array(1),
+                'days' => array(1)
             ))
             ->add('specialization', TextType::class, array(
-                'label'     => 'Спеціальність',
-                'required'  => false
+                'label' => 'Спеціальність',
+                'required' => false
 
             ))
             ->add('group', TextType::class, array(
-                    'label'     => 'Група',
-                    'required'  => false
+                    'label' => 'Група',
+                    'required' => false
 
                 )
-            )
-        ;
+            );
 
     }
 

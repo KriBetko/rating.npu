@@ -18,8 +18,7 @@ class TypeType extends AbstractType
         $builder
             ->add('title', TextType::class, array(
                 'label' => 'Назва'
-            ))
-        ;
+            ));
     }
 
     /**

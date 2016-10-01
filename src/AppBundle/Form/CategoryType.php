@@ -21,7 +21,7 @@ class CategoryType extends AbstractType
                 'label' => 'Назва'
             ))
             ->add('type', ChoiceType::class, array(
-                'choices'  => array(
+                'choices' => array(
                     1 => 'Для викладачів',
                     2 => 'Для студентів',
                     3 => 'Для кафедри',
@@ -33,9 +33,8 @@ class CategoryType extends AbstractType
                     'class' => 'form-control'
                 ),
                 'placeholder' => 'Тип',
-                'empty_data'  => null
-            ))
-        ;
+                'empty_data' => null
+            ));
     }
 
     /**

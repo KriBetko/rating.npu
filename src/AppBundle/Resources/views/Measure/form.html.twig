@@ -10,7 +10,9 @@
 
         <div class="row">
             {% if singleGroup %}
-                <div class="col-md-24" style=" text-align: center;">Ви не можете редагувати цей критерій, оскільки вже обрали критерій в цій групі</div>
+                <div class="col-md-24" style=" text-align: center;">Ви не можете редагувати цей критерій, оскільки вже
+                    обрали критерій в цій групі
+                </div>
                 <div style="display: none">
                     {{ form_widget(form.value) }}
                 </div>
@@ -18,10 +20,12 @@
                 {% if measure.criterion.isPlural() %}
                     <div class="col-md-18" style=" text-align: center;">{{ measure.criterion.title }}</div>
                 {% else %}
-                    <div class="col-md-10" style=" text-align: center;">Данний критерій одиничний. Відмітьте значення та натисніть на кнопку "Зберегти"</div>
+                    <div class="col-md-10" style=" text-align: center;">Данний критерій одиничний. Відмітьте значення та
+                        натисніть на кнопку "Зберегти"
+                    </div>
                 {% endif %}
 
-                <div class="  {% if measure.criterion.isPlural() %}col-md-4{% else %}col-md-14{% endif %}" >
+                <div class="  {% if measure.criterion.isPlural() %}col-md-4{% else %}col-md-14{% endif %}">
                     {% if editable %}
                         {{ form_widget(form.value) }}
                     {% else %}
@@ -35,13 +39,14 @@
         </div>
 
         {% if not singleGroup %}
-            <br><hr><br>
+            <br>
+            <hr><br>
             {% if editable and measure.criterion.isPlural() %}
-            <ol  class="fields" id="field-ol" data-prototype="{{ form_widget(form.fields.vars.prototype)|e }}">
-                {% for field in form.fields %}
-                    <li class="input-field">{{ form_row(field.title) }}</li>
-                {% endfor %}
-            </ol>
+                <ol class="fields" id="field-ol" data-prototype="{{ form_widget(form.fields.vars.prototype)|e }}">
+                    {% for field in form.fields %}
+                        <li class="input-field">{{ form_row(field.title) }}</li>
+                    {% endfor %}
+                </ol>
             {% else %}
                 <ol {% if not measure.criterion.isPlural() %}style="display: none" {% endif %}>
                     {% for field in form.fields %}
@@ -51,5 +56,5 @@
             {% endif %}
         {% endif %}
     </div>
-   {{ form_rest(form) }}
+    {{ form_rest(form) }}
 </form>

@@ -61,7 +61,7 @@ class Cathedra
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -219,7 +219,7 @@ class Cathedra
     /**
      * Get managers
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getManagers()
     {

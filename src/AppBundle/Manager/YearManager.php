@@ -16,6 +16,7 @@ class YearManager
         $this->em = $entityManager;
         $this->container = $container;
     }
+
     public function generateMeasureForAllUser(Year $year, $user = false)
     {
         $measureManager = $this->container->get('measure');
@@ -36,7 +37,8 @@ class YearManager
     }
 
 
-    private function clearDeletedMeasureForAllUser($year, $criteria){
+    private function clearDeletedMeasureForAllUser($year, $criteria)
+    {
 
         $allCriteria = $this->em->getRepository('AppBundle:Criterion')->findAll();
         $results = array_diff($allCriteria, $criteria);
@@ -50,6 +52,7 @@ class YearManager
     {
         return $this->em->getRepository('AppBundle:Year')->findOneByActive(true);
     }
+
     public function getYears()
     {
         return $this->em->getRepository('AppBundle:Year')->findBy([], ['title' => 'DESC']);

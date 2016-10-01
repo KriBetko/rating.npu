@@ -62,7 +62,7 @@ class UserController extends Controller
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -95,11 +95,11 @@ class UserController extends Controller
     public function newAction()
     {
         $entity = new User();
-        $form   = $this->createCreateForm($entity);
+        $form = $this->createCreateForm($entity);
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -125,7 +125,7 @@ class UserController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -169,19 +169,19 @@ class UserController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
 
     /**
-    * Creates a form to edit a User entity.
-    *
-    * @param User $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
+     * Creates a form to edit a User entity.
+     *
+     * @param User $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
     private function createEditForm(User $entity)
     {
         $form = $this->createForm(new UserType(), $entity, array(
@@ -225,8 +225,8 @@ class UserController extends Controller
         }
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -273,7 +273,7 @@ class UserController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('UserBundle:User')->findOneById($id);
-        if ($user->isAdmin() ){
+        if ($user->isAdmin()) {
             $user->removeRole('ROLE_ADMIN');
         } else {
             $user->addRole('ROLE_ADMIN');
@@ -295,13 +295,10 @@ class UserController extends Controller
         $user = $em->getRepository('UserBundle:User')->findOneById($id);
 
         /*** @var Year $year */
-        if($user->isBlock())
-        {
+        if ($user->isBlock()) {
             $year = $this->get('year.manager')->getCurrentYear();
             $user->setAvailableYeaR($year->getId());
-        }
-        else
-        {
+        } else {
             $user->setAvailableYeaR(null);
         }
 

@@ -24,7 +24,6 @@ class FilterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-
             ->add('years', EntityType::class, array(
                 'class' => 'AppBundle\Entity\Year',
                 'query_builder' => function (EntityRepository $er) {
@@ -37,9 +36,8 @@ class FilterType extends AbstractType
                     'class' => 'form-control'
                 ),
                 'mapped' => false,
-                'required'    => true
+                'required' => true
             ))
-
             ->add('institute', EntityType::class, array(
                 'class' => 'SubdivisionBundle:Institute',
                 'choice_label' => 'title',
@@ -47,12 +45,10 @@ class FilterType extends AbstractType
                 'attr' => array(
                     'class' => 'form-control'
                 ),
-                'required'    => false,
+                'required' => false,
                 'placeholder' => 'Оберіть факультет',
-                'empty_data'  => null
+                'empty_data' => null
             ))
-
-
             ->add('cathedra', EntityType::class, array(
                 'class' => 'SubdivisionBundle:Cathedra',
                 'query_builder' => function (EntityRepository $er) {
@@ -64,12 +60,10 @@ class FilterType extends AbstractType
                 'attr' => array(
                     'class' => 'form-control'
                 ),
-                'required'    => false,
+                'required' => false,
                 'placeholder' => 'Оберіть кафедру',
-                'empty_data'  => null
+                'empty_data' => null
             ))
-            
-
             ->add('position', EntityType::class, array(
                 'class' => 'SubdivisionBundle:Position',
                 'query_builder' => function (EntityRepository $er) {
@@ -81,15 +75,13 @@ class FilterType extends AbstractType
                 'attr' => array(
                     'class' => 'form-control'
                 ),
-                'required'    => false,
+                'required' => false,
                 'placeholder' => 'Оберіть посаду',
-                'empty_data'  => null
+                'empty_data' => null
             ))
-
             ->add('additional', null, array(
                 'label' => 'Рейтинг з сумісниками'
-            ))
-          ;
+            ));
 
     }
 

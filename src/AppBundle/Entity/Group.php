@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="AppBundle\Repository\GroupRepository")
@@ -11,8 +12,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Group
 {
-    const T_PLURAL      =   1;
-    const T_UNITARY     =   2;
+    const T_PLURAL = 1;
+    const T_UNITARY = 2;
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -45,7 +46,7 @@ class Group
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -74,6 +75,16 @@ class Group
     }
 
     /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
      * Set title
      *
      * @param string $title
@@ -84,16 +95,6 @@ class Group
         $this->title = $title;
 
         return $this;
-    }
-
-    /**
-     * Get title
-     *
-     * @return string 
-     */
-    public function getTitle()
-    {
-        return $this->title;
     }
 
     /**

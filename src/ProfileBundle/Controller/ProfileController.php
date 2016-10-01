@@ -30,11 +30,11 @@ class ProfileController extends Controller
         $jobs = $em->getRepository('SubdivisionBundle:Job')->findUserJobs($user);
 
         return $this->render("ProfileBundle:Profile:index.html.twig", array(
-            'user'      => $user,
-            'jobs'      => $jobs,
-            'formJob'   => $form->createView(),
+            'user' => $user,
+            'jobs' => $jobs,
+            'formJob' => $form->createView(),
             'tableView' => $this->getTableView(),
-            'formView'  => $this->getFormView()
+            'formView' => $this->getFormView()
         ));
     }
 
@@ -151,9 +151,9 @@ class ProfileController extends Controller
         $user = $this->getUser();
         $form = $this->createForm(new UserType(), $user);
 
-        if ($request->getMethod() == 'POST'){
+        if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
-            if ($form->isValid()){
+            if ($form->isValid()) {
                 $em->flush();
                 $this->addFlash('success_update', '1');
                 return $this->redirect($this->generateUrl('my_profile'));

@@ -13,7 +13,7 @@ class AsyncController extends Controller
      * @param Integer $id
      * @return Response
      */
-    public function getCathedrasAction ($id)
+    public function getCathedrasAction($id)
     {
         $em = $this->getDoctrine()->getManager();
         /**
@@ -24,20 +24,18 @@ class AsyncController extends Controller
         $output = '';
         $status = 0;
 
-        if ($institute)
-        {
+        if ($institute) {
             $cathedras = $institute->getCathedras()->toArray();
 
-            if ($cathedras)
-            {
-                foreach($cathedras as $cathedra){
+            if ($cathedras) {
+                foreach ($cathedras as $cathedra) {
                     $output .= $this->render('SubdivisionBundle:Cathedra:cathedra_list.html.twig',
-                        array('cathedra'=>$cathedra))->getContent();
+                        array('cathedra' => $cathedra))->getContent();
                 }
                 $status = 1;
             }
         }
 
-        return $this->get('app.sender')->sendJson(array('status'=>$status, 'output' => $output));
+        return $this->get('app.sender')->sendJson(array('status' => $status, 'output' => $output));
     }
 }

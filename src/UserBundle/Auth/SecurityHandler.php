@@ -24,8 +24,7 @@ class SecurityHandler implements AuthenticationSuccessHandlerInterface, Authenti
     {
         //dump('handler');die; TODO What?!
         $referer = $request->headers->get('referer');
-        if (empty($referer))
-        {
+        if (empty($referer)) {
             return new RedirectResponse($this->router->generate('homepage'));
         } else {
             return new RedirectResponse($referer);

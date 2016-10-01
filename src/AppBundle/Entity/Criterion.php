@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CriterionRepository")
@@ -11,8 +12,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Criterion
 {
-    const T_PLURAL      =   1;
-    const T_UNITARY     =   2;
+    const T_PLURAL = 1;
+    const T_UNITARY = 2;
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -57,22 +58,25 @@ class Criterion
      */
     protected $group;
 
-    public function __toString(){
+    public function __toString()
+    {
         try {
-            return (string) $this->id;
+            return (string)$this->id;
         } catch (Exception $exception) {
             return '';
         }
     }
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
     }
+
     public function isPlural()
     {
         return $this->plural === 2 ? false : true;
@@ -95,7 +99,15 @@ class Criterion
         $this->plural = $plural;
     }
 
-
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
 
     /**
      * Set title
@@ -111,13 +123,13 @@ class Criterion
     }
 
     /**
-     * Get title
+     * Get coefficient
      *
-     * @return string 
+     * @return string
      */
-    public function getTitle()
+    public function getCoefficient()
     {
-        return $this->title;
+        return $this->coefficient;
     }
 
     /**
@@ -134,13 +146,13 @@ class Criterion
     }
 
     /**
-     * Get coefficient
+     * Get reference
      *
-     * @return string 
+     * @return string
      */
-    public function getCoefficient()
+    public function getReference()
     {
-        return $this->coefficient;
+        return $this->reference;
     }
 
     /**
@@ -157,13 +169,13 @@ class Criterion
     }
 
     /**
-     * Get reference
+     * Get type
      *
-     * @return string 
+     * @return integer
      */
-    public function getReference()
+    public function getType()
     {
-        return $this->reference;
+        return $this->type;
     }
 
     /**
@@ -180,13 +192,13 @@ class Criterion
     }
 
     /**
-     * Get type
+     * Get category
      *
-     * @return integer 
+     * @return \AppBundle\Entity\Category
      */
-    public function getType()
+    public function getCategory()
     {
-        return $this->type;
+        return $this->category;
     }
 
     /**
@@ -203,13 +215,13 @@ class Criterion
     }
 
     /**
-     * Get category
+     * Get group
      *
-     * @return \AppBundle\Entity\Category 
+     * @return \AppBundle\Entity\Group
      */
-    public function getCategory()
+    public function getGroup()
     {
-        return $this->category;
+        return $this->group;
     }
 
     /**
@@ -223,15 +235,5 @@ class Criterion
         $this->group = $group;
 
         return $this;
-    }
-
-    /**
-     * Get group
-     *
-     * @return \AppBundle\Entity\Group 
-     */
-    public function getGroup()
-    {
-        return $this->group;
     }
 }

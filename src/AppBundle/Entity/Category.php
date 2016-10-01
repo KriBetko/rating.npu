@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CategoryRepository")
@@ -11,10 +12,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Category
 {
-    const TYPE_TEACHER      = 1;
-    const TYPE_STUDENT      = 2;
-    const TYPE_CATHEDRA     = 3;
-    const TYPE_INSTITUTE    = 4;
+    const TYPE_TEACHER = 1;
+    const TYPE_STUDENT = 2;
+    const TYPE_CATHEDRA = 3;
+    const TYPE_INSTITUTE = 4;
 
 
     /**
@@ -59,6 +60,16 @@ class Category
     }
 
     /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
      * Set title
      *
      * @param string $title
@@ -72,15 +83,14 @@ class Category
     }
 
     /**
-     * Get title
+     * Get type
      *
-     * @return string
+     * @return integer
      */
-    public function getTitle()
+    public function getType()
     {
-        return $this->title;
+        return $this->type;
     }
-
 
     /**
      * Set type
@@ -93,16 +103,6 @@ class Category
         $this->type = $type;
 
         return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return integer 
-     */
-    public function getType()
-    {
-        return $this->type;
     }
 
     /**
@@ -137,10 +137,10 @@ class Category
     {
         return $this->criteria;
     }
+
     public function getTextType()
     {
-        switch($this->type)
-        {
+        switch ($this->type) {
             case self::TYPE_TEACHER:
                 return "Для викладачів";
             case self::TYPE_STUDENT:

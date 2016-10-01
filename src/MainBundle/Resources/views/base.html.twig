@@ -1,52 +1,52 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}
-            {% stylesheets
-            '@bootstrap_css'
-            '@MainBundle/Resources/public/css/jquery-ui.min.css'
-            '@MainBundle/Resources/public/less/*'
-            '@MainBundle/Resources/public/css/style.css' %}
-            <link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
-            {% endstylesheets %}
-        {% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
+<head>
+    <meta charset="UTF-8"/>
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}
+        {% stylesheets
+        '@bootstrap_css'
+        '@MainBundle/Resources/public/css/jquery-ui.min.css'
+        '@MainBundle/Resources/public/less/*'
+        '@MainBundle/Resources/public/css/style.css' %}
+        <link href="{{ asset_url }}" type="text/css" rel="stylesheet"/>
+        {% endstylesheets %}
+    {% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+</head>
 
-    <body>
-        <nav class="navbar navbar-default navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="{{ url('my_profile') }}">
-                        Система оцінювання діяльності навчальних, наукових та технічних підрозділів педагогічного
-                        університету НПУ ім. М.П. Драгоманова
-                    </a>
-                </div>
-            </div>
-            {% block navbar %}{% endblock %}
-        </nav>
-
-        <div class="after-navbar container">
-            {% block content %}{% endblock %}
+<body>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{{ url('my_profile') }}">
+                Система оцінювання діяльності навчальних, наукових та технічних підрозділів педагогічного
+                університету НПУ ім. М.П. Драгоманова
+            </a>
         </div>
+    </div>
+    {% block navbar %}{% endblock %}
+</nav>
 
-        <footer class="footer panel-footer">
-            <div class="container">
-                <p class="text-center">Copyright 2016</p>
-            </div>
-        </footer>
+<div class="after-navbar container">
+    {% block content %}{% endblock %}
+</div>
 
-        {% block javascripts %}
-            {% javascripts
-            '@jquery_js'
-            '@jqueryui_js'
-            '@bootstrap_js'
-            '@MainBundle/Resources/public/scripts/ajax.form.js'
-            '@MainBundle/Resources/public/scripts/app.js' %}
-            <script src="{{ asset_url }}"></script>
-            {% endjavascripts %}
-        {% endblock %}
-    </body>
+<footer class="footer panel-footer">
+    <div class="container">
+        <p class="text-center">Copyright 2016</p>
+    </div>
+</footer>
+
+{% block javascripts %}
+    {% javascripts
+    '@jquery_js'
+    '@jqueryui_js'
+    '@bootstrap_js'
+    '@MainBundle/Resources/public/scripts/ajax.form.js'
+    '@MainBundle/Resources/public/scripts/app.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+</body>
 </html>

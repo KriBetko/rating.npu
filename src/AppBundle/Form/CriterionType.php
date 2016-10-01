@@ -29,9 +29,6 @@ class CriterionType extends AbstractType
                 'required' => false,
                 'label' => 'Опис'
             ))
-
-
-
             ->add('group', EntityType::class, array(
                 'class' => 'AppBundle:Group',
                 'choice_label' => 'title',
@@ -39,9 +36,9 @@ class CriterionType extends AbstractType
                 'attr' => array(
                     'class' => 'form-control'
                 ),
-                'required'    => false,
+                'required' => false,
                 'placeholder' => 'Група критерїів',
-                'empty_data'  => null
+                'empty_data' => null
             ))
             ->add('category', EntityType::class, array(
                 'class' => 'AppBundle:Category',
@@ -50,18 +47,17 @@ class CriterionType extends AbstractType
                 'attr' => array(
                     'class' => 'form-control'
                 ),
-                'required'    => true,
+                'required' => true,
                 'placeholder' => 'Категорія',
-                'empty_data'  => null
+                'empty_data' => null
             ))
             ->add('plural', ChoiceType::class, array(
                 'label' => 'Тип',
-                'choices'   => array(
+                'choices' => array(
                     Group::T_PLURAL => 'Множинний',
                     Group::T_UNITARY => 'Одиничний',
                 )
-            ))
-        ;
+            ));
     }
 
     /**

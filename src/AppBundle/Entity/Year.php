@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="AppBundle\Repository\YearRepository")
@@ -71,11 +72,21 @@ class Year
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
     }
 
     /**
@@ -92,13 +103,13 @@ class Year
     }
 
     /**
-     * Get title
+     * Get active
      *
-     * @return string 
+     * @return boolean
      */
-    public function getTitle()
+    public function getActive()
     {
-        return $this->title;
+        return $this->active;
     }
 
     /**
@@ -112,16 +123,6 @@ class Year
         $this->active = $active;
 
         return $this;
-    }
-
-    /**
-     * Get active
-     *
-     * @return boolean 
-     */
-    public function getActive()
-    {
-        return $this->active;
     }
 
     /**

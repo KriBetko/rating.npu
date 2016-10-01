@@ -1,15 +1,14 @@
-
-function getCathedrasList(instituteSelect, cathedraSelect){
-    $('body').on('change', instituteSelect, function() {
-        if ($(this).val()){
+function getCathedrasList(instituteSelect, cathedraSelect) {
+    $('body').on('change', instituteSelect, function () {
+        if ($(this).val()) {
             $.ajax({
                 method: "get",
-                url: "/app_dev.php/cathedras/get/"+$(this).val()
+                url: "/app_dev.php/cathedras/get/" + $(this).val()
             })
-                .done(function( msg ) {
-                    if (msg.status == 1){
+                .done(function (msg) {
+                    if (msg.status == 1) {
                         $(cathedraSelect).empty().append(msg.output).prop('disabled', false);
-                    } else  {
+                    } else {
                         $(cathedraSelect).empty().append('<option value="">-</option>').prop('disabled', 'disabled');
                     }
 

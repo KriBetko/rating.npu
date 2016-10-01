@@ -13,9 +13,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class MeasureType extends AbstractType
 {
     public $measure;
+
     public function __construct($measure)
     {
-        $this->measure  =   $measure->getCriterion();
+        $this->measure = $measure->getCriterion();
     }
 
     /**
@@ -24,14 +25,14 @@ class MeasureType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        if ($this->measure->isPlural()){
+        if ($this->measure->isPlural()) {
             $builder->add('value', IntegerType::class, array(
                 'label' => false
             ));
         } else {
             $builder->add('value', CheckboxType::class, array(
                 'label' => $this->measure->getTitle(),
-                'required'  => false,
+                'required' => false,
 
             ));
 
@@ -43,18 +44,16 @@ class MeasureType extends AbstractType
                     function ($submittedDescription) {
                         return $submittedDescription === true ? 1 : 0;
                     }
-                ))
-            ;
+                ));
         }
         $builder->add('fields', CollectionType::class, array(
                 'type' => new FieldType(),
-                    'label' =>false,
-                    'allow_add'    => true,
-                    'by_reference' => false,
-                    'allow_delete' => true
-                )
-            );
-        ;
+                'label' => false,
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true
+            )
+        );;
 
     }
 

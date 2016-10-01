@@ -23,12 +23,11 @@ class GroupType extends AbstractType
             ))
             ->add('plural', ChoiceType::class, array(
                 'label' => 'Тип',
-                'choices'   => array(
+                'choices' => array(
                     Group::T_PLURAL => 'Множинний',
                     Group::T_UNITARY => 'Одиничний',
                 )
-            ))
-        ;
+            ));
     }
 
     /**

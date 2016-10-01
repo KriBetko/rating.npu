@@ -24,8 +24,7 @@ class OAuthProvider
     {
         //Data from Google response
         $responseArray = $response->getResponse();
-        if (!isset($responseArray['hd']) || ($responseArray['hd'] != 'npu.edu.ua' && $responseArray['hd'] != 'std.npu.edu.ua') )
-        {
+        if (!isset($responseArray['hd']) || ($responseArray['hd'] != 'npu.edu.ua' && $responseArray['hd'] != 'std.npu.edu.ua')) {
             $token = new User();
             return $token;
             //return new RedirectResponse($this->container->get('router')->generate('homepage'));
@@ -54,13 +53,12 @@ class OAuthProvider
             $user->setEmail($email);
             $user->setParentName($firstname);
 
-            if ($responseArray['hd'] == 'npu.edu.ua')
-            {
+            if ($responseArray['hd'] == 'npu.edu.ua') {
                 $user->addRole('ROLE_USER');
                 $user->addRole('ROLE_TEACHER');
 
             }
-            if ($responseArray['hd'] == 'std.npu.edu.ua'){
+            if ($responseArray['hd'] == 'std.npu.edu.ua') {
                 $user->addRole('ROLE_USER');
                 $user->addRole('ROLE_TEACHER');
             }

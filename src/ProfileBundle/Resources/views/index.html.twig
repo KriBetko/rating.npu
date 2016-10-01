@@ -80,8 +80,10 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">{% if is_granted('ROLE_TEACHER') %} Додати нове місце роботи {% else %} Додати нове місце навчання{% endif %}</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title"
+                            id="myModalLabel">{% if is_granted('ROLE_TEACHER') %} Додати нове місце роботи {% else %} Додати нове місце навчання{% endif %}</h4>
                     </div>
                     <div class="modal-body" id="form-block">
                         {{ include(formView) }}
@@ -94,18 +96,22 @@
             </div>
         </div>
 
-        <div class="modal fade" id="modalRemoveJob" tabindex="-2" role="dialog" aria-labelledby="myModalLabel" data-id="">
+        <div class="modal fade" id="modalRemoveJob" tabindex="-2" role="dialog" aria-labelledby="myModalLabel"
+             data-id="">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">{% if is_granted('ROLE_TEACHER') %}Видалення місця роботи  {% else %} Видалення місця навчання{% endif %}</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title"
+                            id="myModalLabel">{% if is_granted('ROLE_TEACHER') %}Видалення місця роботи  {% else %} Видалення місця навчання{% endif %}</h4>
                     </div>
                     <div class="modal-body" id="form-block">
                         {% if is_granted('ROLE_TEACHER') %} Ви дійсно бажаєте видалити дане місце роботи? {% else %} Ви дійсно бажаєте видалити дане місце навчання? {% endif %}
                     </div>
                     <div class="modal-footer center-block">
-                        <a data-href="{{ path('profile_remove_job') }}" id="removeJob" type="button" class="btn btn-danger">ТАК</a>
+                        <a data-href="{{ path('profile_remove_job') }}" id="removeJob" type="button"
+                           class="btn btn-danger">ТАК</a>
                         <button type="button" class="btn btn-default" data-dismiss="modal">НІ</button>
                     </div>
 
@@ -117,14 +123,18 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">{% if is_granted('ROLE_TEACHER') %} Редагування місця роботи {% else %} Редагування місця навчання {% endif %}</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title"
+                            id="myModalLabel">{% if is_granted('ROLE_TEACHER') %} Редагування місця роботи {% else %} Редагування місця навчання {% endif %}</h4>
                     </div>
                     <div class="modal-body" id="form-edit-block">
 
                     </div>
                     <div class="modal-footer center-block">
-                        <button data-dismiss="modal"  id="sender-edit-form" type="button" class="btn btn-primary">Оновити</button>
+                        <button data-dismiss="modal" id="sender-edit-form" type="button" class="btn btn-primary">
+                            Оновити
+                        </button>
                     </div>
                 </div>
             </div>
@@ -135,17 +145,15 @@
 {% block javascripts %}
     {{ parent() }}
     <script>
-        function initAddJobForm (){
+        function initAddJobForm() {
             getCathedrasList('#job_institute', '#job_cathedra');
-            $('#form-job-sender').click(function(){
+            $('#form-job-sender').click(function () {
                 $('#form-job').ajaxSubmit({
-                    'success': function(e){
-                        if (e.status == 0)
-                        {
+                    'success': function (e) {
+                        if (e.status == 0) {
                             $('#form-block').html(e.view);
                         }
-                        else if(e.status = 1)
-                        {
+                        else if (e.status = 1) {
                             $('#modalJob').modal('hide');
                             $('#form-job').clearForm();
                             $('#table-jobs-block').html(e.view);
@@ -156,44 +164,42 @@
             });
 
         }
-        $(document).ready(function(){
+        $(document).ready(function () {
 
             initAddJobForm();
 
-            $(document.body).on('click', '.remove-job-link', function(){
-               $('#removeJob').attr('data-id', $(this).attr('data-id'));
+            $(document.body).on('click', '.remove-job-link', function () {
+                $('#removeJob').attr('data-id', $(this).attr('data-id'));
             });
 
-            $(document.body).on('submit', '#form-job, #form-edit-job', function(e){
+            $(document.body).on('submit', '#form-job, #form-edit-job', function (e) {
                 e.preventDefault();
             });
 
-            $('#removeJob').click(function(){
+            $('#removeJob').click(function () {
                 $.ajax({
                     method: "post",
-                    url:  $(this).attr('data-href')+'/'+$(this).attr('data-id')
+                    url: $(this).attr('data-href') + '/' + $(this).attr('data-id')
                 })
-                .done(function(e) {
-                    if (e.status == 1){
-                        $('#modalRemoveJob').modal('hide');
-                        $('#table-jobs-block').html(e.view);
-                    }
+                        .done(function (e) {
+                            if (e.status == 1) {
+                                $('#modalRemoveJob').modal('hide');
+                                $('#table-jobs-block').html(e.view);
+                            }
 
-                });
+                        });
             });
 
-            $('#sender-edit-form').click(function(e){
+            $('#sender-edit-form').click(function (e) {
                 e.preventDefault();
                 e.stopPropagation();
                 $('#form-edit-job').ajaxSubmit({
-                    'success': function(e){
-                        if (e.status == 0)
-                        {
+                    'success': function (e) {
+                        if (e.status == 0) {
                             $('#form-edit-block').html(e.view);
                             getCathedrasList('#job_institute', '#job_cathedra');
                         }
-                        else if (e.status = 1)
-                        {
+                        else if (e.status = 1) {
                             $('#modalEditJob').modal('hide');
                             $('#form-edit-job').clearForm();
                             $('#table-jobs-block').html(e.view);
@@ -203,18 +209,18 @@
                 });
             });
 
-            $(document.body).on('click', '.edit-job-link', function(){
+            $(document.body).on('click', '.edit-job-link', function () {
                 $.ajax({
                     method: "get",
-                    url:  $(this).attr('data-href')+'/'+$(this).attr('data-id')
+                    url: $(this).attr('data-href') + '/' + $(this).attr('data-id')
                 })
-                .done(function(e) {
-                    $('#form-edit-block').html(e.view);
+                        .done(function (e) {
+                            $('#form-edit-block').html(e.view);
 
-                });
+                        });
             });
 
         });
     </script>
-{% endblock javascripts%}
+{% endblock javascripts %}
 

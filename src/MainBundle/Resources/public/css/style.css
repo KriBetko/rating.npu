@@ -1,28 +1,23 @@
-.footer
-{
+.footer {
     position: absolute;
     bottom: 0;
     width: 100%;
     background-color: #f5f5f5;
 }
 
-.after-navbar
-{
+.after-navbar {
     margin-top: 125px;
 }
 
-ul.cathedras
-{
+ul.cathedras {
     list-style-type: none;
 }
 
-html
-{
+html {
     height: 100%;
 }
 
-footer
-{
+footer {
     position: absolute;
     bottom: 0;
     left: 0;

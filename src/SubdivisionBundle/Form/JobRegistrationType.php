@@ -17,20 +17,17 @@ class JobRegistrationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-
             ->add('institute', EntityType::class, array(
                 'class' => 'SubdivisionBundle:Institute',
-            'choice_label' => 'title',
-            'label' => 'Факультет',
-            'attr' => array(
-                'class' => 'form-control'
-            ),
-            'required'    => true,
-            'placeholder' => 'Оберіть факультет',
-            'empty_data'  => null
+                'choice_label' => 'title',
+                'label' => 'Факультет',
+                'attr' => array(
+                    'class' => 'form-control'
+                ),
+                'required' => true,
+                'placeholder' => 'Оберіть факультет',
+                'empty_data' => null
             ))
-
-
             ->add('cathedra', EntityType::class, array(
                 'class' => 'SubdivisionBundle:Cathedra',
                 'query_builder' => function (EntityRepository $er) {
@@ -42,28 +39,25 @@ class JobRegistrationType extends AbstractType
                 'attr' => array(
                     'class' => 'form-control'
                 ),
-                'required'    => true,
+                'required' => true,
                 'placeholder' => 'Оберіть кафедру',
-                'empty_data'  => null
+                'empty_data' => null
             ))
-            
-
             ->add('position', EntityType::class, array(
                 'class' => 'SubdivisionBundle:Position',
-            'query_builder' => function (EntityRepository $er) {
-                return $er->createQueryBuilder('c')
-                    ->orderBy('c.title', 'ASC');
-            },
-            'choice_label' => 'title',
-            'label' => 'Посада',
-            'attr' => array(
-                'class' => 'form-control'
-            ),
-            'required'    => true,
-            'placeholder' => 'Оберіть посаду',
-            'empty_data'  => null
-        ));
-        ;
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('c')
+                        ->orderBy('c.title', 'ASC');
+                },
+                'choice_label' => 'title',
+                'label' => 'Посада',
+                'attr' => array(
+                    'class' => 'form-control'
+                ),
+                'required' => true,
+                'placeholder' => 'Оберіть посаду',
+                'empty_data' => null
+            ));;
     }
 
     /**

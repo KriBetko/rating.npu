@@ -28,15 +28,13 @@ class YearType extends AbstractType
             ->add('title', TextType::class, array(
                 'label' => 'Назва'
             ))
-
             ->add('criteria', EntityType::class, array(
                 'label' => "Список критеріїв",
                 'class' => 'AppBundle:Criterion',
                 'choice_label' => 'title',
                 'multiple' => true,
                 'expanded' => true
-            ))
-        ;
+            ));
     }
 
     /**

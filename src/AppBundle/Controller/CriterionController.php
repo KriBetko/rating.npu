@@ -2,13 +2,13 @@
 
 namespace AppBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Entity\Criterion;
+use AppBundle\Form\CriterionType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use AppBundle\Entity\Criterion;
-use AppBundle\Form\CriterionType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Criterion controller.
@@ -61,7 +61,7 @@ class CriterionController extends Controller
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -79,7 +79,7 @@ class CriterionController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Зберегти',  'attr' => array(
+        $form->add('submit', 'submit', array('label' => 'Зберегти', 'attr' => array(
             'class' => 'btn btn-success')));
 
         return $form;
@@ -95,11 +95,11 @@ class CriterionController extends Controller
     public function newAction()
     {
         $entity = new Criterion();
-        $form   = $this->createCreateForm($entity);
+        $form = $this->createCreateForm($entity);
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -126,18 +126,18 @@ class CriterionController extends Controller
         $editForm = $this->createEditForm($entity);
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView()
+            'entity' => $entity,
+            'edit_form' => $editForm->createView()
         );
     }
 
     /**
-    * Creates a form to edit a Criterion entity.
-    *
-    * @param Criterion $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
+     * Creates a form to edit a Criterion entity.
+     *
+     * @param Criterion $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
     private function createEditForm(Criterion $entity)
     {
         $form = $this->createForm(new CriterionType(), $entity, array(
@@ -145,7 +145,7 @@ class CriterionController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Оновити',  'attr' => array(
+        $form->add('submit', 'submit', array('label' => 'Оновити', 'attr' => array(
             'class' => 'btn btn-success')));
 
         return $form;
@@ -181,8 +181,8 @@ class CriterionController extends Controller
         }
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView()
+            'entity' => $entity,
+            'edit_form' => $editForm->createView()
         );
     }
 }

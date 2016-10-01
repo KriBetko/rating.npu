@@ -21,8 +21,7 @@ class FieldType extends AbstractType
                 'attr' => array(
                     'class' => 'iField'
                 )
-            ))
-        ;
+            ));
     }
 
     /**

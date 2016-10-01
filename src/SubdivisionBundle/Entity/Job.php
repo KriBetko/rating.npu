@@ -12,21 +12,21 @@ use UserBundle\Entity\User;
  */
 class Job
 {
-    const FORM_DAILY        = 1;
-    const FORM_EXTRAMURAL   = 2;
+    const FORM_DAILY = 1;
+    const FORM_EXTRAMURAL = 2;
 
 
     // TODO refactor this
     public static $fList =
         [
-            self::FORM_DAILY        => 'Денна',
-            self::FORM_EXTRAMURAL   => 'Заочна'
+            self::FORM_DAILY => 'Денна',
+            self::FORM_EXTRAMURAL => 'Заочна'
 
         ];
     protected $formList =
         [
-            self::FORM_DAILY        => 'Денна',
-            self::FORM_EXTRAMURAL   => 'Заочна'
+            self::FORM_DAILY => 'Денна',
+            self::FORM_EXTRAMURAL => 'Заочна'
 
         ];
     /**
@@ -187,7 +187,7 @@ class Job
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {

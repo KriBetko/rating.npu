@@ -28,7 +28,6 @@ class FilterStudentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-
             ->add('years', EntityType::class, array(
                 'class' => 'AppBundle\Entity\Year',
                 'query_builder' => function (EntityRepository $er) {
@@ -41,9 +40,8 @@ class FilterStudentType extends AbstractType
                     'class' => 'form-control'
                 ),
                 'mapped' => false,
-                'required'    => true
+                'required' => true
             ))
-
             ->add('institute', EntityType::class, array(
                 'class' => 'SubdivisionBundle:Institute',
                 'choice_label' => 'title',
@@ -51,11 +49,10 @@ class FilterStudentType extends AbstractType
                 'attr' => array(
                     'class' => 'form-control'
                 ),
-                'required'    => false,
+                'required' => false,
                 'placeholder' => 'Оберіть факультет',
-                'empty_data'  => null
+                'empty_data' => null
             ))
-
             ->add('formEducation', ChoiceType::class, array(
                 'choices' => Job::$fList,
                 'placeholder' => 'Не обрано',
@@ -63,22 +60,20 @@ class FilterStudentType extends AbstractType
                 'attr' => array(
                     'class' => 'form-control'
                 ),
-                'required'    => false,
+                'required' => false,
                 'placeholder' => 'Форма навчання',
-                'empty_data'  => null,
+                'empty_data' => null,
 
             ))
-
             ->add('group', ChoiceType::class, array(
                 'choices' =>
                     $this->em->getRepository('SubdivisionBundle:Job')->getGroupList()
-                ,
+            ,
                 'placeholder' => 'Не обрано',
                 'choices_as_values' => false,
                 'label' => 'Група',
                 'required' => false
-            ))
-          ;
+            ));
 
     }
 

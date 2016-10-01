@@ -21,7 +21,7 @@ class MainController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      * @internal param Request $request
      */
-    public function listAction ()
+    public function listAction()
     {
         /**
          * @var Cathedra $c
@@ -33,15 +33,13 @@ class MainController extends Controller
 
         $cathedras = $user->getCathedras()->toArray();
         $cathedrasIDs = [];
-        foreach ($cathedras as $c)
-        {
+        foreach ($cathedras as $c) {
             $cathedrasIDs[] = $c->getId();
         }
 
         $institutes = $user->getInstitutes()->toArray();
         $institutesIDs = [];
-        foreach ($institutes as $i)
-        {
+        foreach ($institutes as $i) {
             $institutesIDs[] = $i->getId();
         }
 
@@ -49,9 +47,9 @@ class MainController extends Controller
 
         return $this->render('SubdivisionBundle::cathedras.html.twig',
             [
-                'cathedrasIDs'    => $cathedrasIDs,
+                'cathedrasIDs' => $cathedrasIDs,
                 'institutesIDs' => $institutesIDs,
-                'institutes'   => $institutes
+                'institutes' => $institutes
             ]
         );
     }
@@ -64,21 +62,21 @@ class MainController extends Controller
     public function ratingAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $year =  $request->query->get('job')['years'] ?: $this->get('year.manager')->getCurrentYear()->getId();
+        $year = $request->query->get('job')['years'] ?: $this->get('year.manager')->getCurrentYear()->getId();
 
         $filterJob = new Job();
         $form = $this->createForm(new FilterType(), $filterJob, array(
             'action' => $this->generateUrl('rating_teachers'),
             'method' => 'GET',
         ));
-        $form->add('submit', 'submit', array('label' => 'Фільтрувати',  'attr' => array(
-        'class' => 'btn btn-success')));
+        $form->add('submit', 'submit', array('label' => 'Фільтрувати', 'attr' => array(
+            'class' => 'btn btn-success')));
         $form->handleRequest($request);
         $users = $em->getRepository('AppBundle:Measure')->getRatings($year, $filterJob);
         return $this->render('SubdivisionBundle::rating.html.twig',
             [
-                'users'         => $users,
-                'form'          => $form->createView()
+                'users' => $users,
+                'form' => $form->createView()
             ]
         );
     }
@@ -91,21 +89,21 @@ class MainController extends Controller
     public function ratingStudentAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $year =  $request->query->get('job')['years'] ?: $this->get('year.manager')->getCurrentYear()->getId();
+        $year = $request->query->get('job')['years'] ?: $this->get('year.manager')->getCurrentYear()->getId();
 
         $filterJob = new Job();
         $form = $this->createForm(new FilterStudentType($em), $filterJob, array(
             'action' => $this->generateUrl('rating_students'),
             'method' => 'GET',
         ));
-        $form->add('submit', 'submit', array('label' => 'Фільтрувати',  'attr' => array(
+        $form->add('submit', 'submit', array('label' => 'Фільтрувати', 'attr' => array(
             'class' => 'btn btn-success')));
         $form->handleRequest($request);
         $users = $em->getRepository('AppBundle:Measure')->getStudentRatings($year, $filterJob);
         return $this->render('SubdivisionBundle::rating_student.html.twig',
             [
-                'users'         => $users,
-                'form'          => $form->createView()
+                'users' => $users,
+                'form' => $form->createView()
             ]
         );
     }
@@ -116,7 +114,7 @@ class MainController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      * @internal param Request $request
      */
-    public function showCathedraAction ($id)
+    public function showCathedraAction($id)
     {
         $em = $this->getDoctrine()->getManager();
         $cathedra = $em->getRepository("SubdivisionBundle:Cathedra")->findOneById($id);
@@ -127,9 +125,9 @@ class MainController extends Controller
         }
         return $this->render('SubdivisionBundle::cathedra.html.twig',
             [
-                'cathedra'    => $cathedra,
-                'users'         => $users,
-                'total'         => $total
+                'cathedra' => $cathedra,
+                'users' => $users,
+                'total' => $total
             ]
         );
     }
@@ -140,7 +138,7 @@ class MainController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      * @internal param Request $request
      */
-    public function showUserAction ($id)
+    public function showUserAction($id)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository("UserBundle:User")->findOneById($id);
@@ -152,7 +150,7 @@ class MainController extends Controller
         return $this->render('SubdivisionBundle::user.html.twig',
             [
                 'user' => $user,
-                'measures'  => $measures
+                'measures' => $measures
             ]
         );
     }
@@ -163,14 +161,14 @@ class MainController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      * @internal param Request $request
      */
-    public function showInstituteAction ($id)
+    public function showInstituteAction($id)
     {
         $em = $this->getDoctrine()->getManager();
         $institute = $em->getRepository("SubdivisionBundle:Institute")->findOneById($id);
 
         return $this->render('SubdivisionBundle::cathedras.html.twig',
             [
-                'institute'    => $institute
+                'institute' => $institute
             ]
         );
     }

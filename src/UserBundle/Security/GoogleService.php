@@ -9,13 +9,13 @@ class GoogleService
 {
     protected $container;
     protected $router;
-    protected $redirectRouteName    = 'google_check';
-    protected $scopes               = ['email', 'profile'];
+    protected $redirectRouteName = 'google_check';
+    protected $scopes = ['email', 'profile'];
 
     public function __construct(Router $router, Container $container)
     {
-        $this->router       = $router;
-        $this->container    = $container;
+        $this->router = $router;
+        $this->container = $container;
     }
 
     public function init()
@@ -24,7 +24,7 @@ class GoogleService
         // gUVeePzKyw6ZSFd6tygTAyX3
         $client = new \Google_Client( //TODO Hide id and secret
             [
-                'client_id'     => "1082037993678-kp9r5siv7b78sgb5ajslnju3vg9ls5j2.apps.googleusercontent.com",//$this->container->getParameter('google_client_id'),
+                'client_id' => "1082037993678-kp9r5siv7b78sgb5ajslnju3vg9ls5j2.apps.googleusercontent.com",//$this->container->getParameter('google_client_id'),
                 'client_secret' => "604FLAFcUZgd4kvdeiJr76Nm"//$this->container->getParameter('google_client_secret'),
             ]
         );

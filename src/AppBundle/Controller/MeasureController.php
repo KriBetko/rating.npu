@@ -50,8 +50,7 @@ class MeasureController extends Controller
      */
     public function editAction(Request $request, $id)
     {
-        if(!$this->getUser()->isBlock())
-        {
+        if (!$this->getUser()->isBlock()) {
             $em = $this->getDoctrine()->getManager();
 
             $measure = $em->getRepository('AppBundle:Measure')->findOneBy(array('id' => $id));
@@ -138,8 +137,7 @@ class MeasureController extends Controller
 
         $jobs = $em->getRepository('SubdivisionBundle:Job')->findUserJobs($user);
         /*** @var Job $job */
-        foreach ($jobs as $job)
-        {
+        foreach ($jobs as $job) {
             $jobRating = 0;
             $measures = $em->getRepository('AppBundle:Measure')->findBy(array('job' => $job->getId()));
             /*** @var Measure $measure */

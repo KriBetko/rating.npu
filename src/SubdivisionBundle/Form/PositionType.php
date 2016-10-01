@@ -17,9 +17,8 @@ class PositionType extends AbstractType
     {
         $builder
             ->add('title', TextType::class, array(
-            'label' => 'Назва'
-            ))
-        ;
+                'label' => 'Назва'
+            ));
     }
 
     /**

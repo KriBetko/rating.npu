@@ -29,7 +29,7 @@ class UserManager
     }
 
     /**
-     * @param \Google_Service_Oauth2_Userinfoplus$response
+     * @param \Google_Service_Oauth2_Userinfoplus $response
      * @param integer $year
      * @return User
      */

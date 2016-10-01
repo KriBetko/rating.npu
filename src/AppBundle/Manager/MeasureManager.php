@@ -19,12 +19,12 @@ class MeasureManager
         $this->container = $container;
     }
 
-    public function create(Year $year,Job $job, Criterion $criterion)
+    public function create(Year $year, Job $job, Criterion $criterion)
     {
         $measure = $this->em->getRepository('AppBundle:Measure')->findOneBy(array(
-            'job'      => $job,
-            'criterion' => $criterion,
-            'year'      => $year)
+                'job' => $job,
+                'criterion' => $criterion,
+                'year' => $year)
         );
 
         if ($measure) return $measure;
@@ -39,10 +39,12 @@ class MeasureManager
         return $measure;
     }
 
-    public function removeByCriterionIds($ids, $year){
+    public function removeByCriterionIds($ids, $year)
+    {
         $this->em->getRepository('AppBundle:Measure')->removeMeasures($ids, $year);
         return true;
     }
+
     protected function role()
     {
 

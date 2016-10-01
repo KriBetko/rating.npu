@@ -1,5 +1,6 @@
-<form  novalidate id="{% if update is defined %}form-edit-job{% else %}form-job{% endif %}"
-      action="{% if update is defined %}{{ path('profile_edit_job', {'id': job.id}) }}{% else %}{{ path('profile_save_job') }}{% endif %}" {{ form_enctype(formJob) }} method="POST" class="login-form container">
+<form novalidate id="{% if update is defined %}form-edit-job{% else %}form-job{% endif %}"
+      action="{% if update is defined %}{{ path('profile_edit_job', {'id': job.id}) }}{% else %}{{ path('profile_save_job') }}{% endif %}" {{ form_enctype(formJob) }}
+      method="POST" class="login-form container">
     <div class="form-group form-error-block">
         {{ form_label(formJob.institute) }}
         {{ form_errors(formJob.institute, { 'attr': {'class': 'form-error-block'} }) }}

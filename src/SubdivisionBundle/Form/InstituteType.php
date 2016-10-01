@@ -28,20 +28,18 @@ class InstituteType extends AbstractType
             ->add('director', EntityType::class, array(
                 'class' => 'UserBundle:User',
                 'label' => 'Директор',
-                'required'    => false,
+                'required' => false,
                 'placeholder' => 'Директор',
-                'empty_data'  => null
+                'empty_data' => null
             ))
-
             ->add('managers', EntityType::class, array(
                 'class' => 'UserBundle:User',
                 'label' => 'Керівники',
                 'placeholder' => 'Не обраний керівник',
                 'empty_data' => null,
-                'multiple' =>true,
-                'required'    => false,
-            ))
-        ;
+                'multiple' => true,
+                'required' => false,
+            ));
     }
 
     /**

@@ -60,7 +60,7 @@ class CathedraController extends Controller
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -78,7 +78,7 @@ class CathedraController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Зберегти',  'attr' => array(
+        $form->add('submit', 'submit', array('label' => 'Зберегти', 'attr' => array(
             'class' => 'btn btn-success')));
 
         return $form;
@@ -94,11 +94,11 @@ class CathedraController extends Controller
     public function newAction()
     {
         $entity = new Cathedra();
-        $form   = $this->createCreateForm($entity);
+        $form = $this->createCreateForm($entity);
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -124,7 +124,7 @@ class CathedraController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -167,19 +167,19 @@ class CathedraController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
 
     /**
-    * Creates a form to edit a Cathedra entity.
-    *
-    * @param Cathedra $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
+     * Creates a form to edit a Cathedra entity.
+     *
+     * @param Cathedra $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
     private function createEditForm(Cathedra $entity)
     {
         $form = $this->createForm(new CathedraType(), $entity, array(
@@ -187,7 +187,7 @@ class CathedraController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Оновити',  'attr' => array(
+        $form->add('submit', 'submit', array('label' => 'Оновити', 'attr' => array(
             'class' => 'btn btn-success')));
 
         return $form;
@@ -224,8 +224,8 @@ class CathedraController extends Controller
         }
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }

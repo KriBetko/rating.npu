@@ -15,7 +15,7 @@ class MainController extends Controller
         return $this->render(
             'MainBundle:Main:index.html.twig',
             [
-                'authUrl'   =>  $this->get('google.oauth')->getAuthUrl()
+                'authUrl' => $this->get('google.oauth')->getAuthUrl()
             ]
         );
     }

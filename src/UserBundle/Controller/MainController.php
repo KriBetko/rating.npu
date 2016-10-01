@@ -5,7 +5,6 @@ use AppBundle\Entity\Year;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use UserBundle\Entity\User;
 
 class MainController extends Controller
 {
@@ -21,21 +20,16 @@ class MainController extends Controller
 
         /*** @var \Google_Service_Oauth2_Userinfoplus $response */
         $response = $this->get('google.oauth')->getResponse();
-        if ($response)
-        {
+        if ($response) {
             $user = $em->getRepository('UserBundle:User')->loadUserByUsername($response->getId());
 
-            if (!$user )
-            {
+            if (!$user) {
                 /** @var Year $year */
                 $year = $this->get('year.manager')->getCurrentYear();
 
-                if ($response->getHd() == 'npu.edu.ua')
-                {
+                if ($response->getHd() == 'npu.edu.ua') {
                     $user = $um->createTeacher($response, $year->getId());
-                }
-                elseif ($response->getHd() == 'std.npu.edu.ua')
-                {
+                } elseif ($response->getHd() == 'std.npu.edu.ua') {
                     $user = $um->createStudent($response, $year->getId());
                 }
 

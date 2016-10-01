@@ -79,14 +79,17 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">Редагування критерія</h4>
                 </div>
                 <div class="modal-body" id="form-measure-block">
 
                 </div>
                 <div class="modal-footer">
-                    {% if editable %}<button id="form-measure-sender" type="button" class="btn btn-primary">Зберегти</button>{% endif %}
+                    {% if editable %}
+                        <button id="form-measure-sender" type="button" class="btn btn-primary">Зберегти
+                        </button>{% endif %}
                     <button type="button" class="btn" data-dismiss="modal">Відмінити</button>
                 </div>
 
@@ -102,11 +105,11 @@
         var $addTagLink = $('<a class=" btn btn-success btn-xs add-field-link" href="#">  <span  class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>');
         var $newLinkLi = $('<li class="new-link-field"></li>').append($addTagLink);
 
-        $(document).ready(function(){
-            $('#year-select').change(function(){
+        $(document).ready(function () {
+            $('#year-select').change(function () {
                 var optionSelected = $("option:selected", this);
                 var valueSelected = this.value;
-                window.location.href = "/app_dev.php/profile/measure/"+valueSelected;
+                window.location.href = "/app_dev.php/profile/measure/" + valueSelected;
             });
             calculateJobsBlock();
             calculateCategoryBlock();
@@ -121,30 +124,30 @@
 
 
             // open measure edit popup
-            $(document.body).on('click', '.edit-measure-link', function(){
+            $(document.body).on('click', '.edit-measure-link', function () {
                 $.ajax({
                     method: "get",
-                    url:  $(this).attr('data-href')
+                    url: $(this).attr('data-href')
                 })
-                        .done(function(e) {
+                        .done(function (e) {
                             $('#form-measure-block').html(e.view);
-                            setTimeout( function (){
+                            setTimeout(function () {
                                 initFieldCollection();
                             }, 50);
                         });
             });
 
             // submit measure form
-            $('#form-measure-sender').click(function(){
+            $('#form-measure-sender').click(function () {
                 var total = 0;
                 $('#form-edit-measure').ajaxSubmit({
-                    'success': function(e){
+                    'success': function (e) {
                         if (e.status == 0) {
                             $('#form-block').html(e.view);
-                        } else if(e.status = 1) {
-                            var blockCategory = $('.category_'+e.category+'_'+ e.job);
-                            var currentMeasure = $('.measure_'+ e.measure);
-                            var valueDiv = $('.value_'+e.measure);
+                        } else if (e.status = 1) {
+                            var blockCategory = $('.category_' + e.category + '_' + e.job);
+                            var currentMeasure = $('.measure_' + e.measure);
+                            var valueDiv = $('.value_' + e.measure);
                             $(currentMeasure).text(e.total);
                             valueDiv.text(e.value);
                             calculateJobsBlock();
@@ -156,39 +159,39 @@
                     }
                 });
             });
-            $(document.body).on('input', '#measure_value', function(){
+            $(document.body).on('input', '#measure_value', function () {
                 var count = $(this).val();
                 var fields = $('.input-field').get().reverse();
                 var countInput = fields.length;
 
-                if (count > countInput){
-                    for(var i = 0; count - countInput  > i; i++){
-                        addTagForm( $('ol.fields'), $newLinkLi);
+                if (count > countInput) {
+                    for (var i = 0; count - countInput > i; i++) {
+                        addTagForm($('ol.fields'), $newLinkLi);
                     }
                 }
-                if (count < countInput){
-                    for(var i = 0; countInput - count > i; i++){
+                if (count < countInput) {
+                    for (var i = 0; countInput - count > i; i++) {
                         fields[i].remove();
                     }
                 }
             });
         });
 
-        $(document.body).on('click', '.add-field-link', function(){
+        $(document.body).on('click', '.add-field-link', function () {
             var fields = $('.input-field').length;
             $('#measure_value').val(fields);
         });
 
-        $(document.body).on('submit', '#form-edit-measure', function(e){
+        $(document.body).on('submit', '#form-edit-measure', function (e) {
             e.preventDefault();
             alert('no!');
         });
 
-        var calculateJobsBlock = function(){
-          var containers = $('.jobs_container');
-            containers.each(function(k, container){
+        var calculateJobsBlock = function () {
+            var containers = $('.jobs_container');
+            containers.each(function (k, container) {
                 var total = 0;
-                $('.measure_total', container).each(function(key ,field){
+                $('.measure_total', container).each(function (key, field) {
 
                     total += parseFloat($(field).text());
                 });
@@ -196,12 +199,12 @@
             });
         };
 
-        var calculateCategoryBlock = function(){
+        var calculateCategoryBlock = function () {
             var containers = $('.category-block');
-            containers.each(function(k, container){
+            containers.each(function (k, container) {
                 var totalLabel = $(container).prev();
                 var total = 0;
-                $('.measure_total', container).each(function(key ,field){
+                $('.measure_total', container).each(function (key, field) {
                     total += parseFloat($(field).text());
                 });
                 $('b', totalLabel, container).text(total);
@@ -213,15 +216,13 @@
             var $collectionHolder;
 
 
-
             // Get the ul that holds the collection of tags
             $collectionHolder = $('ol.fields');
 
             // add a delete link to all of the existing tag form li elements
-            $collectionHolder.find('li').each(function() {
+            $collectionHolder.find('li').each(function () {
                 addTagFormDeleteLink($(this));
             });
-
 
 
             // add the "add a tag" anchor and li to the tags ul
@@ -231,7 +232,7 @@
             // index when inserting a new item (e.g. 2)
             $collectionHolder.data('index', $collectionHolder.find(':input').length);
 
-            $addTagLink.on('click', function(e) {
+            $addTagLink.on('click', function (e) {
                 // prevent the link from creating a "#" on the URL
                 e.preventDefault();
 
@@ -264,12 +265,12 @@
         function addTagFormDeleteLink($tagFormLi) {
             var $removeFormA = $('<a class=" btn btn-danger btn-xs remove-field-link" href="#">  <span  class="glyphicon glyphicon-remove  " aria-hidden="true"></span></a>');
             $tagFormLi.append($removeFormA);
-            $removeFormA.on('click', function(e) {
+            $removeFormA.on('click', function (e) {
                 e.preventDefault();
-                $('#measure_value').val($('#measure_value').val()-1);
+                $('#measure_value').val($('#measure_value').val() - 1);
                 $tagFormLi.remove();
             });
         }
 
     </script>
-{% endblock javascripts%}
+{% endblock javascripts %}

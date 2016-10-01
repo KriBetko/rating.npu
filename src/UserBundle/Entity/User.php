@@ -72,7 +72,7 @@ class User implements UserInterface, \Serializable
     protected $picture;
     /**
      * @ORM\Column(type="datetime", length=255, nullable=true)
-    */
+     */
     protected $birthday;
     /**
      * @ORM\OneToMany(targetEntity="SubdivisionBundle\Entity\Job", mappedBy="user")
@@ -149,7 +149,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -280,7 +280,7 @@ class User implements UserInterface, \Serializable
 
     public function __toString()
     {
-        return $this->getLastName().' '.$this->getFirstName().' '.$this->getParentName();
+        return $this->getLastName() . ' ' . $this->getFirstName() . ' ' . $this->getParentName();
     }
 
     /**
@@ -430,7 +430,7 @@ class User implements UserInterface, \Serializable
     {
         $this->roles[] = $role;
         foreach ($this->roles as $k => $v) {
-            if ($role == $v ) {
+            if ($role == $v) {
                 unset($this->roles[$k]);
             }
         }
