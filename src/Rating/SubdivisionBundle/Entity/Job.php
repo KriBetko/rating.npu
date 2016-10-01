@@ -17,20 +17,18 @@ class Job
 
 
     // TODO refactor this
-    protected $formList =
-        [
-            self::FORM_DAILY        => 'Денна',
-            self::FORM_EXTRAMURAL   => 'Заочна'
-
-        ];
-
     public static $fList =
         [
             self::FORM_DAILY        => 'Денна',
             self::FORM_EXTRAMURAL   => 'Заочна'
 
         ];
+    protected $formList =
+        [
+            self::FORM_DAILY        => 'Денна',
+            self::FORM_EXTRAMURAL   => 'Заочна'
 
+        ];
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -102,6 +100,9 @@ class Job
      * @Assert\NotBlank(message="Будь ласка, вкажіть спеціальність", groups={"education"})
      */
     protected $specialization;
+
+    /** @ORM\Column(type="integer") */
+    private $rating;
 
     /**
      * @return mixed
@@ -194,6 +195,16 @@ class Job
     }
 
     /**
+     * Get bet
+     *
+     * @return string
+     */
+    public function getBet()
+    {
+        return $this->bet;
+    }
+
+    /**
      * Set bet
      *
      * @param string $bet
@@ -207,13 +218,13 @@ class Job
     }
 
     /**
-     * Get bet
+     * Get additional
      *
-     * @return string 
+     * @return boolean
      */
-    public function getBet()
+    public function getAdditional()
     {
-        return $this->bet;
+        return $this->additional;
     }
 
     /**
@@ -230,13 +241,13 @@ class Job
     }
 
     /**
-     * Get additional
+     * Get user
      *
-     * @return boolean 
+     * @return User
      */
-    public function getAdditional()
+    public function getUser()
     {
-        return $this->additional;
+        return $this->user;
     }
 
     /**
@@ -253,13 +264,13 @@ class Job
     }
 
     /**
-     * Get user
+     * Get position
      *
-     * @return User
+     * @return Position
      */
-    public function getUser()
+    public function getPosition()
     {
-        return $this->user;
+        return $this->position;
     }
 
     /**
@@ -276,13 +287,13 @@ class Job
     }
 
     /**
-     * Get position
+     * Get cathedra
      *
-     * @return Position
+     * @return Cathedra
      */
-    public function getPosition()
+    public function getCathedra()
     {
-        return $this->position;
+        return $this->cathedra;
     }
 
     /**
@@ -299,13 +310,13 @@ class Job
     }
 
     /**
-     * Get cathedra
+     * Get institute
      *
-     * @return Cathedra
+     * @return Institute
      */
-    public function getCathedra()
+    public function getInstitute()
     {
-        return $this->cathedra;
+        return $this->institute;
     }
 
     /**
@@ -322,12 +333,18 @@ class Job
     }
 
     /**
-     * Get institute
-     *
-     * @return Institute
+     * @return mixed
      */
-    public function getInstitute()
+    public function getRating()
     {
-        return $this->institute;
+        return $this->rating;
+    }
+
+    /**
+     * @param mixed $rating
+     */
+    public function setRating($rating)
+    {
+        $this->rating = $rating;
     }
 }

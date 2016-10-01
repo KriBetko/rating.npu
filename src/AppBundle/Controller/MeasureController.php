@@ -92,7 +92,7 @@ class MeasureController extends Controller
 
                     $em->flush();
 
-                    $this->calculateUserRating($measure->getResult());
+                    $this->calculateUserRating();
 
                     return $this->get('app.sender')->sendJson(
                         array(
@@ -124,7 +124,7 @@ class MeasureController extends Controller
         }
     }
 
-    private function calculateUserRating($result)
+    private function calculateUserRating()
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -138,12 +138,19 @@ class MeasureController extends Controller
         /*** @var Job $job */
         foreach ($jobs as $job)
         {
+            $jobRating = 0;
+            $measures = $em->getRepository('AppBundle:Measure')->findBy(array('job' => $job->getId()));
             /*** @var Measure $measure */
-            $measure = $em->getRepository('AppBundle:Measure')->findOneBy(array('job' => $job->getId()));
-            $rating = $rating + $measure->getResult();
+            foreach ($measures as $measure) {
+                $result = $measure->getResult();
+                $jobRating = $jobRating + $result;
+                $rating = $rating + $result;
+            }
+
+            $job->setRating($jobRating);
         }
 
-        $user->setRating($rating + $result);
+        $user->setRating($rating);
 
         $em->flush();
     }

@@ -3,11 +3,16 @@
 namespace Rating\ProfileBundle\Controller;
 
 use Rating\SubdivisionBundle\Entity\Job;
+use Rating\SubdivisionBundle\Form\EducationType;
+use Rating\SubdivisionBundle\Form\JobType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/profile")
+ */
 class AsyncProfileController extends Controller
 {
     /**
@@ -17,13 +22,12 @@ class AsyncProfileController extends Controller
      */
     public function asyncSaveJobAction(Request $request)
     {
-        $profileController = new ProfileController();
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         $status = 0;
         /*** @var Job $job */
         $job = new Job();
-        $form = $profileController->getFormForUser($job);
+        $form = $this->getFormForUser($job);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -32,14 +36,34 @@ class AsyncProfileController extends Controller
             $em->flush();
             $jobs = $em->getRepository('RatingSubdivisionBundle:Job')->findUserJobs($user);
             $status = 1;
-            $view = $this->render($profileController->getTableView(), array('jobs' => $jobs,))->getContent();
+            $view = $this->render($this->getTableView(), array('jobs' => $jobs,))->getContent();
         } else {
-            $view = $this->render($profileController->getFormView(), array(
+            $view = $this->render($this->getFormView(), array(
                 'user' => $user,
                 'formJob' => $form->createView()
             ))->getContent();
         }
         return $this->get('app.sender')->sendJson(array('status' => $status, 'view' => $view));
+    }
+
+    protected function getFormForUser($job)
+    {
+        $user = $this->getUser();
+        $form = ($user->isStudent()) ? $this->createForm(new EducationType($job), $job) : $this->createForm(new JobType($job), $job);
+        return $form;
+    }
+
+    protected function getTableView()
+    {
+        $user = $this->getUser();
+        return ($user->isStudent()) ? "RatingProfileBundle:Profile:table_jobs_student.html.twig" : "RatingProfileBundle:Profile:table_jobs.html.twig";
+
+    }
+
+    protected function getFormView()
+    {
+        $user = $this->getUser();
+        return ($user->isStudent()) ? "RatingProfileBundle:Profile:form_job_student.html.twig" : "RatingProfileBundle:Profile:form_job.html.twig";
     }
 
     /**
@@ -50,14 +74,13 @@ class AsyncProfileController extends Controller
      */
     public function asyncEditJobAction(Request $request, $id = null)
     {
-        $profileController = new ProfileController();
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         $status = 0;
         $job = $em->getRepository('RatingSubdivisionBundle:Job')->findOneBy(array('id' => $id, 'user' => $user));
 
         /*** @var Form $form */
-        $form = $profileController->getFormForUser($job);
+        $form = $this->getFormForUser($job);
 
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
@@ -65,12 +88,12 @@ class AsyncProfileController extends Controller
                 $em->flush();
                 $jobs = $em->getRepository('RatingSubdivisionBundle:Job')->findUserJobs($user);
                 $status = 1;
-                $view = $this->render($profileController->getTableView(), array('jobs' => $jobs,))->getContent();
+                $view = $this->render($this->getTableView(), array('jobs' => $jobs,))->getContent();
                 return $this->get('app.sender')->sendJson(array('status' => $status, 'view' => $view));
             }
         }
 
-        $view = $this->render($profileController->getFormView(), array(
+        $view = $this->render($this->getFormView(), array(
             'user' => $user,
             'formJob' => $form->createView(),
             'job' => $job,
@@ -87,14 +110,13 @@ class AsyncProfileController extends Controller
      */
     public function asyncRemoveJobAction($id = null)
     {
-        $profileController = new ProfileController();
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         $job = $em->getRepository('RatingSubdivisionBundle:Job')->findOneBy(array('id' => $id, 'user' => $user));
         $em->remove($job);
         $em->flush();
         $jobs = $em->getRepository('RatingSubdivisionBundle:Job')->findUserJobs($user);
-        $view = $this->render($profileController->getTableView(), array('jobs' => $jobs,))->getContent();
+        $view = $this->render($this->getTableView(), array('jobs' => $jobs,))->getContent();
 
         return $this->get('app.sender')->sendJson(array('status' => 1, 'view' => $view));
     }

@@ -1,7 +1,7 @@
 <div class="container">
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <div class="navbar-header">
-            <a class="navbar-brand">Адміністративна панель</a>
+            <a class="navbar-brand" href="{{ url('admin_index') }}">Адміністративна панель</a>
         </div>
         <ul class="nav navbar-nav">
             {% set currentPath = app.request.attributes.get('_route') %}
@@ -32,6 +32,14 @@
                     <li><a href="{{ path('group') }}">Групи критеріїв</a></li>
                     <li><a href="{{ path('category') }}">Категорії критеріїв</a></li>
                 </ul>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a href="{{ path('logout') }}">
+                    Вийти
+                    <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+                </a>
             </li>
         </ul>
     </div>
