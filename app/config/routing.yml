@@ -13,7 +13,7 @@ rating_admin:
     type:     annotation
     prefix:   /admin
 
-rating_user:
+rating_teachers:
     resource: "@RatingUserBundle/Controller/"
     type:     annotation
     prefix:   /

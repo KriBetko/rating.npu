@@ -1,19 +1,18 @@
 {% extends '@RatingMain/base.html.twig' %}
 
 {% block content %}
-    <div class="after-navbar-1 container">
-        {% for flash_message in app.session.flashbag.get('invalid_domains') %}
-            <div class="alert alert-danger text-center alert-dismissible fade in" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-                <h4><strong>Помилка!</strong></h4>
-                <p>Доступ в систему дозволений лише з доменів <b>npu.edu.ua</b> та <b>std.npu.edu.ua</b>.</p><br>
-                Якщо Ви ще не маєте поштової скриньки, зверніться до адміністратора <b><a class="alert-link" href="mailto:admin@npu.edu.ua">admin@npu.edu.ua</a></b>
-            </div>
-        {% endfor %}
-        <div class="text-center">
-            <a href="{{ authUrl }}" class="btn google-btn"><i class="icon"></i>{{ 'Ввійти через Google+' | trans }}</a>
+    {% for flash_message in app.session.flashbag.get('invalid_domains') %}
+        <div class="alert alert-danger text-center alert-dismissible fade in" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            <h4><strong>Помилка!</strong></h4>
+            <p>Доступ в систему дозволений лише з доменів <b>npu.edu.ua</b> та <b>std.npu.edu.ua</b>.</p><br>
+            Якщо Ви ще не маєте поштової скриньки, зверніться до адміністратора <b><a class="alert-link"
+                                                                                      href="mailto:admin@npu.edu.ua">admin@npu.edu.ua</a></b>
         </div>
+    {% endfor %}
+    <div class="text-center">
+        <a href="{{ authUrl }}" class="btn google-btn"><i class="icon"></i>{{ 'Ввійти через Google+' | trans }}</a>
     </div>
 {% endblock %}

@@ -1,11 +1,9 @@
 {% extends '@RatingAdmin/index.html.twig' %}
 
 {% block content %}
-    <div id="wrapper" class="after-navbar-2 container">
+    <div id="wrapper" class="after-navbar container">
         <h1>User creation</h1>
-
         {{ form(form) }}
-
         <ul class="record_actions">
             <li>
                 <a href="{{ path('user') }}">Back to the list</a>

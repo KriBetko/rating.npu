@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/profile")
+ * @Route("/")
  */
 class MainController extends Controller
 {
@@ -57,7 +57,7 @@ class MainController extends Controller
     }
 
     /**
-     * @Route("/rating", name="rating_user")
+     * @Route("/rating/teachers", name="rating_teachers")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -68,7 +68,7 @@ class MainController extends Controller
 
         $filterJob = new Job();
         $form = $this->createForm(new FilterType(), $filterJob, array(
-            'action' => $this->generateUrl('rating_user'),
+            'action' => $this->generateUrl('rating_teachers'),
             'method' => 'GET',
         ));
         $form->add('submit', 'submit', array('label' => 'Фільтрувати',  'attr' => array(
@@ -84,7 +84,7 @@ class MainController extends Controller
     }
 
     /**
-     * @Route("/rating/student", name="rating_student")
+     * @Route("/rating/students", name="rating_students")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
