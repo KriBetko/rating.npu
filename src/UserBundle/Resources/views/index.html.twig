@@ -1,12 +1,8 @@
-{% extends '::admin.html.twig' %}
+{% extends '@Admin/index.html.twig' %}
 
-{% block body -%}
+{% block content %}
     <h1>Користувачі</h1>
-    <br><br>
-    <a class="btn btn-primary" href="{{ path('admin_index') }}">
-        {{ 'Назад' }}
-    </a>
-    <br><br>
+    <br>
     <table class="table table-bordered">
         <thead>
             <tr>
