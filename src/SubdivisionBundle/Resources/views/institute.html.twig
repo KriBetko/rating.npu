@@ -1,9 +1,9 @@
-{% extends  "ProfileBundle:Profile:index.html.twig" %}
+{% extends  "ProfileBundle::index.html.twig" %}
 
 {% block content %}
     <ul>
         {% for i in institutes %}
-            <li><a href="{{ path("inst") }}">{{ i.title }}</a></li>
+            <li><a href="{{ path("institutes") }}">{{ i.title }}</a></li>
             {% set cath = i.cathedras %}
             <li>
                 <ul>

@@ -108,7 +108,6 @@ class GroupController extends Controller
      *
      * @Route("/{id}", name="group_show")
      * @Method("GET")
-     * @Template()
      * @param $id
      * @return array
      */

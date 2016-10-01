@@ -13,7 +13,7 @@ class MainController extends Controller
     public function indexAction()
     {
         return $this->render(
-            'MainBundle:Main:index.html.twig',
+            'MainBundle::index.html.twig',
             [
                 'authUrl' => $this->get('google.oauth')->getAuthUrl()
             ]

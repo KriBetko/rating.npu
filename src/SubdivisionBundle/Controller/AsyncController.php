@@ -29,7 +29,7 @@ class AsyncController extends Controller
 
             if ($cathedras) {
                 foreach ($cathedras as $cathedra) {
-                    $output .= $this->render('SubdivisionBundle:Cathedra:cathedra_list.html.twig',
+                    $output .= $this->render('SubdivisionBundle::cathedra_list.html.twig',
                         array('cathedra' => $cathedra))->getContent();
                 }
                 $status = 1;

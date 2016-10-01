@@ -29,7 +29,7 @@ class ProfileController extends Controller
         $form = $this->getFormForUser($job);
         $jobs = $em->getRepository('SubdivisionBundle:Job')->findUserJobs($user);
 
-        return $this->render("ProfileBundle:Profile:index.html.twig", array(
+        return $this->render("ProfileBundle::index.html.twig", array(
             'user' => $user,
             'jobs' => $jobs,
             'formJob' => $form->createView(),
@@ -48,14 +48,14 @@ class ProfileController extends Controller
     protected function getTableView()
     {
         $user = $this->getUser();
-        return ($user->isStudent()) ? "ProfileBundle:Profile:table_jobs_student.html.twig" : "ProfileBundle:Profile:table_jobs.html.twig";
+        return ($user->isStudent()) ? "ProfileBundle::table_jobs_student.html.twig" : "ProfileBundle::table_jobs.html.twig";
 
     }
 
     protected function getFormView()
     {
         $user = $this->getUser();
-        return ($user->isStudent()) ? "ProfileBundle:Profile:form_job_student.html.twig" : "ProfileBundle:Profile:form_job.html.twig";
+        return ($user->isStudent()) ? "ProfileBundle::form_job_student.html.twig" : "ProfileBundle::form_job.html.twig";
     }
 
     /**
@@ -160,7 +160,7 @@ class ProfileController extends Controller
             }
         }
 
-        return $this->render('ProfileBundle:Profile:edit_profile.html.twig',
+        return $this->render('ProfileBundle::edit_profile.html.twig',
             array(
                 'form' => $form->createView()
             ));

@@ -61,7 +61,6 @@ class FilterStudentType extends AbstractType
                     'class' => 'form-control'
                 ),
                 'required' => false,
-                'placeholder' => 'Форма навчання',
                 'empty_data' => null,
 
             ))

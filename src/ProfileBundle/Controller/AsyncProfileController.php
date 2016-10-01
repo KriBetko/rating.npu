@@ -56,14 +56,14 @@ class AsyncProfileController extends Controller
     protected function getTableView()
     {
         $user = $this->getUser();
-        return ($user->isStudent()) ? "ProfileBundle:Profile:table_jobs_student.html.twig" : "ProfileBundle:Profile:table_jobs.html.twig";
+        return ($user->isStudent()) ? "ProfileBundle::table_jobs_student.html.twig" : "ProfileBundle::table_jobs.html.twig";
 
     }
 
     protected function getFormView()
     {
         $user = $this->getUser();
-        return ($user->isStudent()) ? "ProfileBundle:Profile:form_job_student.html.twig" : "ProfileBundle:Profile:form_job.html.twig";
+        return ($user->isStudent()) ? "ProfileBundle::form_job_student.html.twig" : "ProfileBundle::form_job.html.twig";
     }
 
     /**
