@@ -121,6 +121,8 @@ class MeasureController extends Controller
             ))->getContent();
 
             return $this->get('app.sender')->sendJson(array('status' => 1, 'view' => $view));
+        } else {
+            return $this->get('app.sender')->sendJson(array('status' => 0));
         }
     }
 

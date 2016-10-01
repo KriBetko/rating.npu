@@ -1,5 +1,4 @@
 services:
-
   google.client:
     class: UserBundle\Security\GoogleService
     arguments: ['@router', '@service_container']
@@ -7,6 +6,7 @@ services:
   google.oauth:
       class: UserBundle\Security\GoogleOAuth
       arguments: ['@google.client', '@service_container', '@request_stack']
+
   user.manager:
       class: UserBundle\Security\UserManager
       arguments: ['@service_container']
