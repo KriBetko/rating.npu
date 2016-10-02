@@ -4,10 +4,12 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Entity\Measure;
+use AppBundle\Entity\Rating;
 use AppBundle\Entity\Year;
 use AppBundle\Form\MeasureType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Types\IntegerType;
+use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use SubdivisionBundle\Entity\Job;
@@ -53,6 +55,7 @@ class MeasureController extends Controller
         if (!$this->getUser()->isBlock()) {
             $em = $this->getDoctrine()->getManager();
 
+            /*** @var Measure $measure */
             $measure = $em->getRepository('AppBundle:Measure')->findOneBy(array('id' => $id));
 
             $form = $this->createForm(new MeasureType($measure), $measure);
@@ -127,6 +130,7 @@ class MeasureController extends Controller
 
     private function calculateUserRating()
     {
+        /*** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
         /*** @var \UserBundle\Entity\User $user */
@@ -140,6 +144,7 @@ class MeasureController extends Controller
         foreach ($jobs as $job) {
             $jobRating = 0;
             $measures = $em->getRepository('AppBundle:Measure')->findBy(array('job' => $job->getId()));
+
             /*** @var Measure $measure */
             foreach ($measures as $measure) {
                 $result = $measure->getResult();
@@ -151,6 +156,24 @@ class MeasureController extends Controller
         }
 
         $user->setRating($rating);
+
+        /*** @var Year $year */
+        $year = $em->getRepository('AppBundle:Year')->findOneBy(array('id' => $user->getAvailableYear()));
+        /*** @var Rating $ratingObj */
+        $ratingObj = $em->getRepository('AppBundle:Rating')->findOneBy(array('user' => $user, 'year' => $year));
+
+        if ($ratingObj == null) {
+            $ratingObj = new Rating();
+            $ratingObj->setUser($user);
+            $ratingObj->setYear($year);
+            $ratingObj->setRating($rating);
+
+            $em->persist($ratingObj);
+        } else {
+            $ratingObj->setUser($user);
+            $ratingObj->setYear($year);
+            $ratingObj->setRating($rating);
+        }
 
         $em->flush();
     }

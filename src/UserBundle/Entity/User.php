@@ -97,7 +97,8 @@ class User implements UserInterface, \Serializable
      */
     private $rating = 0;
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Year")
+     * @ORM\JoinColumn(name="year_id", referencedColumnName="id")
      */
     private $availableYearId;
     /**
