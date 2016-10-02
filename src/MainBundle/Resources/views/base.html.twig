@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
     {% block stylesheets %}
         {% stylesheets
         '@bootstrap_css'
@@ -12,7 +13,17 @@
         <link href="{{ asset_url }}" type="text/css" rel="stylesheet"/>
         {% endstylesheets %}
     {% endblock %}
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+    {% block javascripts %}
+        {% javascripts
+        '@jquery_js'
+        '@jqueryui_js'
+        '@bootstrap_js'
+        '@MainBundle/Resources/public/scripts/ajax.form.js'
+        '@MainBundle/Resources/public/scripts/app.js' %}
+        <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    {% endblock %}
+    {% block header %}{% endblock %}
 </head>
 
 <body>
@@ -37,16 +48,5 @@
         <p class="text-center">Copyright 2016</p>
     </div>
 </footer>
-
-{% block javascripts %}
-    {% javascripts
-    '@jquery_js'
-    '@jqueryui_js'
-    '@bootstrap_js'
-    '@MainBundle/Resources/public/scripts/ajax.form.js'
-    '@MainBundle/Resources/public/scripts/app.js' %}
-    <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
-{% endblock %}
 </body>
 </html>

@@ -2,6 +2,7 @@
 
 namespace ProfileBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use SubdivisionBundle\Entity\Job;
 use SubdivisionBundle\Form\EducationType;
@@ -21,6 +22,7 @@ class ProfileController extends Controller
      */
     public function indexAction()
     {
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
 
@@ -28,13 +30,15 @@ class ProfileController extends Controller
         $job->setUser($user);
         $form = $this->getFormForUser($job);
         $jobs = $em->getRepository('SubdivisionBundle:Job')->findUserJobs($user);
+        $ratings = $em->getRepository('AppBundle:Rating')->findBy(array('user' => $user));
 
         return $this->render("ProfileBundle::index.html.twig", array(
             'user' => $user,
             'jobs' => $jobs,
             'formJob' => $form->createView(),
             'tableView' => $this->getTableView(),
-            'formView' => $this->getFormView()
+            'formView' => $this->getFormView(),
+            'ratings' => $ratings
         ));
     }
 

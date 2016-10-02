@@ -1,4 +1,6 @@
-{% extends  "ProfileBundle::index.html.twig" %}
+{% extends  "MainBundle::base.html.twig" %}
+
+{% block navbar %}{% include 'MainBundle::user-navbar.html.twig' %}{% endblock %}
 
 {% block content %}
     <h2>{{ cathedra.title }}</h2>

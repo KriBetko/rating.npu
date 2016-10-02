@@ -201,7 +201,7 @@ class YearController extends Controller
 
         /*** @var User $user */
         foreach ($users as $user) {
-            $user->setAvailableYeaR($year->getId());
+            $user->setAvailableYeaR($year);
         }
 
         $em->flush();

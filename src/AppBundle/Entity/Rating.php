@@ -34,7 +34,7 @@ class Rating
     /**
      * @ORM\Column(type="integer")
      */
-    protected $rating = 0;
+    protected $value = 0;
 
     /**
      * @return mixed
@@ -71,17 +71,17 @@ class Rating
     /**
      * @return int
      */
-    public function getRating()
+    public function getValue()
     {
-        return $this->rating;
+        return $this->value;
     }
 
     /**
-     * @param $rating
+     * @param $value
      */
-    public function setRating($rating)
+    public function setValue($value)
     {
-        $this->rating = $rating;
+        $this->value = $value;
     }
 
     /**

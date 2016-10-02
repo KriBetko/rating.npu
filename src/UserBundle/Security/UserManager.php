@@ -36,8 +36,8 @@ class UserManager
     protected function create($response, $year)
     {
         $user = new User();
-        $user->setLastName($response->getGivenName());
-        $user->setFirstName($response->getFamilyName());
+        $user->setLastName($response->getFamilyName());
+        $user->setFirstName($response->getGivenName());
         $user->setParentName(""); //TODO ParentName not found in GoogleAccount, fix this
         $user->setGoogleId($response->getId());
         $user->setEmail($response->getEmail());

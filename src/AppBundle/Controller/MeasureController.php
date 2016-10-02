@@ -132,18 +132,21 @@ class MeasureController extends Controller
     {
         /*** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-
         /*** @var \UserBundle\Entity\User $user */
         $user = $this->getUser();
+        /*** @var Year $year */
+        $year = $em->getRepository('AppBundle:Year')->findOneBy(array('id' => $user->getAvailableYear()));
+        /*** @var Rating $ratingObj */
+        $ratingObj = $em->getRepository('AppBundle:Rating')->findOneBy(array('user' => $user, 'year' => $year));
 
         /*** @var IntegerType $rating */
-        $rating = 0;
+        $rating = ($ratingObj == null) ? 0 : $ratingObj->getValue();
 
         $jobs = $em->getRepository('SubdivisionBundle:Job')->findUserJobs($user);
         /*** @var Job $job */
         foreach ($jobs as $job) {
             $jobRating = 0;
-            $measures = $em->getRepository('AppBundle:Measure')->findBy(array('job' => $job->getId()));
+            $measures = $em->getRepository('AppBundle:Measure')->findBy(array('job' => $job, 'year' => $year));
 
             /*** @var Measure $measure */
             foreach ($measures as $measure) {
@@ -157,22 +160,17 @@ class MeasureController extends Controller
 
         $user->setRating($rating);
 
-        /*** @var Year $year */
-        $year = $em->getRepository('AppBundle:Year')->findOneBy(array('id' => $user->getAvailableYear()));
-        /*** @var Rating $ratingObj */
-        $ratingObj = $em->getRepository('AppBundle:Rating')->findOneBy(array('user' => $user, 'year' => $year));
-
         if ($ratingObj == null) {
             $ratingObj = new Rating();
             $ratingObj->setUser($user);
             $ratingObj->setYear($year);
-            $ratingObj->setRating($rating);
+            $ratingObj->setValue($rating);
 
             $em->persist($ratingObj);
         } else {
             $ratingObj->setUser($user);
             $ratingObj->setYear($year);
-            $ratingObj->setRating($rating);
+            $ratingObj->setValue($rating);
         }
 
         $em->flush();
