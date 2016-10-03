@@ -297,7 +297,7 @@ class UserController extends Controller
         /*** @var Year $year */
         if ($user->isBlock()) {
             $year = $this->get('year.manager')->getCurrentYear();
-            $user->setAvailableYeaR($year->getId());
+            $user->setAvailableYeaR($year);
         } else {
             $user->setAvailableYeaR(null);
         }

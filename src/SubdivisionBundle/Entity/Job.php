@@ -102,7 +102,7 @@ class Job
     protected $specialization;
 
     /** @ORM\Column(type="integer") */
-    private $rating;
+    private $rating = 0;
 
     /**
      * @return mixed

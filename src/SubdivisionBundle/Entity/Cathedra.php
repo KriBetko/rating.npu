@@ -233,7 +233,6 @@ class Cathedra
 
     public function setRating($rating)
     {
-        $this->$this->rating = $rating;
-        return $this;
+        $this->rating = $rating;
     }
 }

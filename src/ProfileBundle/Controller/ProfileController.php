@@ -30,7 +30,7 @@ class ProfileController extends Controller
         $job->setUser($user);
         $form = $this->getFormForUser($job);
         $jobs = $em->getRepository('SubdivisionBundle:Job')->findUserJobs($user);
-        $ratings = $em->getRepository('AppBundle:Rating')->findBy(array('user' => $user));
+        $ratings = $em->getRepository('AppBundle:UserRating')->findBy(array('user' => $user));
 
         return $this->render("ProfileBundle::index.html.twig", array(
             'user' => $user,

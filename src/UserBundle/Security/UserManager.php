@@ -2,6 +2,7 @@
 
 namespace UserBundle\Security;
 
+use AppBundle\Entity\Year;
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
@@ -18,7 +19,7 @@ class UserManager
 
     /**
      * @param \Google_Service_Oauth2_Userinfoplus $response
-     * @param integer $year
+     * @param Year $year
      * @return User
      */
     public function createStudent($response, $year)
@@ -30,7 +31,7 @@ class UserManager
 
     /**
      * @param \Google_Service_Oauth2_Userinfoplus $response
-     * @param integer $year
+     * @param Year $year
      * @return User
      */
     protected function create($response, $year)
@@ -50,7 +51,7 @@ class UserManager
 
     /**
      * @param \Google_Service_Oauth2_Userinfoplus $response
-     * @param integer $year
+     * @param Year $year
      * @return User
      */
     public function createTeacher($response, $year)

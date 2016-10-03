@@ -100,7 +100,7 @@ class User implements UserInterface, \Serializable
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Year")
      * @ORM\JoinColumn(name="year_id", referencedColumnName="id")
      */
-    private $availableYearId;
+    private $availableYear;
     /**
      * @ORM\ManyToMany(targetEntity="SubdivisionBundle\Entity\Institute", mappedBy="managers")
      */
@@ -498,24 +498,16 @@ class User implements UserInterface, \Serializable
 
     public function isBlock()
     {
-        return $this->availableYearId == null;
+        return $this->availableYear == null;
     }
 
-    /**
-     * @return integer
-     */
     public function getAvailableYear()
     {
-        return $this->availableYearId;
+        return $this->availableYear;
     }
 
-    /**
-     * @param $yearId
-     * @return $this
-     */
     public function setAvailableYeaR($yearId)
     {
-        $this->availableYearId = $yearId;
-        return $this;
+        $this->availableYear = $yearId;
     }
 }

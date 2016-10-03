@@ -28,9 +28,9 @@ class MainController extends Controller
                 $year = $this->get('year.manager')->getCurrentYear();
 
                 if ($response->getHd() == 'npu.edu.ua') {
-                    $user = $um->createTeacher($response, $year->getId());
+                    $user = $um->createTeacher($response, $year);
                 } elseif ($response->getHd() == 'std.npu.edu.ua') {
-                    $user = $um->createStudent($response, $year->getId());
+                    $user = $um->createStudent($response, $year);
                 }
 
                 $em->persist($user);

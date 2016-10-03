@@ -2,9 +2,8 @@
 
 namespace AppBundle\Controller;
 
-
 use AppBundle\Entity\Measure;
-use AppBundle\Entity\Rating;
+use AppBundle\Entity\UserRating;
 use AppBundle\Entity\Year;
 use AppBundle\Form\MeasureType;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -12,10 +11,10 @@ use Doctrine\DBAL\Types\IntegerType;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use SubdivisionBundle\Entity\Cathedra;
 use SubdivisionBundle\Entity\Job;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-
 
 class MeasureController extends Controller
 {
@@ -95,6 +94,7 @@ class MeasureController extends Controller
                     $em->flush();
 
                     $this->calculateUserRating();
+                    $this->calculateCathedraRating($measure->getJob()->getCathedra()->getId());
 
                     return $this->get('app.sender')->sendJson(
                         array(
@@ -136,11 +136,11 @@ class MeasureController extends Controller
         $user = $this->getUser();
         /*** @var Year $year */
         $year = $em->getRepository('AppBundle:Year')->findOneBy(array('id' => $user->getAvailableYear()));
-        /*** @var Rating $ratingObj */
-        $ratingObj = $em->getRepository('AppBundle:Rating')->findOneBy(array('user' => $user, 'year' => $year));
+        /*** @var UserRating $ratingObj */
+        $ratingObj = $em->getRepository('AppBundle:UserRating')->findOneBy(array('user' => $user, 'year' => $year));
 
         /*** @var IntegerType $rating */
-        $rating = ($ratingObj == null) ? 0 : $ratingObj->getValue();
+        $rating = 0;
 
         $jobs = $em->getRepository('SubdivisionBundle:Job')->findUserJobs($user);
         /*** @var Job $job */
@@ -161,7 +161,7 @@ class MeasureController extends Controller
         $user->setRating($rating);
 
         if ($ratingObj == null) {
-            $ratingObj = new Rating();
+            $ratingObj = new UserRating();
             $ratingObj->setUser($user);
             $ratingObj->setYear($year);
             $ratingObj->setValue($rating);
@@ -176,9 +176,29 @@ class MeasureController extends Controller
         $em->flush();
     }
 
-    private function calculateCathedraRating($cathedra)
+    /** @param integer $cathedraId */
+    private function calculateCathedraRating($cathedraId)
     {
-        //TODO
+        /*** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+        /*** @var \UserBundle\Entity\User $user */
+        $user = $this->getUser();
+        /*** @var Year $year */
+        $year = $em->getRepository('AppBundle:Year')->findOneBy(array('id' => $user->getAvailableYear()));
+        /** @var Cathedra $cathedra */
+        $cathedra = $em->getRepository('SubdivisionBundle:Cathedra')->findOneBy(array('id' => $cathedraId));
+        $jobs = $em->getRepository('SubdivisionBundle:Job')->findBy(array('cathedra' => $cathedraId));
+
+        $totalRating = 0;
+
+        /** @var Job $job */
+        foreach ($jobs as $job) {
+            $totalRating = $totalRating + $job->getRating();
+        }
+
+        $cathedra->setRating($totalRating);
+
+        $em->flush();
     }
 
     private function caculateFacultieRating($facultie)

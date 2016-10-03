@@ -8,9 +8,9 @@ use UserBundle\Entity\User;
 /**
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CategoryRepository")
- * @ORM\Table(name="rating")
+ * @ORM\Table(name="rating_users")
  */
-class Rating
+class UserRating
 {
     /**
      * @ORM\Column(type="integer")
