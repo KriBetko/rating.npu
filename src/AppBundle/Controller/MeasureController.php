@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\CathedraRating;
+use AppBundle\Entity\InstituteRating;
 use AppBundle\Entity\Measure;
 use AppBundle\Entity\UserRating;
 use AppBundle\Entity\Year;
@@ -95,7 +96,8 @@ class MeasureController extends Controller
                     $em->flush();
 
                     $this->calculateUserRating();
-                    $this->calculateCathedraRating($measure->getJob()->getCathedra()->getId());
+                    $this->calculateCathedraRating($measure->getJob()->getCathedra());
+                    $this->caculateFacultieRating($measure->getJob()->getCathedra());
 
                     return $this->get('app.sender')->sendJson(
                         array(
@@ -143,9 +145,8 @@ class MeasureController extends Controller
         /*** @var IntegerType $rating */
         $rating = 0;
 
-        $jobs = $em->getRepository('SubdivisionBundle:Job')->findUserJobs($user);
         /*** @var Job $job */
-        foreach ($jobs as $job) {
+        foreach ($em->getRepository('SubdivisionBundle:Job')->findUserJobs($user) as $job) {
             $jobRating = 0;
             $measures = $em->getRepository('AppBundle:Measure')->findBy(array('job' => $job, 'year' => $year));
 
@@ -169,16 +170,14 @@ class MeasureController extends Controller
 
             $em->persist($ratingObj);
         } else {
-            $ratingObj->setUser($user);
-            $ratingObj->setYear($year);
             $ratingObj->setValue($rating);
         }
 
         $em->flush();
     }
 
-    /** @param integer $cathedraId */
-    private function calculateCathedraRating($cathedraId)
+    /** @param Cathedra $cathedra */
+    private function calculateCathedraRating($cathedra)
     {
         /*** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -186,16 +185,13 @@ class MeasureController extends Controller
         $user = $this->getUser();
         /*** @var Year $year */
         $year = $em->getRepository('AppBundle:Year')->findOneBy(array('id' => $user->getAvailableYear()));
-        /** @var Cathedra $cathedra */
-        $cathedra = $em->getRepository('SubdivisionBundle:Cathedra')->findOneBy(array('id' => $cathedraId));
-        $jobs = $em->getRepository('SubdivisionBundle:Job')->findBy(array('cathedra' => $cathedraId));
         /*** @var CathedraRating $ratingObj */
         $ratingObj = $em->getRepository('AppBundle:CathedraRating')->findOneBy(array('cathedra' => $cathedra, 'year' => $year));
 
         $totalRating = 0;
 
         /** @var Job $job */
-        foreach ($jobs as $job) {
+        foreach ($em->getRepository('SubdivisionBundle:Job')->findBy(array('cathedra' => $cathedra)) as $job) {
             $totalRating = $totalRating + $job->getRating();
         }
 
@@ -208,16 +204,46 @@ class MeasureController extends Controller
             $ratingObj->setValue($totalRating);
             $em->persist($ratingObj);
         } else {
-            $ratingObj->setCathedra($cathedra);
-            $ratingObj->setYear($year);
             $ratingObj->setValue($totalRating);
         }
 
         $em->flush();
     }
 
-    private function caculateFacultieRating($facultie)
+    /**
+     * @param Cathedra $cathedra
+     */
+    private function caculateFacultieRating($cathedra)
     {
-        //TODO
+        /*** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+        /*** @var \UserBundle\Entity\User $user */
+        $user = $this->getUser();
+        /*** @var Year $year */
+        $year = $em->getRepository('AppBundle:Year')->findOneBy(array('id' => $user->getAvailableYear()));
+
+        $institute = $cathedra->getInstitute();
+
+        $totalRating = 0;
+
+        foreach ($em->getRepository('SubdivisionBundle:Cathedra')->findBy(array('institute' => $institute)) as $cathedr) {
+            $totalRating = $totalRating + $cathedr->getRating();
+        }
+
+        $institute->setRating($totalRating);
+
+        $ratingObj = $em->getRepository('AppBundle:InstituteRating')->findOneBy(array('institute' => $institute, 'year' => $year));
+
+        if ($ratingObj == null) {
+            $ratingObj = new InstituteRating();
+            $ratingObj->setInstitute($institute);
+            $ratingObj->setYear($year);
+            $ratingObj->setValue($totalRating);
+            $em->persist($ratingObj);
+        } else {
+            $ratingObj->setValue($totalRating);
+        }
+
+        $em->flush();
     }
 }
