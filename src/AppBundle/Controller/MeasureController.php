@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\CathedraRating;
 use AppBundle\Entity\Measure;
 use AppBundle\Entity\UserRating;
 use AppBundle\Entity\Year;
@@ -188,6 +189,8 @@ class MeasureController extends Controller
         /** @var Cathedra $cathedra */
         $cathedra = $em->getRepository('SubdivisionBundle:Cathedra')->findOneBy(array('id' => $cathedraId));
         $jobs = $em->getRepository('SubdivisionBundle:Job')->findBy(array('cathedra' => $cathedraId));
+        /*** @var CathedraRating $ratingObj */
+        $ratingObj = $em->getRepository('AppBundle:CathedraRating')->findOneBy(array('cathedra' => $cathedra, 'year' => $year));
 
         $totalRating = 0;
 
@@ -197,6 +200,18 @@ class MeasureController extends Controller
         }
 
         $cathedra->setRating($totalRating);
+
+        if ($ratingObj == null) {
+            $ratingObj = new CathedraRating();
+            $ratingObj->setCathedra($cathedra);
+            $ratingObj->setYear($year);
+            $ratingObj->setValue($totalRating);
+            $em->persist($ratingObj);
+        } else {
+            $ratingObj->setCathedra($cathedra);
+            $ratingObj->setYear($year);
+            $ratingObj->setValue($totalRating);
+        }
 
         $em->flush();
     }
