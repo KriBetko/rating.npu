@@ -24,8 +24,8 @@ class GoogleService
         // gUVeePzKyw6ZSFd6tygTAyX3
         $client = new \Google_Client( //TODO Hide id and secret
             [
-                'client_id' => "1082037993678-kp9r5siv7b78sgb5ajslnju3vg9ls5j2.apps.googleusercontent.com",//$this->container->getParameter('google_client_id'),
-                'client_secret' => "604FLAFcUZgd4kvdeiJr76Nm"//$this->container->getParameter('google_client_secret'),
+                'client_id' => "375709262973-g7q7p85bh2qk0ieddmafm665sqf71rek.apps.googleusercontent.com",//$this->container->getParameter('google_client_id'),
+                'client_secret' => "OYvnMHoW712hJrRS3fGV_gYy"//$this->container->getParameter('google_client_secret'),
             ]
         );
         $client->setRedirectUri($this->generateRedirectUrl());

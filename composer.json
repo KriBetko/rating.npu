@@ -26,10 +26,10 @@
         "leafo/lessphp": "^0.5.0",
         "twitter/bootstrap": "^3.3",
         "components/jquery": "^3.1",
-        "components/jqueryui": "^1.12"
+        "components/jqueryui": "^1.12",
+        "sensio/generator-bundle": "^3.0"
     },
     "require-dev": {
-        "sensio/generator-bundle": "~3.0",
         "symfony/phpunit-bridge": "~2.7"
     },
     "scripts": {
