@@ -2,6 +2,7 @@
 namespace SubdivisionBundle\Controller;
 
 
+use Doctrine\ORM\EntityManager;
 use SubdivisionBundle\Entity\Cathedra;
 use SubdivisionBundle\Entity\Institute;
 use SubdivisionBundle\Entity\Job;
@@ -116,18 +117,25 @@ class MainController extends Controller
      */
     public function showCathedraAction($id)
     {
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
+        /** @var Cathedra $cathedra */
         $cathedra = $em->getRepository("SubdivisionBundle:Cathedra")->findOneById($id);
         $users = $em->getRepository('AppBundle:Measure')->getValue($cathedra);
-        $total = 0;
-        foreach ($users as $u) {
-            $total += $u['summa'];
+        $jobs = $em->getRepository('SubdivisionBundle:Job')->findBy(array('cathedra' => $cathedra));
+
+        $bets = 0.0;
+        /** @var Job $job */
+        foreach ($jobs as $job) {
+            $bets += $job->getBet();
         }
+
         return $this->render('SubdivisionBundle::cathedra.html.twig',
             [
                 'cathedra' => $cathedra,
                 'users' => $users,
-                'total' => $total
+                'total' => $cathedra->getRating(),
+                'bets' => $bets
             ]
         );
     }

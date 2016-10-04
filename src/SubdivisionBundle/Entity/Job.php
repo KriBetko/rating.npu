@@ -1,6 +1,7 @@
 <?php
 namespace SubdivisionBundle\Entity;
 
+use Doctrine\DBAL\Types\DecimalType;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use UserBundle\Entity\User;
@@ -197,7 +198,7 @@ class Job
     /**
      * Get bet
      *
-     * @return string
+     * @return DecimalType
      */
     public function getBet()
     {
