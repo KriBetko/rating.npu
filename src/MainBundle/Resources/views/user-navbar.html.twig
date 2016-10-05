@@ -3,16 +3,16 @@
         <ul class="nav navbar-nav">
             {% set currentPath = app.request.attributes.get('_route') %}
 
-            {% if currentPath == 'my_profile' or currentPath == 'my_profile_edit' %}
+            {% if currentPath == 'profile' or currentPath == 'profile_edit' %}
                 <li class="active">
-                    <a href="{{ path('my_profile') }}">
+                    <a href="{{ path('profile') }}">
                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                         Мій Профіль
                     </a>
                 </li>
             {% else %}
                 <li>
-                    <a href="{{ path('my_profile') }}">
+                    <a href="{{ path('profile') }}">
                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                         Мій Профіль
                     </a>

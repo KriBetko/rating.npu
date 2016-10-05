@@ -20,7 +20,7 @@ use UserBundle\Form\UserType;
 class ProfileController extends Controller
 {
     /**
-     * @Route("/", name="my_profile")
+     * @Route("/", name="profile")
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction()
@@ -71,7 +71,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * @Route("/edit", name="my_profile_edit")
+     * @Route("/edit", name="profile_edit")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
@@ -86,7 +86,7 @@ class ProfileController extends Controller
             if ($form->isValid()) {
                 $em->flush();
                 $this->addFlash('success_update', '1');
-                return $this->redirect($this->generateUrl('my_profile'));
+                return $this->redirect($this->generateUrl('profile'));
             }
         }
 
