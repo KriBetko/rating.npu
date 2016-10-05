@@ -107,6 +107,13 @@
             </span>
         </h2>
         <br>
+        <select id="year-select" class="form-control" style="width: 190px; margin-bottom: 40px"
+                title="Оберіть навчальний рік">
+            {% for year in years %}
+                <option value="{{ year.id }}"
+                        {% if year.id == year.id %}selected="selected"{% endif %}>{{ year.title }}</option>
+            {% endfor %}
+        </select>
         <div id="table-jobs-block">
             {{ include(tableView) }}
         </div>
@@ -200,6 +207,20 @@
 
         }
         $(document).ready(function () {
+            $('#year-select').change(function () {
+                $.ajax({
+                    url: "/profile/async/get/jobs/" + this.value, success: function (e) {
+                        if (e.status == 0) {
+                            $('#form-block').html(e.view);
+                        }
+                        else if (e.status == 1) {
+                            $('#modalJob').modal('hide');
+                            $('#form-job').clearForm();
+                            $('#table-jobs-block').html(e.view);
+                        }
+                    }
+                });
+            });
 
             initAddJobForm();
 
@@ -248,13 +269,10 @@
                 $.ajax({
                     method: "get",
                     url: $(this).attr('data-href') + '/' + $(this).attr('data-id')
-                })
-                        .done(function (e) {
-                            $('#form-edit-block').html(e.view);
-
-                        });
+                }).done(function (e) {
+                    $('#form-edit-block').html(e.view);
+                });
             });
-
         });
     </script>
 {% endblock javascripts %}

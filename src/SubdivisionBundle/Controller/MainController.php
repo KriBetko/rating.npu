@@ -1,7 +1,6 @@
 <?php
 namespace SubdivisionBundle\Controller;
 
-
 use Doctrine\ORM\EntityManager;
 use SubdivisionBundle\Entity\Cathedra;
 use SubdivisionBundle\Entity\Institute;

@@ -16,7 +16,6 @@ class Job
     const FORM_DAILY = 1;
     const FORM_EXTRAMURAL = 2;
 
-
     // TODO refactor this
     public static $fList =
         [
@@ -92,12 +91,14 @@ class Job
      */
     protected $formEducation;
     /**
-     * @ORM\Column(type="date", length=64, nullable=true)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Year"));
+     * @ORM\JoinColumn(name="year_id", referencedColumnName="id")
      * @Assert\NotBlank(message="Будь ласка, оберіть рік вступу", groups={"education"})
      */
-    protected $entryYear;
+    protected $year;
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\JoinColumn(name="yaer_id", referencedColumnName="id")
      * @Assert\NotBlank(message="Будь ласка, вкажіть спеціальність", groups={"education"})
      */
     protected $specialization;
@@ -108,17 +109,14 @@ class Job
     /**
      * @return mixed
      */
-    public function getEntryYear()
+    public function getYear()
     {
-        return $this->entryYear;
+        return $this->year;
     }
 
-    /**
-     * @param mixed $entryYear
-     */
-    public function setEntryYear($entryYear)
+    public function setYear($year)
     {
-        $this->entryYear = $entryYear;
+        $this->year = $year;
     }
 
     /**

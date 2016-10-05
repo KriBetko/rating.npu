@@ -2,6 +2,8 @@
 
 namespace ProfileBundle\Controller;
 
+use AppBundle\Entity\Year;
+use Doctrine\ORM\EntityManager;
 use SubdivisionBundle\Entity\Job;
 use SubdivisionBundle\Form\EducationType;
 use SubdivisionBundle\Form\JobType;
@@ -9,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use UserBundle\Entity\User;
 
 /**
  * @Route("/profile")
@@ -23,6 +26,7 @@ class AsyncProfileController extends Controller
     public function asyncSaveJobAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        /** @var User $user */
         $user = $this->getUser();
         $status = 0;
         /*** @var Job $job */
@@ -32,11 +36,12 @@ class AsyncProfileController extends Controller
 
         if ($form->isValid()) {
             $job->setUser($user);
+            $job->setYear($user->getAvailableYear());
             $em->persist($job);
             $em->flush();
-            $jobs = $em->getRepository('SubdivisionBundle:Job')->findUserJobs($user);
+            $jobs = $em->getRepository('SubdivisionBundle:Job')->findBy(array('year' => $user->getAvailableYear()));
             $status = 1;
-            $view = $this->render($this->getTableView(), array('jobs' => $jobs,))->getContent();
+            $view = $this->render($this->getTableView(), array('jobs' => $jobs))->getContent();
         } else {
             $view = $this->render($this->getFormView(), array(
                 'user' => $user,
@@ -117,6 +122,29 @@ class AsyncProfileController extends Controller
         $em->flush();
         $jobs = $em->getRepository('SubdivisionBundle:Job')->findUserJobs($user);
         $view = $this->render($this->getTableView(), array('jobs' => $jobs,))->getContent();
+
+        return $this->get('app.sender')->sendJson(array('status' => 1, 'view' => $view));
+    }
+
+    /**
+     * @Route("/async/get/jobs/{id}", name="profile_get_jobs")
+     * @param null $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function asyncGetJobsByYeear($id = null)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+        /** @var User $user */
+        $user = $this->getUser();
+        /** @var Year $year */
+        $year = $id == null ? $this->get('year.manager')->getCurrentYear()
+            : $em->getRepository('AppBundle:Year')->findOneBy(array('id' => $id));
+
+        $jobs = $em->getRepository('SubdivisionBundle:Job')->findBy(array('user' => $user, 'year' => $year));
+        $block = $user->getAvailableYear() == $year;
+
+        $view = $this->render($this->getTableView(), array('jobs' => $jobs, 'block' => $block))->getContent();
 
         return $this->get('app.sender')->sendJson(array('status' => 1, 'view' => $view));
     }

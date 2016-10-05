@@ -6,7 +6,8 @@
         <th>Посада</th>
         <th>Ставка</th>
         <th>Форма працевлаштування</th>
-        <th>Редагувати</th>
+        {% if block %}
+            <th>Редагувати</th>{% endif %}
     </tr>
     </thead>
 
@@ -17,6 +18,7 @@
             <td class="text-center">{{ job.position.title }}</td>
             <td class="text-center">{{ job.bet }}</td>
             <td class="text-center">{% if job.additional == 1 %}За сумісництвом{% else %}Основне{% endif %}</td>
+            {% if block %}
             <td class="text-center">
                 <a data-target="#modalEditJob" data-toggle="modal" class="btn btn-info btn-xs edit-job-link"
                    data-id="{{ job.id }}" data-href="{{ path('profile_edit_job') }}" title="Редагувати">
@@ -27,7 +29,7 @@
                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                 </span>
             </td>
+            {% endif %}
         </tr>
-
     {% endfor %}
 </table>
