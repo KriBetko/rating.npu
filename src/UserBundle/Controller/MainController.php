@@ -40,7 +40,7 @@ class MainController extends Controller
             $em->flush();
             $um->authorize($user, $request);
 
-            return $this->redirectToRoute('my_profile');
+            return $this->redirectToRoute('profile');
         }
         $this->addFlash('invalid_domains', 'invalid_domains');
         return $this->redirectToRoute('homepage');

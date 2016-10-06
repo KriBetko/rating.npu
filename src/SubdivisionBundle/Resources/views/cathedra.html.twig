@@ -4,7 +4,8 @@
 
 {% block content %}
     <h2>{{ cathedra.title }}</h2>
-
+    <h3>Рейтинг - {{ total }}</h3>
+    <h3>Всього ставок - {{ bets }}</h3>
     <table class="table table-bordered">
         <thead>
         <tr>
@@ -21,5 +22,4 @@
         {% endfor %}
         </thead>
     </table>
-    <h3>Рейтинг - {{ total }}</h3>
 {% endblock %}

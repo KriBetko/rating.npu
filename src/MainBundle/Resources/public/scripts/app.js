@@ -3,7 +3,7 @@ function getCathedrasList(instituteSelect, cathedraSelect) {
         if ($(this).val()) {
             $.ajax({
                 method: "get",
-                url: "/app_dev.php/cathedras/get/" + $(this).val()
+                url: "/cathedras/get/" + $(this).val()
             })
                 .done(function (msg) {
                     if (msg.status == 1) {

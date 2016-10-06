@@ -7,6 +7,7 @@
 
 .after-navbar {
     margin-top: 125px;
+    margin-bottom: 75px;
 }
 
 ul.cathedras {
@@ -17,11 +18,9 @@ html {
     height: 100%;
 }
 
-footer {
-    position: absolute;
+#footer {
+    position: fixed;
     bottom: 0;
     left: 0;
-    background-color: #efefef;
-    text-align: center;
     width: 100%;
 }

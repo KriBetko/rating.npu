@@ -44,7 +44,6 @@ class UserManager
         $user->setEmail($response->getEmail());
         $user->setPicture($response->getPicture());
         $user->addRole('ROLE_USER');
-        $user->addRole('ROLE_ADMIN'); //TODO Delete admin role in prodServer
         $user->setAvailableYeaR($year);
         return $user;
     }
