@@ -99,13 +99,17 @@ class AsyncProfileController extends Controller
      */
     public function asyncEditJobAction(Request $request, $id = null)
     {
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
+        /** @var User $user */
         $user = $this->getUser();
         $status = 0;
+        /** @var Job $job */
         $job = $em->getRepository('SubdivisionBundle:Job')->findOneBy(array('id' => $id, 'user' => $user));
-
         /*** @var Form $form */
         $form = $this->getFormForUser($job);
+        /** @var BooleanType $block */
+        $block = $this->getBlock($user);
 
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
@@ -113,7 +117,7 @@ class AsyncProfileController extends Controller
                 $em->flush();
                 $jobs = $em->getRepository('SubdivisionBundle:Job')->findUserJobs($user);
                 $status = 1;
-                $view = $this->render($this->getTableView(), array('jobs' => $jobs,))->getContent();
+                $view = $this->render($this->getTableView(), array('jobs' => $jobs, 'block' => $block))->getContent();
                 return $this->get('app.sender')->sendJson(array('status' => $status, 'view' => $view));
             }
         }
@@ -123,7 +127,7 @@ class AsyncProfileController extends Controller
             'formJob' => $form->createView(),
             'job' => $job,
             'update' => true,
-
+            'block' => $block
         ))->getContent();
         return $this->get('app.sender')->sendJson(array('status' => $status, 'view' => $view));
     }
@@ -135,14 +139,17 @@ class AsyncProfileController extends Controller
      */
     public function asyncRemoveJobAction($id = null)
     {
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
+        /** @var User $user */
         $user = $this->getUser();
+        /** @var Job $job */
         $job = $em->getRepository('SubdivisionBundle:Job')->findOneBy(array('id' => $id, 'user' => $user));
         $em->remove($job);
         $em->flush();
         $jobs = $em->getRepository('SubdivisionBundle:Job')->findUserJobs($user);
-        $view = $this->render($this->getTableView(), array('jobs' => $jobs,))->getContent();
-
+        $block = $this->getBlock($user);
+        $view = $this->render($this->getTableView(), array('jobs' => $jobs, 'block' => $block))->getContent();
         return $this->get('app.sender')->sendJson(array('status' => 1, 'view' => $view));
     }
 
