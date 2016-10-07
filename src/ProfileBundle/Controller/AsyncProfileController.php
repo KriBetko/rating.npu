@@ -3,6 +3,7 @@
 namespace ProfileBundle\Controller;
 
 use AppBundle\Entity\Year;
+use Doctrine\DBAL\Types\BooleanType;
 use Doctrine\ORM\EntityManager;
 use SubdivisionBundle\Entity\Job;
 use SubdivisionBundle\Form\EducationType;
@@ -31,9 +32,12 @@ class AsyncProfileController extends Controller
         $status = 0;
         /*** @var Job $job */
         $job = new Job();
+        /** @var BooleanType $block */
+        $block = $this->getBlock($user);
+
+        /** @var Form $form */
         $form = $this->getFormForUser($job);
         $form->handleRequest($request);
-
         if ($form->isValid()) {
             $job->setUser($user);
             $job->setYear($user->getAvailableYear());
@@ -41,14 +45,30 @@ class AsyncProfileController extends Controller
             $em->flush();
             $jobs = $em->getRepository('SubdivisionBundle:Job')->findBy(array('year' => $user->getAvailableYear()));
             $status = 1;
-            $view = $this->render($this->getTableView(), array('jobs' => $jobs))->getContent();
+            $view = $this->render($this->getTableView(), array('jobs' => $jobs, 'block' => $block))->getContent();
         } else {
             $view = $this->render($this->getFormView(), array(
                 'user' => $user,
-                'formJob' => $form->createView()
+                'formJob' => $form->createView(),
+                'block' => $block
             ))->getContent();
         }
         return $this->get('app.sender')->sendJson(array('status' => $status, 'view' => $view));
+    }
+
+    /**
+     * @param User $user
+     * @param $yearId
+     * @return bool
+     */
+    private function getBlock($user, $yearId = null)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+        /** @var Year $year */
+        $year = $yearId == null ? $this->get('year.manager')->getCurrentYear()
+            : $em->getRepository('AppBundle:Year')->findOneBy(array('id' => $yearId));
+        return $user->getAvailableYear() == $year;
     }
 
     protected function getFormForUser($job)
@@ -140,12 +160,10 @@ class AsyncProfileController extends Controller
         /** @var Year $year */
         $year = $id == null ? $this->get('year.manager')->getCurrentYear()
             : $em->getRepository('AppBundle:Year')->findOneBy(array('id' => $id));
-
         $jobs = $em->getRepository('SubdivisionBundle:Job')->findBy(array('user' => $user, 'year' => $year));
-        $block = $user->getAvailableYear() == $year;
-
+        /** @var BooleanType $block */
+        $block = $this->getBlock($user, $id);
         $view = $this->render($this->getTableView(), array('jobs' => $jobs, 'block' => $block))->getContent();
-
         return $this->get('app.sender')->sendJson(array('status' => 1, 'view' => $view));
     }
 }
