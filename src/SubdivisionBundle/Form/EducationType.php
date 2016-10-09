@@ -49,7 +49,7 @@ class EducationType extends AbstractType
 
 
             ))
-            ->add('entryYear', DateType::class, array(
+            ->add('year', DateType::class, array(
                 'years' => range(2008, date('Y')),
                 'label' => 'Рік вступу',
                 'widget' => 'choice',

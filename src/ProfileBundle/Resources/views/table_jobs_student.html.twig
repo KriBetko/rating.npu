@@ -15,7 +15,7 @@
         <tr>
             <td class="text-center">{{ job.institute.title }}</td>
             <td class="text-center">{{ job.formList[job.formEducation] }}</td>
-            <td class="text-center">{{ job.entryYear|date('Y') }}</td>
+            <td class="text-center">{{ job.year|date('Y') }}</td>
             <td class="text-center">{{ job.group }}</td>
             <td class="text-center">{{ job.specialization }}</td>
             {% if block %}
