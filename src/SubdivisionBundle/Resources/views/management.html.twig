@@ -1,0 +1,32 @@
+{% extends  "MainBundle::base.html.twig" %}
+
+{% block title %}Підрозділи{% endblock %}
+
+{% block navbar %}{% include 'MainBundle::user-navbar.html.twig' %}{% endblock %}
+
+{% block content %}
+    {% for institute in institutes %}
+        <ul class="cathedras">
+            <li>
+                <b>
+                    <a href="{{ path("profile_institute_show", {'id': institute.id}) }}">
+                        {{ institute.title }} ({{ institute.rating }})
+                    </a>
+                </b>
+            </li>
+            <li>
+                <ol style="margin-left: 40px;">
+                    {% for cathedra in institute.cathedras %}
+                        <li>
+                            <i>
+                                <a href="{{ path("profile_cathedra_show", {'id': cathedra.id}) }}">
+                                    {{ cathedra.title }} ({{ cathedra.rating }})
+                                </a>
+                            </i>
+                        </li>
+                    {% endfor %}
+                </ol>
+            </li>
+        </ul>
+    {% endfor %}
+{% endblock %}

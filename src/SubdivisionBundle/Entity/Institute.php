@@ -44,6 +44,7 @@ class Institute
 
     /**
      * @ORM\OneToMany(targetEntity="SubdivisionBundle\Entity\Cathedra", mappedBy="institute")
+     * @ORM\OrderBy({"rating" = "DESC"})
      */
     protected $cathedras;
 

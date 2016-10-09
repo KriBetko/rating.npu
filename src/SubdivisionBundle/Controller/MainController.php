@@ -10,6 +10,7 @@ use SubdivisionBundle\Form\FilterType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use UserBundle\Entity\User;
 
 /**
  * @Route("/")
@@ -23,32 +24,13 @@ class MainController extends Controller
      */
     public function listAction()
     {
-        /**
-         * @var Cathedra $c
-         * @var Institute $i
-         */
-
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        $user = $this->getUser();
 
-        $cathedras = $user->getCathedras()->toArray();
-        $cathedrasIDs = [];
-        foreach ($cathedras as $c) {
-            $cathedrasIDs[] = $c->getId();
-        }
+        $institutes = $em->getRepository("SubdivisionBundle:Institute")->findAllByRating();
 
-        $institutes = $user->getInstitutes()->toArray();
-        $institutesIDs = [];
-        foreach ($institutes as $i) {
-            $institutesIDs[] = $i->getId();
-        }
-
-        $institutes = $em->getRepository("SubdivisionBundle:Institute")->findAll();
-
-        return $this->render('SubdivisionBundle::cathedras.html.twig',
+        return $this->render('SubdivisionBundle::management.html.twig',
             [
-                'cathedrasIDs' => $cathedrasIDs,
-                'institutesIDs' => $institutesIDs,
                 'institutes' => $institutes
             ]
         );
@@ -119,7 +101,7 @@ class MainController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         /** @var Cathedra $cathedra */
-        $cathedra = $em->getRepository("SubdivisionBundle:Cathedra")->findOneById($id);
+        $cathedra = $em->getRepository("SubdivisionBundle:Cathedra")->findOneBy(array('id' => $id));
         $users = $em->getRepository('AppBundle:Measure')->getValue($cathedra);
         $jobs = $em->getRepository('SubdivisionBundle:Job')->findBy(array('cathedra' => $cathedra));
 
@@ -148,7 +130,7 @@ class MainController extends Controller
     public function showUserAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository("UserBundle:User")->findOneById($id);
+        $user = $em->getRepository("UserBundle:User")->findOneBy(array('id' => $id));
         $year = $this->get('year.manager')->getCurrentYear();
         $this->get('year.manager')->generateMeasureForAllUser($year, $user);
 
@@ -170,10 +152,11 @@ class MainController extends Controller
      */
     public function showInstituteAction($id)
     {
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        $institute = $em->getRepository("SubdivisionBundle:Institute")->findOneById($id);
+        $institute = $em->getRepository("SubdivisionBundle:Institute")->findOneBy(array('id' => $id));
 
-        return $this->render('SubdivisionBundle::cathedras.html.twig',
+        return $this->render('SubdivisionBundle::management.html.twig',
             [
                 'institute' => $institute
             ]
