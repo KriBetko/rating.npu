@@ -29,7 +29,6 @@ class MeasureRepository extends EntityRepository
 
     }
 
-
     public function removeMeasures($ids, $year)
     {
         $q = $this->getEntityManager()->createQuery('
@@ -98,7 +97,6 @@ class MeasureRepository extends EntityRepository
         return $result;
     }
 
-
     public function getStudentRatings($year, Job $filterJob)
     {
         $em = $this->getEntityManager();
@@ -131,7 +129,6 @@ class MeasureRepository extends EntityRepository
         $result = $query->getResult();
         return $result;
     }
-
 
     public function getUserMeasures($year, $user)
     {
@@ -200,6 +197,4 @@ class MeasureRepository extends EntityRepository
         }
         return $return;
     }
-
-
 }

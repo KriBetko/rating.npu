@@ -2,7 +2,9 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Category;
 use AppBundle\Entity\CathedraRating;
+use AppBundle\Entity\Criterion;
 use AppBundle\Entity\InstituteRating;
 use AppBundle\Entity\Measure;
 use AppBundle\Entity\UserRating;
@@ -178,35 +180,22 @@ class MeasureController extends Controller
         /*** @var CathedraRating $cathedraRating */
         $cathedraRating = $em->getRepository('AppBundle:CathedraRating')->findOneBy(array('cathedra' => $cathedra, 'year' => $year));
 
-        $totalCathedraRating = 0;
-
-        /** @var Job $job */
-        foreach ($em->getRepository('SubdivisionBundle:Job')->findBy(array('cathedra' => $cathedra)) as $job) {
-            $totalCathedraRating = $totalCathedraRating + $job->getRating();
-        }
-
-        $cathedra->setRating($totalCathedraRating);
+        $cathedra->setRating($this->getCriterionRating(3));
 
         if ($cathedraRating == null) {
             $cathedraRating = new CathedraRating();
             $cathedraRating->setCathedra($cathedra);
             $cathedraRating->setYear($year);
-            $cathedraRating->setValue($totalCathedraRating);
+            $cathedraRating->setValue($cathedra->getRating());
             $em->persist($cathedraRating);
         } else {
-            $cathedraRating->setValue($totalCathedraRating);
+            $cathedraRating->setValue($cathedra->getRating());
         }
 
         /* Update institute rating */
         $institute = $cathedra->getInstitute();
 
-        $totalInstituteRating = 0;
-
-        foreach ($em->getRepository('SubdivisionBundle:Cathedra')->findBy(array('institute' => $institute)) as $cathedr) {
-            $totalInstituteRating = $totalInstituteRating + $cathedr->getRating();
-        }
-
-        $institute->setRating($totalInstituteRating);
+        $institute->setRating($this->getCriterionRating(4));
 
         $instituteRating = $em->getRepository('AppBundle:InstituteRating')->findOneBy(array('institute' => $institute, 'year' => $year));
 
@@ -214,12 +203,40 @@ class MeasureController extends Controller
             $instituteRating = new InstituteRating();
             $instituteRating->setInstitute($institute);
             $instituteRating->setYear($year);
-            $instituteRating->setValue($totalInstituteRating);
+            $instituteRating->setValue($institute->getRating());
             $em->persist($instituteRating);
         } else {
-            $instituteRating->setValue($totalInstituteRating);
+            $instituteRating->setValue($institute->getRating());
         }
 
         $em->flush();
+    }
+
+    /**
+     * @param integer $id
+     * @return integer
+     */
+    private function getCriterionRating($id)
+    {
+        /*** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $totalRating = 0;
+
+        $categories = $em->getRepository('AppBundle:Category')->findBy(array('type' => $id));
+        /** @var Category $category */
+        foreach ($categories as $category) {
+            $criterias = $category->getCriteria();
+            /** @var Criterion $criteria */
+            foreach ($criterias as $criteria) {
+                $measures = $em->getRepository('AppBundle:Measure')->findBy(array('criterion' => $criteria));
+                /** @var Measure $measure */
+                foreach ($measures as $measure) {
+                    $totalRating += $measure->getValue();
+                }
+            }
+        }
+
+        return $totalRating;
     }
 }

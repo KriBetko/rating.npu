@@ -1,6 +1,7 @@
 <?php
 namespace AppBundle\Entity;
 
+use Doctrine\DBAL\Types\DecimalType;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -125,7 +126,7 @@ class Criterion
     /**
      * Get coefficient
      *
-     * @return string
+     * @return DecimalType
      */
     public function getCoefficient()
     {
