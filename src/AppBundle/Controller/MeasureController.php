@@ -180,7 +180,18 @@ class MeasureController extends Controller
         /*** @var CathedraRating $cathedraRating */
         $cathedraRating = $em->getRepository('AppBundle:CathedraRating')->findOneBy(array('cathedra' => $cathedra, 'year' => $year));
 
-        $cathedra->setRating($this->getCriterionRating(3));
+        $cathedraCriterionRating = $this->getCriterionRating(3);
+        $cathedraBets = 0.0;
+        $cathedraUserRating = 0;
+
+        $jobs = $em->getRepository('SubdivisionBundle:Job')->findBy(array('cathedra' => $cathedra));
+        /** @var Job $teacher */
+        foreach ($jobs as $job) {
+            $cathedraBets += $job->getBet();
+            $cathedraUserRating += $job->getRating();
+        }
+
+        $cathedra->setRating($cathedraCriterionRating + ($cathedraUserRating / $cathedraBets));
 
         if ($cathedraRating == null) {
             $cathedraRating = new CathedraRating();
@@ -195,7 +206,18 @@ class MeasureController extends Controller
         /* Update institute rating */
         $institute = $cathedra->getInstitute();
 
-        $institute->setRating($this->getCriterionRating(4));
+        $instituteCriterionRating = $this->getCriterionRating(4);
+        $cathedrasRating = 0;
+
+        /** @var array $cathedras */
+        $cathedras = $em->getRepository('SubdivisionBundle:Cathedra')->findBy(array('institute' => $institute));
+
+        /** @var Cathedra $cathedra */
+        foreach ($cathedras as $cathedra) {
+            $cathedrasRating += $cathedra->getRating();
+        }
+
+        $institute->setRating($instituteCriterionRating + ($cathedrasRating / count($cathedras)));
 
         $instituteRating = $em->getRepository('AppBundle:InstituteRating')->findOneBy(array('institute' => $institute, 'year' => $year));
 
