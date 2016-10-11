@@ -7,7 +7,8 @@
         <th>Група</th>
         <th>Спеціалізація</th>
         {% if block %}
-            <th>Дії</th>{% endif %}
+            <th>Дії</th>
+        {% endif %}
     </tr>
     </thead>
 
@@ -15,7 +16,7 @@
         <tr>
             <td class="text-center">{{ job.institute.title }}</td>
             <td class="text-center">{{ job.formList[job.formEducation] }}</td>
-            <td class="text-center">{{ job.year|date('Y') }}</td>
+            <td class="text-center">{{ job.year.title }}</td>
             <td class="text-center">{{ job.group }}</td>
             <td class="text-center">{{ job.specialization }}</td>
             {% if block %}
