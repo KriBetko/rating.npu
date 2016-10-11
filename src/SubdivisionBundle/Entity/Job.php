@@ -69,7 +69,8 @@ class Job
      *      min = 0.00,
      *      max = 1.00,
      *      minMessage = "Значення має бути від 0 до 1",
-     *      maxMessage = "Значення має бути від 0 до 1", groups={"addJob"}
+     *      maxMessage = "Значення має бути від 0 до 1", groups={"addJob"},
+     *     invalidMessage="Значення має бути від 0 до 1"
      * )
      * @Assert\NotBlank(message="Будь ласка, вкажіть ставку (від 0.00 до 1.00).", groups={"addJob"})
      */
