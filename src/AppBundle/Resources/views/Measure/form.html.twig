@@ -1,13 +1,11 @@
-<form novalidate id="form-edit-measure"
-      action="{{ path('edit_measure', {'id': measure.id}) }}" {{ form_enctype(form) }} method="POST" class="">
+<form novalidate id="form-edit-measure" action="{{ path('edit_measure', {'id': measure.id}) }}"
+        {{ form_enctype(form) }} method="POST" class="">
     <div class="form-group form-error-block">
         {% set editable = measure.year.editable %}
-
         {% if measure.criterion.group is not null %}
             <div>{{ measure.criterion.group.title }}:</div>
             <br>
         {% endif %}
-
         <div class="row">
             {% if singleGroup %}
                 <div class="col-md-24" style=" text-align: center;">Ви не можете редагувати цей критерій, оскільки вже
@@ -20,12 +18,11 @@
                 {% if measure.criterion.isPlural() %}
                     <div class="col-md-18" style=" text-align: center;">{{ measure.criterion.title }}</div>
                 {% else %}
-                    <div class="col-md-10" style=" text-align: center;">Данний критерій одиничний. Відмітьте значення та
+                    <div style=" text-align: center;">Данний критерій одиничний. Відмітьте значення та
                         натисніть на кнопку "Зберегти"
                     </div>
                 {% endif %}
-
-                <div class="  {% if measure.criterion.isPlural() %}col-md-4{% else %}col-md-14{% endif %}">
+                <div class="{% if measure.criterion.isPlural() %}col-md-4{% else %}center-block{% endif %}">
                     {% if editable %}
                         {{ form_widget(form.value) }}
                     {% else %}
