@@ -15,7 +15,7 @@
     {% for job in jobs %}
         <tr>
             <td class="text-center">{{ job.institute.title }}</td>
-            <td class="text-center">{{ job.formList[job.formEducation] }}</td>
+            <td class="text-center">{{ job.formEducation }}</td>
             <td class="text-center">{{ job.year.title }}</td>
             <td class="text-center">{{ job.group }}</td>
             <td class="text-center">{{ job.specialization }}</td>
