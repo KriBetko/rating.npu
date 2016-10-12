@@ -3,6 +3,7 @@ namespace SubdivisionBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\DecimalType;
 use Doctrine\ORM\Mapping as ORM;
 use UserBundle\Entity\User;
 
@@ -52,6 +53,11 @@ class Institute
      * @ORM\Column(type="integer")
      */
     protected $rating;
+
+    /**
+     * @ORM\Column(type="decimal")
+     */
+    protected $bets;
 
     /**
      * Constructor
@@ -215,5 +221,21 @@ class Institute
     public function setRating($rating)
     {
         $this->rating = $rating;
+    }
+
+    /**
+     * @return DecimalType
+     */
+    public function getBets()
+    {
+        return $this->bets;
+    }
+
+    /**
+     * @param DecimalType $bets
+     */
+    public function setBets($bets)
+    {
+        $this->bets = $bets;
     }
 }

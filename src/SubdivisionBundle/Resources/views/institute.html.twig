@@ -1,18 +1,57 @@
 {% extends  "MainBundle::base.html.twig" %}
 
+{% block title %}{{ institute.title }}{% endblock %}
+
 {% block navbar %}{% include 'MainBundle::user-navbar.html.twig' %}{% endblock %}
 
 {% block content %}
-    <ul>
-        {% for i in institutes %}
-            <li><a href="{{ path("institutes") }}">{{ i.title }}</a></li>
-            {% set cath = i.cathedras %}
-            <li>
+    <h1>{{ institute.title }}</h1>
+    <hr>
+    <h3>Відомості:</h3>
+    <div class="row">
+        {% set director = institute.director %}
+        <div class="col-md-2"><b>Директора:</b></div>
+        <div class="col-md-8">
+            <p>{% if director is null %}Не вказано{% else %}{{ institute.director.fullName }}{% endif %}</p></div>
+    </div>
+    <div class="row">
+        <div class="col-md-2"><b>Місце у рейтингу:</b></div>
+        <div class="col-md-8"><p>integer</p></div>
+    </div>
+    <div class="row">
+        <div class="col-md-2"><b>Рейтинг:</b></div>
+        <div class="col-md-8"><p>{{ institute.rating }}</p></div>
+    </div>
+    <div class="row">
+        <div class="col-md-2"><b>Кількість підрозділів:</b></div>
+        <div class="col-md-8"><p>{{ institute.cathedras|length }}</p></div>
+    </div>
+    <div class="row">
+        <div class="col-md-2"><b>Кількість ставок:</b></div>
+        <div class="col-md-8"><p>{{ institute.bets }}</p></div>
+    </div>
+    <div class="row">
+        {% set managers = institute.managers %}
+        <div class="col-md-2"><b>Керівники:</b></div>
+        <div class="col-md-8">
+            {% if managers is null %}
+                <p>Не вказаноі</p>
+            {% else %}
                 <ul>
-                    {% for c in cath %}
-                        <li><a href="">{{ c.title }}</a></li>
+                    {% for manager in managers %}
+                        <li>{{ manager.fullName }}</li>
                     {% endfor %}
                 </ul>
+            {% endif %}
+        </div>
+    </div>
+    <hr>
+    <h3>Структура:</h3>
+    <ul>
+        {% for cathedra in institute.cathedras %}
+            <li>
+                <a href="{{ path("profile_cathedra_show", {'id': cathedra.id}) }}">{{ cathedra.title }}
+                    ({{ cathedra.rating }})</a>
             </li>
         {% endfor %}
     </ul>

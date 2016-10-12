@@ -510,4 +510,9 @@ class User implements UserInterface, \Serializable
     {
         $this->availableYear = $yearId;
     }
+
+    public function getFullName()
+    {
+        return $this->lastName . ' ' . $this->firstName . ' ' . $this->parentName;
+    }
 }

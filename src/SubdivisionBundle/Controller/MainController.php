@@ -156,7 +156,7 @@ class MainController extends Controller
         $em = $this->getDoctrine()->getManager();
         $institute = $em->getRepository("SubdivisionBundle:Institute")->findOneBy(array('id' => $id));
 
-        return $this->render('SubdivisionBundle::management.html.twig',
+        return $this->render('SubdivisionBundle::institute.html.twig',
             [
                 'institute' => $institute
             ]
