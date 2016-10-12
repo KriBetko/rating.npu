@@ -20,15 +20,15 @@
                 {% for category in job.categories %}
                     <h3>{{ category.title }}<b style="text-align: right"></b></h3>
                     <div class="category-block category_{{ category.category_id }}_{{ job.job.id }}">
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-5">Назва</div>
-                            <div class="col-md-2">Коєфіціент</div>
-                            <div class="col-md-2">Кількість</div>
-                            <div class="col-md-1">Рейтинг</div>
-                            <div class="col-md-1">Дії</div>
-                        </div>
                         {% if category.singles is defined %}
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-5">Назва</div>
+                                <div class="col-md-2">Коєфіціент</div>
+                                <div class="col-md-2">Кількість</div>
+                                <div class="col-md-1">Рейтинг</div>
+                                <div class="col-md-1">Дії</div>
+                            </div>
                             {% for single in category.singles %}
                                 <div class="row item-criteria-{% if loop.index is even %}even{% else %}odd{% endif %}">
                                     <div class="col-md-1"></div>
