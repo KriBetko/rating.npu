@@ -1,11 +1,53 @@
 {% extends  "MainBundle::base.html.twig" %}
 
+{% block title %}{{ cathedra.title }}{% endblock %}
+
 {% block navbar %}{% include 'MainBundle::user-navbar.html.twig' %}{% endblock %}
 
 {% block content %}
-    <h2>{{ cathedra.title }}</h2>
-    <h3>Рейтинг - {{ total }}</h3>
-    <h3>Всього ставок - {{ bets }}</h3>
+    <h1>{{ cathedra.title }}</h1>
+    <hr>
+    <h3>Відомості:</h3>
+    <div class="row">
+        {% set director = cathedra.director %}
+        <div class="col-md-2"><b>Директора:</b></div>
+        <div class="col-md-8">
+            <p>{% if director is null %}Не вказано{% else %}{{ director.fullName }}{% endif %}</p></div>
+    </div>
+    {% set cRating = cathedra.rating %}
+    <div class="row">
+        <div class="col-md-2"><b>Місце у рейтингу:</b></div>
+        <div class="col-md-8"><p>{{ cRating.ratingPosition }}</p></div>
+    </div>
+    <div class="row">
+        <div class="col-md-2"><b>Рейтинг:</b></div>
+        {% if cRating is null %}
+            <div class="col-md-8"><p>0</p></div>
+        {% else %}
+            <div class="col-md-8"><p>{{ cRating.value }}</p></div>
+        {% endif %}
+    </div>
+    <div class="row">
+        <div class="col-md-2"><b>Кількість ставок:</b></div>
+        <div class="col-md-8"><p>{{ cathedra.bets }}</p></div>
+    </div>
+    <div class="row">
+        {% set managers = cathedra.managers %}
+        <div class="col-md-2"><b>Керівники:</b></div>
+        <div class="col-md-8">
+            {% if managers|length == 0 %}
+                <p>Не вказані</p>
+            {% else %}
+                <ul>
+                    {% for manager in managers %}
+                        <li>{{ manager.fullName }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+    <hr>
+    <h3>Викладачі:</h3>
     <table class="table table-bordered">
         <thead>
         <tr>

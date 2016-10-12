@@ -12,15 +12,15 @@
         {% set director = institute.director %}
         <div class="col-md-2"><b>Директора:</b></div>
         <div class="col-md-8">
-            <p>{% if director is null %}Не вказано{% else %}{{ institute.director.fullName }}{% endif %}</p></div>
+            <p>{% if director is null %}Не вказано{% else %}{{ director.fullName }}{% endif %}</p></div>
     </div>
+    {% set iRating = institute.rating %}
     <div class="row">
         <div class="col-md-2"><b>Місце у рейтингу:</b></div>
-        <div class="col-md-8"><p>integer</p></div>
+        <div class="col-md-8"><p>{{ iRating.ratingPosition }}</p></div>
     </div>
     <div class="row">
         <div class="col-md-2"><b>Рейтинг:</b></div>
-        {% set iRating = institute.rating %}
         {% if iRating is null %}
             <div class="col-md-8"><p>0</p></div>
         {% else %}

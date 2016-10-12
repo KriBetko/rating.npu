@@ -97,4 +97,20 @@ class InstituteRating
     {
         return $this->id;
     }
+
+    /**
+     * @return integer
+     */
+    public function getRatingPosition()
+    {
+        return $this->ratingPosition;
+    }
+
+    /**
+     * @param integer $ratingPosition
+     */
+    public function setRatingPosition($ratingPosition)
+    {
+        $this->ratingPosition = $ratingPosition;
+    }
 }

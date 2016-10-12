@@ -115,7 +115,6 @@ class MainController extends Controller
             [
                 'cathedra' => $cathedra,
                 'users' => $users,
-                'total' => $cathedra->getRating(),
                 'bets' => $bets
             ]
         );
