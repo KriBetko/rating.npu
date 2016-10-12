@@ -39,8 +39,8 @@
         {% set managers = institute.managers %}
         <div class="col-md-2"><b>Керівники:</b></div>
         <div class="col-md-8">
-            {% if managers is null %}
-                <p>Не вказаноі</p>
+            {% if managers|length == 0 %}
+                <p>Не вказані</p>
             {% else %}
                 <ul>
                     {% for manager in managers %}
