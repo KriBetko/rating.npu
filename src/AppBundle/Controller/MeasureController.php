@@ -207,14 +207,18 @@ class MeasureController extends Controller
         $institute = $cathedra->getInstitute();
 
         $instituteCriterionRating = $this->getCriterionRating(4);
-        $cathedrasRating = 0;
+        $cathedrasRating = 0.0;
 
         /** @var array $cathedras */
         $cathedras = $em->getRepository('SubdivisionBundle:Cathedra')->findBy(array('institute' => $institute));
 
         /** @var Cathedra $cathedra */
         foreach ($cathedras as $cathedra) {
-            $cathedrasRating += $cathedra->getRating();
+            /** @var CathedraRating $cRating */
+            $cRating = $cathedra->getRating();
+            if ($cRating != null) {
+                $cathedrasRating += $cRating->getValue();
+            }
         }
 
         $instituteRating = $em->getRepository('AppBundle:InstituteRating')->findOneBy(array('institute' => $institute, 'year' => $year));
