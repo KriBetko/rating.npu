@@ -17,7 +17,11 @@
     {% set iRating = institute.rating %}
     <div class="row">
         <div class="col-md-2"><b>Місце у рейтингу:</b></div>
-        <div class="col-md-8"><p>{{ iRating.ratingPosition }}</p></div>
+        {% if iRating is null %}
+            <div class="col-md-8"><p>0</p></div>
+        {% else %}
+            <div class="col-md-8"><p>{{ iRating.ratingPosition }}</p></div>
+        {% endif %}
     </div>
     <div class="row">
         <div class="col-md-2"><b>Рейтинг:</b></div>
