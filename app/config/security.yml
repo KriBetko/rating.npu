@@ -24,3 +24,4 @@ security:
         - { path: ^/dashboard/, role: ROLE_USER }
         - { path: ^/profile/, role: ROLE_USER }
         - { path: ^/admin/, role: ROLE_ADMIN }
+        - { path: ^/management/, role: ROLE_USER }
