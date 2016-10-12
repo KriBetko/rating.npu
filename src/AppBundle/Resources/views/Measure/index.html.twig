@@ -22,22 +22,22 @@
                     <div class="category-block category_{{ category.category_id }}_{{ job.job.id }}">
                         <div class="row">
                             <div class="col-md-1"></div>
-                            <div class="col-md-1">Рейтинг</div>
                             <div class="col-md-5">Назва</div>
                             <div class="col-md-2">Коєфіціент</div>
                             <div class="col-md-2">Кількість</div>
+                            <div class="col-md-1">Рейтинг</div>
                             <div class="col-md-1">Дії</div>
                         </div>
                         {% if category.singles is defined %}
                             {% for single in category.singles %}
                                 <div class="row item-criteria-{% if loop.index is even %}even{% else %}odd{% endif %}">
                                     <div class="col-md-1"></div>
-                                    <div class="col-md-1 measure_total measure_{{ single.measure.id }}">
-                                        {{ single.criteria_coefficient * single.measure.value }}
-                                    </div>
                                     <div class="col-md-5">{{ single.criteria_title }}</div>
                                     <div class="col-md-2">{{ single.criteria_coefficient }}</div>
                                     <div class="col-md-2 value_{{ single.measure.id }}">{{ single.measure.value }}</div>
+                                    <div class="col-md-1 measure_total measure_{{ single.measure.id }}">
+                                        {{ single.criteria_coefficient * single.measure.value }}
+                                    </div>
                                     <div class="col-md-1">
                                         <a data-target="#modalMeasure" data-toggle="modal"
                                            class="btn btn-info btn-xs edit-measure-link"
@@ -59,21 +59,21 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-1"></div>
-                                        <div class="col-md-1">Рейтинг</div>
                                         <div class="col-md-5">Назва</div>
                                         <div class="col-md-2">Коєфіціент</div>
                                         <div class="col-md-2">Кількість</div>
+                                        <div class="col-md-1">Рейтинг</div>
                                         <div class="col-md-1">Дії</div>
                                     </div>
                                     {% for single in group.singles %}
                                         <div class="row item-criteria-{% if loop.index is even %}even{% else %}odd{% endif %}">
                                             <div class="col-md-1"></div>
-                                            <div class="col-md-1 measure_total measure_{{ single.measure.id }}">
-                                                {{ single.criteria_coefficient * single.measure.value }}
-                                            </div>
                                             <div class="col-md-5">{{ single.criteria_title }}</div>
                                             <div class="col-md-2">{{ single.criteria_coefficient }}</div>
                                             <div class="col-md-2 value_{{ single.measure.id }}">{{ single.measure.value }}</div>
+                                            <div class="col-md-1 measure_total measure_{{ single.measure.id }}">
+                                                {{ single.criteria_coefficient * single.measure.value }}
+                                            </div>
                                             <div class="col-md-1">
                                                 {% if block == false %}
                                                     <a data-target="#modalMeasure" data-toggle="modal"
