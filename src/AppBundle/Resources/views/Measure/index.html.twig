@@ -50,12 +50,13 @@
                                     </div>
                                 </div>
                             {% endfor %}
+                            <br>
                         {% endif %}
                         <div class="row">
                             {% if category.grouped is defined %}
                                 {% for group in category.grouped %}
                                     <div class="row">
-                                        <div class="col-md-12">{{ group.title }}</div>
+                                        <div class="col-md-12"><b>{{ group.title }}</b></div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-1"></div>
