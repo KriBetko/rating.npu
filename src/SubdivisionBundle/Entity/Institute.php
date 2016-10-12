@@ -50,7 +50,8 @@ class Institute
     protected $cathedras;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\InstituteRating")
+     * @ORM\JoinColumn(name="rating", referencedColumnName="id")
      */
     protected $rating;
 

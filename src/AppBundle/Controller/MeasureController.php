@@ -191,17 +191,17 @@ class MeasureController extends Controller
             $cathedraUserRating += $job->getRating();
         }
 
-        $cathedra->setRating($cathedraCriterionRating + ($cathedraUserRating / $cathedraBets));
-
         if ($cathedraRating == null) {
             $cathedraRating = new CathedraRating();
             $cathedraRating->setCathedra($cathedra);
             $cathedraRating->setYear($year);
-            $cathedraRating->setValue($cathedra->getRating());
+            $cathedraRating->setValue($cathedraCriterionRating + ($cathedraUserRating / $cathedraBets));
             $em->persist($cathedraRating);
         } else {
-            $cathedraRating->setValue($cathedra->getRating());
+            $cathedraRating->setValue($cathedraCriterionRating + ($cathedraUserRating / $cathedraBets));
         }
+
+        $cathedra->setRating($cathedraRating);
 
         /* Update institute rating */
         $institute = $cathedra->getInstitute();
@@ -217,19 +217,19 @@ class MeasureController extends Controller
             $cathedrasRating += $cathedra->getRating();
         }
 
-        $institute->setRating($instituteCriterionRating + ($cathedrasRating / count($cathedras)));
-
         $instituteRating = $em->getRepository('AppBundle:InstituteRating')->findOneBy(array('institute' => $institute, 'year' => $year));
 
         if ($instituteRating == null) {
             $instituteRating = new InstituteRating();
             $instituteRating->setInstitute($institute);
             $instituteRating->setYear($year);
-            $instituteRating->setValue($institute->getRating());
+            $instituteRating->setValue($instituteCriterionRating + ($cathedrasRating / count($cathedras)));
             $em->persist($instituteRating);
         } else {
-            $instituteRating->setValue($institute->getRating());
+            $instituteRating->setValue($instituteCriterionRating + ($cathedrasRating / count($cathedras)));
         }
+
+        $institute->setRating($instituteRating);
 
         $em->flush();
     }

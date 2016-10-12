@@ -9,9 +9,16 @@
         <ul class="cathedras">
             <li>
                 <b>
-                    <a href="{{ path("profile_institute_show", {'id': institute.id}) }}">
-                        {{ institute.title }} ({{ institute.rating }})
-                    </a>
+                    {% set iRating = institute.rating %}
+                    {% if iRating is null %}
+                        <a href="{{ path("profile_institute_show", {'id': institute.id}) }}">
+                            {{ institute.title }} (0)
+                        </a>
+                    {% else %}
+                        <a href="{{ path("profile_institute_show", {'id': institute.id}) }}">
+                            {{ institute.title }} ({{ iRating.value }})
+                        </a>
+                    {% endif %}
                 </b>
             </li>
             <li>
@@ -19,9 +26,16 @@
                     {% for cathedra in institute.cathedras %}
                         <li>
                             <i>
-                                <a href="{{ path("profile_cathedra_show", {'id': cathedra.id}) }}">
-                                    {{ cathedra.title }} ({{ cathedra.rating }})
-                                </a>
+                                {% set cRating = institute.rating %}
+                                {% if cRating is null %}
+                                    <a href="{{ path("profile_cathedra_show", {'id': cathedra.id}) }}">
+                                        {{ cathedra.title }} (0)
+                                    </a>
+                                {% else %}
+                                    <a href="{{ path("profile_cathedra_show", {'id': cathedra.id}) }}">
+                                        {{ cathedra.title }} ({{ cRating.value }})
+                                    </a>
+                                {% endif %}
                             </i>
                         </li>
                     {% endfor %}

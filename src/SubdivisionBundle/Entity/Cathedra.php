@@ -49,7 +49,8 @@ class Cathedra
     protected $managers;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\CathedraRating")
+     * @ORM\JoinColumn(name="rating", referencedColumnName="id")
      */
     protected $rating;
 

@@ -31,9 +31,14 @@ class InstituteRating
     protected $year;
 
     /**
+     * @ORM\Column(type="decimal")
+     */
+    protected $value = 0.0;
+
+    /**
      * @ORM\Column(type="integer")
      */
-    protected $value = 0;
+    protected $ratingPosition = 0;
 
     /**
      * @return mixed

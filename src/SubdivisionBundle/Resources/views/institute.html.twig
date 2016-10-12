@@ -20,7 +20,12 @@
     </div>
     <div class="row">
         <div class="col-md-2"><b>Рейтинг:</b></div>
-        <div class="col-md-8"><p>{{ institute.rating }}</p></div>
+        {% set iRating = institute.rating %}
+        {% if iRating is null %}
+            <div class="col-md-8"><p>0</p></div>
+        {% else %}
+            <div class="col-md-8"><p>{{ iRating.value }}</p></div>
+        {% endif %}
     </div>
     <div class="row">
         <div class="col-md-2"><b>Кількість підрозділів:</b></div>
@@ -50,8 +55,16 @@
     <ul>
         {% for cathedra in institute.cathedras %}
             <li>
-                <a href="{{ path("profile_cathedra_show", {'id': cathedra.id}) }}">{{ cathedra.title }}
-                    ({{ cathedra.rating }})</a>
+                {% set cRating = institute.rating %}
+                {% if cRating is null %}
+                    <a href="{{ path("profile_cathedra_show", {'id': cathedra.id}) }}">
+                        {{ cathedra.title }} (0)
+                    </a>
+                {% else %}
+                    <a href="{{ path("profile_cathedra_show", {'id': cathedra.id}) }}">
+                        {{ cathedra.title }} ({{ cRating.value }})
+                    </a>
+                {% endif %}
             </li>
         {% endfor %}
     </ul>
