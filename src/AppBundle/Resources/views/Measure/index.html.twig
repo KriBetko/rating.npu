@@ -20,55 +20,78 @@
                 {% for category in job.categories %}
                     <h3>{{ category.title }}<b style="text-align: right"></b></h3>
                     <div class="category-block category_{{ category.category_id }}_{{ job.job.id }}">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1">Рейтинг</div>
+                            <div class="col-md-5">Назва</div>
+                            <div class="col-md-2">Коєфіціент</div>
+                            <div class="col-md-2">Кількість</div>
+                            <div class="col-md-1">Дії</div>
+                        </div>
                         {% if category.singles is defined %}
                             {% for single in category.singles %}
-                                <div style="width: 600px; display: inline-block">{{ single.criteria_title }}</div>
-                                <div style="width: 200px; display: inline-block">{{ single.criteria_coefficient }}</div>
-                                <div class="value_{{ single.measure.id }}"
-                                     style="width: 200px; display: inline-block">{{ single.measure.value }}</div>
-                                <div style="width: 50px; display: inline-block">
-                                    <a data-target="#modalMeasure" data-toggle="modal"
-                                       class="btn btn-info btn-xs edit-measure-link" data-id="{{ single.measure.id }}"
-                                       data-href="{{ path('edit_measure', {'id': single.measure.id}) }}"
-                                       title="{% if editable %}Редагувати{% else %}Перегляд{% endif %}">
-                                        <span class="glyphicon {% if editable %}glyphicon-pencil{% else %}glyphicon-edit{% endif %}"
-                                              aria-hidden="true"></span>
-                                    </a>
-                                </div>
-                                <div class="measure_total measure_{{ single.measure.id }}"
-                                     style="display: inline-block; width:  70px">{{ single.criteria_coefficient * single.measure.value }}</div>
-                                <br>
-                            {% endfor %}
-                        {% endif %}
-                        {% if category.grouped is defined %}
-                            {% for group in category.grouped %}
-                                <div>{{ group.title }}</div>
-                                {% for single in group.singles %}
-                                    <div class="item-criteria-{% if loop.index is even %}even{% else %}odd{% endif %}">
-                                        <div style="margin-left: 100px; width:500px; display: inline-block">{{ single.criteria_title }}</div>
-                                        <div style="width: 200px; display: inline-block">{{ single.criteria_coefficient }}</div>
-                                        <div class="value_{{ single.measure.id }}"
-                                             style="width: 200px; display: inline-block">{{ single.measure.value }}</div>
-                                        {% if block == false %}
-                                            <div style="width: 50px; display: inline-block">
-                                                <a data-target="#modalMeasure" data-toggle="modal"
-                                                   class="btn btn-info btn-xs edit-measure-link"
-                                                   data-id="{{ single.measure.id }}"
-                                                   data-href="{{ path('edit_measure', {'id': single.measure.id}) }}"
-                                                   title="{% if editable %}glyphicon-pencil{% else %}glyphicon-edit{% endif %}">
-                                                    <span class="glyphicon {% if editable %}glyphicon-pencil{% else %}glyphicon-edit{% endif %}"
-                                                          aria-hidden="true"></span>
-                                                </a>
-                                            </div>
-                                        {% endif %}
-                                        <div class="measure_total measure_{{ single.measure.id }}"
-                                             style="display: inline-block; width:  70px">{{ single.criteria_coefficient * single.measure.value }}</div>
+                                <div class="row item-criteria-{% if loop.index is even %}even{% else %}odd{% endif %}">
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-1 measure_total measure_{{ single.measure.id }}">
+                                        {{ single.criteria_coefficient * single.measure.value }}
                                     </div>
-
-                                {% endfor %}
-                                <br>
+                                    <div class="col-md-5">{{ single.criteria_title }}</div>
+                                    <div class="col-md-2">{{ single.criteria_coefficient }}</div>
+                                    <div class="col-md-2 value_{{ single.measure.id }}">{{ single.measure.value }}</div>
+                                    <div class="col-md-1">
+                                        <a data-target="#modalMeasure" data-toggle="modal"
+                                           class="btn btn-info btn-xs edit-measure-link"
+                                           data-id="{{ single.measure.id }}"
+                                           data-href="{{ path('edit_measure', {'id': single.measure.id}) }}"
+                                           title="{% if editable %}Редагувати{% else %}Перегляд{% endif %}">
+                                            <span class="glyphicon {% if editable %}glyphicon-pencil{% else %}glyphicon-edit{% endif %}"
+                                                  aria-hidden="true"></span>
+                                        </a>
+                                    </div>
+                                </div>
                             {% endfor %}
                         {% endif %}
+                        <div class="row">
+                            {% if category.grouped is defined %}
+                                {% for group in category.grouped %}
+                                    <div class="row">
+                                        <div class="col-md-12">{{ group.title }}</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-1">Рейтинг</div>
+                                        <div class="col-md-5">Назва</div>
+                                        <div class="col-md-2">Коєфіціент</div>
+                                        <div class="col-md-2">Кількість</div>
+                                        <div class="col-md-1">Дії</div>
+                                    </div>
+                                    {% for single in group.singles %}
+                                        <div class="row item-criteria-{% if loop.index is even %}even{% else %}odd{% endif %}">
+                                            <div class="col-md-1"></div>
+                                            <div class="col-md-1 measure_total measure_{{ single.measure.id }}">
+                                                {{ single.criteria_coefficient * single.measure.value }}
+                                            </div>
+                                            <div class="col-md-5">{{ single.criteria_title }}</div>
+                                            <div class="col-md-2">{{ single.criteria_coefficient }}</div>
+                                            <div class="col-md-2 value_{{ single.measure.id }}">{{ single.measure.value }}</div>
+                                            <div class="col-md-1">
+                                                {% if block == false %}
+                                                    <a data-target="#modalMeasure" data-toggle="modal"
+                                                       class="btn btn-info btn-xs edit-measure-link"
+                                                       data-id="{{ single.measure.id }}"
+                                                       data-href="{{ path('edit_measure', {'id': single.measure.id}) }}"
+                                                       title="{% if editable %}glyphicon-pencil{% else %}glyphicon-edit{% endif %}">
+                                                        <span class="glyphicon {% if editable %}glyphicon-pencil{% else %}glyphicon-edit{% endif %}"
+                                                              aria-hidden="true"></span>
+                                                    </a>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                    <br>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
                     </div>
                 {% endfor %}
             </div>
