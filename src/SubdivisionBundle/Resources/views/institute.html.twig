@@ -59,7 +59,7 @@
     <ul>
         {% for cathedra in institute.cathedras %}
             <li>
-                {% set cRating = institute.rating %}
+                {% set cRating = cathedra.rating %}
                 {% if cRating is null %}
                     <a href="{{ path("profile_cathedra_show", {'id': cathedra.id}) }}">
                         {{ cathedra.title }} (0)

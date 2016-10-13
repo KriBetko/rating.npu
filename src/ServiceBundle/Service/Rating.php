@@ -37,8 +37,8 @@ class Rating
         $year = $this->entityManager->getRepository('AppBundle:Year')->findOneBy(array('id' => $user->getAvailableYear()));
 
         $this->calculateRatingForUser($user, $year);
-        $this->calculateBetsForCathedra($cathedra, $year);
-        $this->calculateBetsForInstitute($cathedra->getInstitute());
+        $this->calculateRatingForCathedras($cathedra, $year);
+        $this->calculateRatingForInstitute($cathedra->getInstitute(), $year);
     }
 
     /**
@@ -81,48 +81,6 @@ class Rating
             $userRating->setValue($totalUserRating);
         }
 
-        $this->entityManager->flush();
-    }
-
-    /***
-     * @param Cathedra $cathedra
-     * @param Year $year
-     */
-    public function calculateBetsForCathedra($cathedra, $year)
-    {
-        $jobs = $this->entityManager->getRepository('SubdivisionBundle:Job')->findBy(array(
-            'cathedra' => $cathedra,
-            'year' => $year
-        ));
-
-        /** @var DecimalType $jBets */
-        $jBets = 0;
-
-        /** @var Job $job */
-        foreach ($jobs as $job) {
-            $jBets += $job->getBet();
-        }
-
-        $cathedra->setBets($jBets);
-        $this->entityManager->flush();
-
-        $this->calculateBetsForInstitute($cathedra->getInstitute());
-    }
-
-    /** @param Institute $institute */
-    private function calculateBetsForInstitute($institute)
-    {
-        $cathedras = $institute->getCathedras();
-
-        /** @var DecimalType $cBets */
-        $cBets = 0;
-
-        /** @var Cathedra $cathedra */
-        foreach ($cathedras as $cathedra) {
-            $cBets += $cathedra->getBets();
-        }
-
-        $institute->setBets($cBets);
         $this->entityManager->flush();
     }
 
@@ -188,13 +146,11 @@ class Rating
     }
 
     /**
-     * @param Cathedra $cathedra
+     * @param Institute $institute
      * @param Year $year
      */
-    public function calculateRatingForInstitute($cathedra, $year)
+    public function calculateRatingForInstitute($institute, $year)
     {
-        $institute = $cathedra->getInstitute();
-
         $instituteCriterionRating = $this->getCriterionRating(4);
         $cathedrasRating = 0.0;
 
@@ -227,6 +183,48 @@ class Rating
 
         $institute->setRating($instituteRating);
 
+        $this->entityManager->flush();
+    }
+
+    /***
+     * @param Cathedra $cathedra
+     * @param Year $year
+     */
+    public function calculateBetsForCathedra($cathedra, $year)
+    {
+        $jobs = $this->entityManager->getRepository('SubdivisionBundle:Job')->findBy(array(
+            'cathedra' => $cathedra,
+            'year' => $year
+        ));
+
+        /** @var DecimalType $jBets */
+        $jBets = 0;
+
+        /** @var Job $job */
+        foreach ($jobs as $job) {
+            $jBets += $job->getBet();
+        }
+
+        $cathedra->setBets($jBets);
+        $this->entityManager->flush();
+
+        $this->calculateBetsForInstitute($cathedra->getInstitute());
+    }
+
+    /** @param Institute $institute */
+    private function calculateBetsForInstitute($institute)
+    {
+        $cathedras = $institute->getCathedras();
+
+        /** @var DecimalType $cBets */
+        $cBets = 0;
+
+        /** @var Cathedra $cathedra */
+        foreach ($cathedras as $cathedra) {
+            $cBets += $cathedra->getBets();
+        }
+
+        $institute->setBets($cBets);
         $this->entityManager->flush();
     }
 }
