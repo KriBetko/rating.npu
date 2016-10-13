@@ -1,0 +1,9 @@
+services:
+  app.sender:
+    class: ServiceBundle\Service\Sender
+    public: true
+
+  service.rating:
+      class: ServiceBundle\Service\Rating
+      public: true
+      arguments: ['@doctrine.orm.default_entity_manager']

@@ -20,7 +20,7 @@ class AppKernel extends Kernel
             new MainBundle\MainBundle(),
             new ProfileBundle\ProfileBundle(),
             new UserBundle\UserBundle(),
-            new System\AppBundle\SystemAppBundle(),
+            new ServiceBundle\ServiceBundle(),
             new SubdivisionBundle\SubdivisionBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle()
         );

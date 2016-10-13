@@ -208,13 +208,10 @@ class Job
      * Set bet
      *
      * @param string $bet
-     * @return Job
      */
     public function setBet($bet)
     {
         $this->bet = $bet;
-
-        return $this;
     }
 
     /**

@@ -1,4 +1,0 @@
-services:
-  app.sender:
-    class: System\AppBundle\Service\Sender
-    public: true

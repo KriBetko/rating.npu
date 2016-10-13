@@ -1,5 +1,5 @@
 system_app:
-    resource: "@SystemAppBundle/Controller/"
+    resource: "@ServiceBundle/Controller/"
     type:     annotation
     prefix:   /
 

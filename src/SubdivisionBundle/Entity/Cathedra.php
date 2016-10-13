@@ -2,8 +2,8 @@
 namespace SubdivisionBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\DBAL\Types\DecimalType;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use UserBundle\Entity\User;
 
 /**
@@ -11,7 +11,7 @@ use UserBundle\Entity\User;
  * @ORM\Entity(repositoryClass="SubdivisionBundle\Repository\CathedraRepository")
  * @ORM\Table(name="cathedra")
  */
-class Cathedra
+class Cathedra extends Controller
 {
     /**
      * @ORM\Column(type="integer")
@@ -55,14 +55,13 @@ class Cathedra
     protected $rating;
 
     /**
-     * @ORM\Column(type="decimal")
+     * @ORM\Column(type="decimal", scale=2)
      */
     protected $bets;
 
     public function __construct()
     {
         $this->managers = new ArrayCollection();
-        $this->users = new ArrayCollection();
     }
 
     /**
@@ -145,39 +144,6 @@ class Cathedra
     }
 
     /**
-     * Add users
-     *
-     * @param User $users
-     * @return Cathedra
-     */
-    public function addUser(User $users)
-    {
-        $this->users[] = $users;
-
-        return $this;
-    }
-
-    /**
-     * Remove users
-     *
-     * @param User $users
-     */
-    public function removeUser(User $users)
-    {
-        $this->users->removeElement($users);
-    }
-
-    /**
-     * Get users
-     *
-     * @return ArrayCollection
-     */
-    public function getUsers()
-    {
-        return $this->users;
-    }
-
-    /**
      * Get director
      *
      * @return \UserBundle\Entity\User
@@ -243,17 +209,11 @@ class Cathedra
         $this->rating = $rating;
     }
 
-    /**
-     * @return DecimalType
-     */
     public function getBets()
     {
         return $this->bets;
     }
 
-    /**
-     * @param DecimalType $bets
-     */
     public function setBets($bets)
     {
         $this->bets = $bets;

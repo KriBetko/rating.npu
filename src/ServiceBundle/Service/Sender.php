@@ -1,5 +1,5 @@
 <?php
-namespace System\AppBundle\Service;
+namespace ServiceBundle\Service;
 
 use Symfony\Component\HttpFoundation\Response;
 

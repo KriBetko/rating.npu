@@ -43,6 +43,8 @@ class AsyncProfileController extends Controller
             $job->setYear($user->getAvailableYear());
             $em->persist($job);
             $em->flush();
+            $this->get('service.rating')->calculateBetsForCathedra($job->getCathedra(), $job->getYear());
+            $this->get('service.rating')->calculateBetsForCathedra($job->getCathedra(), $job->getYear());
             $jobs = $em->getRepository('SubdivisionBundle:Job')->findBy(array('year' => $user->getAvailableYear()));
             $status = 1;
             $view = $this->render($this->getTableView(), array('jobs' => $jobs, 'block' => $block))->getContent();
@@ -115,6 +117,8 @@ class AsyncProfileController extends Controller
             $form->handleRequest($request);
             if ($form->isValid()) {
                 $em->flush();
+                $this->get('service.rating')->calculateBetsForCathedra($job->getCathedra(), $job->getYear());
+                $this->get('service.rating')->calculateBetsForCathedra($job->getCathedra(), $job->getYear());
                 $jobs = $em->getRepository('SubdivisionBundle:Job')->findUserJobs($user);
                 $status = 1;
                 $view = $this->render($this->getTableView(), array('jobs' => $jobs, 'block' => $block))->getContent();
@@ -147,6 +151,8 @@ class AsyncProfileController extends Controller
         $job = $em->getRepository('SubdivisionBundle:Job')->findOneBy(array('id' => $id, 'user' => $user));
         $em->remove($job);
         $em->flush();
+        $this->get('service.rating')->calculateBetsForCathedra($job->getCathedra(), $job->getYear());
+        $this->get('service.rating')->calculateBetsForCathedra($job->getCathedra(), $job->getYear());
         $jobs = $em->getRepository('SubdivisionBundle:Job')->findUserJobs($user);
         $block = $this->getBlock($user);
         $view = $this->render($this->getTableView(), array('jobs' => $jobs, 'block' => $block))->getContent();

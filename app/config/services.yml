@@ -1,4 +1,4 @@
 imports:
   - { resource: '@AppBundle/Resources/config/services.yml' }
   - { resource: '@UserBundle/Resources/config/services.yml' }
-  - { resource: '@SystemAppBundle/Resources/config/services.yml' }
+  - { resource: '@ServiceBundle/Resources/config/services.yml' }
