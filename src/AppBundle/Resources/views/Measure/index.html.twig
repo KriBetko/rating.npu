@@ -1,8 +1,8 @@
-{% extends 'MainBundle::base.html.twig' %}
+{% extends "@Main/base.html.twig" %}
 
 {% block title %}Особова картка{% endblock %}
 
-{% block navbar %}{% include 'MainBundle::user-navbar.html.twig' %}{% endblock %}
+{% block navbar %}{% include '@Main/user-navbar.html.twig' %}{% endblock %}
 
 {% block content %}
     <select id="year-select" class="form-control" style="width: 190px; margin-bottom: 40px"

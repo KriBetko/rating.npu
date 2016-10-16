@@ -1,8 +1,8 @@
-{% extends '@Main/base.html.twig' %}
+{% extends "@Main/base.html.twig" %}
 
 {% block title %}Мій профіль{% endblock %}
 
-{% block navbar %}{% include 'MainBundle::user-navbar.html.twig' %}{% endblock %}
+{% block navbar %}{% include "@Main/user-navbar.html.twig" %}{% endblock %}
 
 {% block content %}
     <div class="row">
@@ -37,7 +37,7 @@
                 </div>
 
                 <div class="center-block">
-                    <input class="btn btn-success" type="submit" value="{{ 'Оновити'|trans }}"/>
+                    <input class="btn btn-success" type="submit" value="{{ 'Оновити' }}"/>
                 </div>
                 {{ form_rest(form) }}
             </form>
