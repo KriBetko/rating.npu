@@ -208,6 +208,7 @@
         }
         $(document).ready(function () {
             $('#year-select').change(function () {
+                $('#table-jobs-block').empty().append("<div id='loader-big' class='center-block'></div>");
                 $.ajax({
                     url: "/profile/async/get/jobs/" + this.value, success: function (e) {
                         if (e.status == 0) {
