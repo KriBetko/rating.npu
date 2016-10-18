@@ -4,6 +4,7 @@ namespace SubdivisionBundle\Controller;
 use SubdivisionBundle\Entity\Institute;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class AsyncController extends Controller
 {
