@@ -7,8 +7,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\IntegerType;
 use Doctrine\ORM\Mapping as ORM;
-use SubdivisionBundle\Entity\Cathedra;
-use SubdivisionBundle\Entity\Institute;
 use SubdivisionBundle\Entity\Job;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -26,6 +24,7 @@ class User implements UserInterface, \Serializable
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
     /**
      * @ORM\Column(type="string", length=255)
      *
@@ -39,6 +38,7 @@ class User implements UserInterface, \Serializable
      * )
      */
     protected $firstName;
+
     /**
      * @ORM\Column(type="string", length=255)
      *
@@ -52,6 +52,7 @@ class User implements UserInterface, \Serializable
      * )
      */
     protected $lastName;
+
     /**
      * @ORM\Column(type="string", length=255)
      *
@@ -65,50 +66,50 @@ class User implements UserInterface, \Serializable
      * )
      */
     protected $parentName;
+
     /**
      * @ORM\Column(type="string", length=512, nullable=true)
      *
      */
     protected $picture;
+
     /**
      * @ORM\Column(type="datetime", length=255, nullable=true)
      */
     protected $birthday;
+
     /**
      * @ORM\OneToMany(targetEntity="SubdivisionBundle\Entity\Job", mappedBy="user")
      */
     protected $jobs;
+
     /**
      * @ORM\Column(type="string", nullable=true, length=256)
      */
     protected $googleId;
+
     /**
      * @ORM\Column(type="string", length=255, unique=true)
      * @Assert\NotBlank()
      * @Assert\Email()
      */
     private $email;
+
     /**
      * @ORM\Column(name="roles", type="array")
      */
     private $roles;
+
     /**
      * @ORM\Column(type="integer")
      */
     private $rating = 0;
+
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Year")
      * @ORM\JoinColumn(name="year_id", referencedColumnName="id")
      */
     private $availableYear;
-    /**
-     * @ORM\ManyToMany(targetEntity="SubdivisionBundle\Entity\Institute", mappedBy="managers")
-     */
-    private $institutes;
-    /**
-     * @ORM\ManyToMany(targetEntity="SubdivisionBundle\Entity\Cathedra", mappedBy="managers")
-     */
-    private $cathedras;
 
     public function __construct()
     {
@@ -116,7 +117,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getPicture()
     {
@@ -124,7 +125,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @param mixed $picture
+     * @param string $picture
      */
     public function setPicture($picture)
     {
@@ -132,7 +133,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getGoogleId()
     {
@@ -140,7 +141,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @param mixed $googleId
+     * @param string $googleId
      */
     public function setGoogleId($googleId)
     {
@@ -148,8 +149,6 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Get id
-     *
      * @return integer
      */
     public function getId()
@@ -158,21 +157,16 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Add jobs
-     *
      * @param Job $jobs
      * @return User
      */
     public function addJob(Job $jobs)
     {
         $this->jobs[] = $jobs;
-
         return $this;
     }
 
     /**
-     * Remove jobs
-     *
      * @param Job $jobs
      */
     public function removeJob(Job $jobs)
@@ -181,8 +175,6 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Get jobs
-     *
      * @return Collection
      */
     public function getJobs()
@@ -191,8 +183,6 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Get birthday
-     *
      * @return DateTime
      */
     public function getBirthday()
@@ -201,82 +191,13 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Set birthday
-     *
      * @param DateTime $birthday
      * @return User
      */
     public function setBirthday($birthday)
     {
         $this->birthday = $birthday;
-
         return $this;
-    }
-
-    /**
-     * Add institutes
-     *
-     * @param Institute $institutes
-     * @return User
-     */
-    public function addInstitute(Institute $institutes)
-    {
-        $this->institutes[] = $institutes;
-
-        return $this;
-    }
-
-    /**
-     * Remove institutes
-     *
-     * @param Institute $institutes
-     */
-    public function removeInstitute(Institute $institutes)
-    {
-        $this->institutes->removeElement($institutes);
-    }
-
-    /**
-     * Get institutes
-     *
-     * @return Collection
-     */
-    public function getInstitutes()
-    {
-        return $this->institutes;
-    }
-
-    /**
-     * Add cathedras
-     *
-     * @param Cathedra $cathedras
-     * @return User
-     */
-    public function addCathedra(Cathedra $cathedras)
-    {
-        $this->cathedras[] = $cathedras;
-
-        return $this;
-    }
-
-    /**
-     * Remove cathedras
-     *
-     * @param Cathedra $cathedras
-     */
-    public function removeCathedra(Cathedra $cathedras)
-    {
-        $this->cathedras->removeElement($cathedras);
-    }
-
-    /**
-     * Get cathedras
-     *
-     * @return Collection
-     */
-    public function getCathedras()
-    {
-        return $this->cathedras;
     }
 
     public function __toString()
@@ -285,8 +206,6 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Get lastName
-     *
      * @return string
      */
     public function getLastName()
@@ -295,21 +214,16 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Set lastName
-     *
      * @param string $lastName
      * @return User
      */
     public function setLastName($lastName)
     {
         $this->lastName = $lastName;
-
         return $this;
     }
 
     /**
-     * Get firstName
-     *
      * @return string
      */
     public function getFirstName()
@@ -318,21 +232,16 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Set firstName
-     *
      * @param string $firstName
      * @return User
      */
     public function setFirstName($firstName)
     {
         $this->firstName = $firstName;
-
         return $this;
     }
 
     /**
-     * Get parentName
-     *
      * @return string
      */
     public function getParentName()
@@ -341,15 +250,12 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Set parentName
-     *
      * @param string $parentName
      * @return User
      */
     public function setParentName($parentName)
     {
         $this->parentName = $parentName;
-
         return $this;
     }
 
@@ -404,7 +310,8 @@ class User implements UserInterface, \Serializable
         ));
     }
 
-    /** @see \Serializable::unserialize()
+    /**
+     * @see \Serializable::unserialize()
      * @param string $serialized
      */
     public function unserialize($serialized)
@@ -452,10 +359,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Set roles
-     *
      * @param array $roles
-     *
      * @return User
      */
     public function setRoles($roles)

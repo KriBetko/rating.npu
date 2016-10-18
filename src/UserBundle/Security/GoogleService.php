@@ -12,6 +12,11 @@ class GoogleService
     protected $redirectRouteName = 'google_check';
     protected $scopes = ['email', 'profile'];
 
+    /**
+     * GoogleService constructor.
+     * @param Router $router
+     * @param Container $container
+     */
     public function __construct(Router $router, Container $container)
     {
         $this->router = $router;

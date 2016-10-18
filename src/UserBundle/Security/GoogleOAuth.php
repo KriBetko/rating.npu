@@ -42,6 +42,10 @@ class GoogleOAuth
         return $this->checkDomain($response);
     }
 
+    /**
+     * @param \Google_Service_Oauth2_Userinfoplus $response
+     * @return mixed
+     */
     public function checkDomain($response)
     {
         if ($response->getHd() && in_array($response->getHd(), $this->domains)) {

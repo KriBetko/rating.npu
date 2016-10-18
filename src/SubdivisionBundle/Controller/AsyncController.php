@@ -4,7 +4,6 @@ namespace SubdivisionBundle\Controller;
 use SubdivisionBundle\Entity\Institute;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
 class AsyncController extends Controller
 {
@@ -19,7 +18,7 @@ class AsyncController extends Controller
         /**
          * @var Institute $institute
          */
-        $institute = $em->getRepository('SubdivisionBundle:Institute')->findOneById($id);
+        $institute = $em->getRepository('SubdivisionBundle:Institute')->findBy(array('id' => $id));
 
         $output = '';
         $status = 0;
