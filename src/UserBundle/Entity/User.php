@@ -111,6 +111,15 @@ class User implements UserInterface, \Serializable
      */
     private $availableYear;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="SubdivisionBundle\Entity\Institute", mappedBy="managers")
+     */
+    private $institutes;
+    /**
+     * @ORM\ManyToMany(targetEntity="SubdivisionBundle\Entity\Cathedra", mappedBy="managers")
+     */
+    private $cathedras;
+
     public function __construct()
     {
         $this->jobs = new ArrayCollection();
@@ -418,5 +427,37 @@ class User implements UserInterface, \Serializable
     public function getFullName()
     {
         return $this->lastName . ' ' . $this->firstName . ' ' . $this->parentName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getInstitutes()
+    {
+        return $this->institutes;
+    }
+
+    /**
+     * @param mixed $institutes
+     */
+    public function setInstitutes($institutes)
+    {
+        $this->institutes = $institutes;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCathedras()
+    {
+        return $this->cathedras;
+    }
+
+    /**
+     * @param mixed $cathedras
+     */
+    public function setCathedras($cathedras)
+    {
+        $this->cathedras = $cathedras;
     }
 }
