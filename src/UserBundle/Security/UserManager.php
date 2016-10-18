@@ -37,9 +37,9 @@ class UserManager
     protected function create($response, $year)
     {
         $user = new User();
-        $user->setLastName($response->getFamilyName());
         $user->setFirstName($response->getGivenName());
-        $user->setParentName(""); //TODO ParentName not found in GoogleAccount, fix this
+        $user->setLastName($response->getFamilyName());
+        $user->setParentName("");
         $user->setGoogleId($response->getId());
         $user->setEmail($response->getEmail());
         $user->setPicture($response->getPicture());
@@ -51,11 +51,13 @@ class UserManager
     /**
      * @param \Google_Service_Oauth2_Userinfoplus $response
      * @param Year $year
+     * @param boolean $firstUser
      * @return User
      */
-    public function createTeacher($response, $year)
+    public function createTeacher($response, $year, $firstUser)
     {
         $user = $this->create($response, $year);
+        if ($firstUser) $user->addRole('ROLE_ADMIN');
         $user->addRole('ROLE_TEACHER');
         return $user;
     }

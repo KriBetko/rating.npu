@@ -26,9 +26,10 @@ class MainController extends Controller
             if (!$user) {
                 /** @var Year $year */
                 $year = $this->get('year.manager')->getCurrentYear();
+                $firstUser = $em->getRepository('UserBundle:User')->findOneBy(array('id' => 0)) == null;
 
                 if ($response->getHd() == 'npu.edu.ua') {
-                    $user = $um->createTeacher($response, $year);
+                    $user = $um->createTeacher($response, $year, $firstUser);
                 } elseif ($response->getHd() == 'std.npu.edu.ua') {
                     $user = $um->createStudent($response, $year);
                 }
