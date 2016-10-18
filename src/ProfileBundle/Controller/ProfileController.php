@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
 use UserBundle\Entity\User;
 use UserBundle\Form\UserType;
 
-
 /**
  * @Route("/profile")
  */
@@ -71,7 +70,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * @Route("/edit", name="profile_edit")
+     * @Route("/edit/", name="profile_edit")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */

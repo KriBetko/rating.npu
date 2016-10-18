@@ -15,12 +15,12 @@ use Symfony\Component\Routing\Annotation\Route;
 use UserBundle\Entity\User;
 
 /**
- * @Route("/profile")
+ * @Route("/profile/async")
  */
 class AsyncProfileController extends Controller
 {
     /**
-     * @Route("/async/save/job", name="profile_save_job")
+     * @Route("/save/job", name="profile_save_job")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -43,7 +43,6 @@ class AsyncProfileController extends Controller
             $job->setYear($user->getAvailableYear());
             $em->persist($job);
             $em->flush();
-            $this->get('service.rating')->calculateBetsForCathedra($job->getCathedra(), $job->getYear());
             $this->get('service.rating')->calculateBetsForCathedra($job->getCathedra(), $job->getYear());
             $jobs = $em->getRepository('SubdivisionBundle:Job')->findBy(array('year' => $user->getAvailableYear()));
             $status = 1;
@@ -94,7 +93,7 @@ class AsyncProfileController extends Controller
     }
 
     /**
-     * @Route("/async/edit/job/{id}", name="profile_edit_job")
+     * @Route("/edit/job/{id}", name="profile_edit_job")
      * @param Request $request
      * @param null $id
      * @return \Symfony\Component\HttpFoundation\Response
@@ -137,7 +136,7 @@ class AsyncProfileController extends Controller
     }
 
     /**
-     * @Route("/async/remove/job/{id}", name="profile_remove_job")
+     * @Route("/remove/job/{id}", name="profile_remove_job")
      * @param null $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -160,11 +159,11 @@ class AsyncProfileController extends Controller
     }
 
     /**
-     * @Route("/async/get/jobs/{id}", name="profile_get_jobs")
+     * @Route("/get/jobs/{id}", name="profile_get_jobs")
      * @param null $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function asyncGetJobsByYeear($id = null)
+    public function asyncGetJobsByYear($id = null)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
