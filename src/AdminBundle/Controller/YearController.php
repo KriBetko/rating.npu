@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace AdminBundle\Controller;
 
 use AppBundle\Entity\Year;
 use AppBundle\Form\YearType;
