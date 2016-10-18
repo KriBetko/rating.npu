@@ -19,7 +19,7 @@ class AsyncController extends Controller
         /**
          * @var Institute $institute
          */
-        $institute = $em->getRepository('SubdivisionBundle:Institute')->findBy(array('id' => $id));
+        $institute = $em->getRepository('SubdivisionBundle:Institute')->findOneBy(array('id' => $id));
 
         $output = '';
         $status = 0;
