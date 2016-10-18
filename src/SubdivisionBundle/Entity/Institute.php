@@ -56,7 +56,7 @@ class Institute
     protected $rating;
 
     /**
-     * @ORM\Column(type="decimal", scale=2)
+     * @ORM\Column(type="decimal", scale=2, nullable=true)
      */
     protected $bets;
 
