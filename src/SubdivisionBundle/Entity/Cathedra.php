@@ -11,7 +11,7 @@ use UserBundle\Entity\User;
  * @ORM\Entity(repositoryClass="SubdivisionBundle\Repository\CathedraRepository")
  * @ORM\Table(name="cathedra")
  */
-class Cathedra extends Controller
+class Cathedra
 {
     /**
      * @ORM\Column(type="integer")
