@@ -261,19 +261,38 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/change/role/{id}", name="change_role")
+     * @Route("/change/role/{id}/{roleid}", name="change_role")
      * @param $id
+     * @param $roleid
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function changeRoleAction($id)
+    public function changeRoleAction($id, $roleid)
     {
         $em = $this->getDoctrine()->getManager();
         /*** @var User $user */
         $user = $em->getRepository('UserBundle:User')->findOneBy(array('id' => $id));
-        if ($user->isAdmin()) {
-            $user->removeRole('ROLE_ADMIN');
-        } else {
-            $user->addRole('ROLE_ADMIN');
+        switch ($roleid) {
+            case 1:
+                if ($user->isTeacher()) {
+                    $user->removeRole('ROLE_TEACHER');
+                } else {
+                    $user->addRole('ROLE_TEACHER');
+                }
+                break;
+            case 2:
+                if ($user->isStudent()) {
+                    $user->removeRole('ROLE_STUDENT');
+                } else {
+                    $user->addRole('ROLE_STUDENT');
+                }
+                break;
+            case 3:
+                if ($user->isAdmin()) {
+                    $user->removeRole('ROLE_ADMIN');
+                } else {
+                    $user->addRole('ROLE_ADMIN');
+                }
+                break;
         }
         $em->flush();
         return $this->redirect($this->generateUrl('user'));
