@@ -10,8 +10,8 @@
             <thead>
             <tr>
                 <th>ID</th>
-                <th>Прізвище</th>
                 <th>Ім'я</th>
+                <th>Прізвище</th>
                 <th>По-батькові</th>
                 <th>Email</th>
                 <th>Блок</th>
@@ -24,10 +24,10 @@
             {% for entity in entities %}
                 <tr>
                     <td class="td-center col-md-1">{{ loop.index }}</td>
-                    <td>{{ entity.firstName }}</td>
-                    <td>{{ entity.lastName }}</td>
-                    <td>{{ entity.parentName }}</td>
-                    <td>{{ entity.email }}</td>
+                    <td class="td-center col-md-1">{{ entity.firstName }}</td>
+                    <td class="td-center col-md-2">{{ entity.lastName }}</td>
+                    <td class="td-center col-md-2">{{ entity.parentName }}</td>
+                    <td class="td-center col-md-1">{{ entity.email }}</td>
                     <td class="td-center col-md-1">
                         {% if   entity.isBlock() %}
                             <a href="{{ path('block_user', {'id': entity.id}) }}" class="btn btn-danger btn-mini">
