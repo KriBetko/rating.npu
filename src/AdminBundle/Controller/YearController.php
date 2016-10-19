@@ -43,7 +43,7 @@ class YearController extends Controller
      *
      * @Route("/", name="year_create")
      * @Method("POST")
-     * @Template("AppBundle:Year:new.html.twig")
+     * @Template("AdminBundle:Year:new.html.twig")
      * @param Request $request
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
