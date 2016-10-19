@@ -27,4 +27,7 @@
         {{ form_widget(formJob.group) }}
     </div>
     {{ form_rest(formJob) }}
+    {% if block %}
+        <p style="color: red;">Можливість додавати місця роботи для цього року заблокована</p>
+    {% endif %}
 </form>

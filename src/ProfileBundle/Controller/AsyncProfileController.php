@@ -38,7 +38,7 @@ class AsyncProfileController extends Controller
         /** @var Form $form */
         $form = $this->getFormForUser($job);
         $form->handleRequest($request);
-        if ($form->isValid()) {
+        if ($form->isValid() && !$block) {
             $job->setUser($user);
             $job->setYear($user->getAvailableYear());
             $em->persist($job);
@@ -69,7 +69,7 @@ class AsyncProfileController extends Controller
         /** @var Year $year */
         $year = $yearId == null ? $this->get('year.manager')->getCurrentYear()
             : $em->getRepository('AppBundle:Year')->findOneBy(array('id' => $yearId));
-        return $user->getAvailableYear() == $year;
+        return $user->getAvailableYear() != $year;
     }
 
     protected function getFormForUser($job)

@@ -267,12 +267,9 @@ class UserController extends Controller
      */
     public function changeRoleAction($id)
     {
-        /**
-         * @var User $user
-         */
-
         $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository('UserBundle:User')->findOneById($id);
+        /*** @var User $user */
+        $user = $em->getRepository('UserBundle:User')->findOneBy(array('id' => $id));
         if ($user->isAdmin()) {
             $user->removeRole('ROLE_ADMIN');
         } else {
@@ -292,7 +289,7 @@ class UserController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         /*** @var User $user */
-        $user = $em->getRepository('UserBundle:User')->findOneById($id);
+        $user = $em->getRepository('UserBundle:User')->findOneBy(array('id' => $id));
 
         /*** @var Year $year */
         if ($user->isBlock()) {
