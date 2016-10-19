@@ -29,12 +29,12 @@
                     <td>{{ entity.parentName }}</td>
                     <td>{{ entity.email }}</td>
                     <td class="td-center col-md-1">
-                        {% if  entity.isBlock() %}
-                            <a href="{{ path('block_user', {'id': entity.id}) }}" class="btn btn-success btn-mini">
-                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        {% if   entity.isBlock() %}
+                            <a href="{{ path('block_user', {'id': entity.id}) }}" class="btn btn-danger btn-mini">
+                                <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
                             </a>
                         {% else %}
-                            <a href="{{ path('block_user', {'id': entity.id}) }}" class="btn btn-danger btn-mini">
+                            <a href="{{ path('block_user', {'id': entity.id}) }}" class="btn btn-success btn-mini">
                                 <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
                             </a>
                         {% endif %}
