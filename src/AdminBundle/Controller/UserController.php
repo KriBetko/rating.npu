@@ -273,29 +273,30 @@ class UserController extends Controller
         $user = $em->getRepository('UserBundle:User')->findOneBy(array('id' => $id));
         switch ($roleid) {
             case 1:
-                if ($user->isTeacher()) {
-                    $user->removeRole('ROLE_TEACHER');
-                } else {
-                    $user->addRole('ROLE_TEACHER');
-                }
+                $this->addRole($user, 'ROLE_TEACHER');
                 break;
             case 2:
-                if ($user->isStudent()) {
-                    $user->removeRole('ROLE_STUDENT');
-                } else {
-                    $user->addRole('ROLE_STUDENT');
-                }
+                $this->addRole($user, 'ROLE_STUDENT');
                 break;
             case 3:
-                if ($user->isAdmin()) {
-                    $user->removeRole('ROLE_ADMIN');
-                } else {
-                    $user->addRole('ROLE_ADMIN');
-                }
+                $this->addRole($user, 'ROLE_ADMIN');
                 break;
         }
         $em->flush();
         return $this->redirect($this->generateUrl('user'));
+    }
+
+    /**
+     * @param User $user
+     * @param string $role
+     */
+    private function addRole($user, $role)
+    {
+        if (in_array($role, $user->getRoles())) {
+            $user->removeRole($role);
+        } else {
+            $user->addRole($role);
+        }
     }
 
     /**
